@@ -16,7 +16,7 @@ export const NavBar = ({ token, setToken }) => {
     <nav className="navbar is-success mb-3" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
         <a className="navbar-item" href="/">
-         <h1 className="title is-4">Rare Publishing</h1>
+         <h1 className="title is-4">Job Seeker</h1>
         </a>
 
         {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
@@ -33,12 +33,11 @@ export const NavBar = ({ token, setToken }) => {
             token
               ?
               <>
-              <Link to="/postform" className="navbar-item">Create Post</Link>
-              <Link to="/allposts" className="navbar-item">All Posts</Link>
-              <Link to="/myposts" className="navbar-item">My Posts</Link>
-              <Link to="/categories" className="navbar-item">Category Manager</Link>
-              <Link to="/tags" className="navbar-item">Tag Manager</Link>
-              <Link to="/" className="navbar-item">User Manager</Link>
+              <Link to="/" className="navbar-item">Dashboard</Link>
+              <Link to="/boards" className="navbar-item">My Boards</Link>
+              <Link to="/myposts" className="navbar-item">Network</Link>
+              <Link to="/categories" className="navbar-item">Interview Prep</Link>
+              <Link to="/tags" className="navbar-item">Resources</Link>
               </>
               :
               ""
