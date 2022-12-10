@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { deleteBoard, getAllBoardsForUser, getSingleBoardForUser } from "../managers/BoardManager";
+import { deleteBoard, getAllBoardsForUser, getAllJobsForBoard, getSingleBoardForUser } from "../managers/BoardManager";
+import { JobList } from "./JobList";
 
 export const BoardView = () => {
   const [board, setBoard] = useState({});
@@ -10,8 +11,8 @@ export const BoardView = () => {
   console.log(id)
 
   useEffect(() => {
-    getSingleBoardForUser(id).then((userBoard) => {
-      setBoard(userBoard);
+    getAllJobsForBoard(id).then((jobsForBoard) => {
+      setBoard(jobsForBoard);
     });
   }, []);
 
@@ -58,12 +59,10 @@ const renderDeleteButton = (id) => {
       <div>{board.goal}</div>
       <h2>Requirements</h2>
       <div>{board.requirements}</div>
-      <h3>Ready To Apply</h3>
-      <h3>Applied</h3>
-      <h3>Interviewed</h3>
-      <h3>Offered</h3>
-      <h3>Denied</h3>
-      <h3></h3>
+<br></br>
+      <JobList
+      boardId={id}
+      />
     </>
   );
 };
