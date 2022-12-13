@@ -4,10 +4,10 @@ import { NavBar } from "./components/navbar/NavBar"
 
 
 export const JobSeeker = () => {
-  const [token, setTokenState] = useState(localStorage.getItem('auth_token'))
+  const [token, setTokenState] = useState(localStorage.getItem('seeker_token'))
 
   const setToken = (newToken) => {
-    localStorage.setItem('auth_token', newToken)
+    localStorage.setItem('seeker_token', newToken)
     setTokenState(newToken)
   }
 
