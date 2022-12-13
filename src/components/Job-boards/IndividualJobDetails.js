@@ -2,20 +2,23 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   deleteBoard,
+  deleteBoardJob,
+  getAllJobsForBoard,
   getAllBoardsForUser,
-  getSingleBoardForUser,
+  getAllJobsForBoardJob,
+  getSingleJobForUser,
 } from "../managers/BoardManager";
 
 export const IndividualJobDetails = () => {
-  const [board, setBoard] = useState({});
+  const [job, setJob] = useState({});
 
   const { boardId } = useParams();
   const { jobId } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    getSingleBoardForUser(id).then((userBoard) => {
-      setBoard(userBoard);
+    getSingleJobForUser(jobId).then((userJob) => {
+      setJob(userJob);
     });
   }, []);
 
@@ -25,47 +28,35 @@ export const IndividualJobDetails = () => {
         <button
           className="button is-small is-danger is-focused"
           onClick={() => {
-            if (window.confirm("Are you sure you want to delete this Board?")) {
-              deleteRequestForBoard(id);
+            if (window.confirm("Are you sure you want to delete this Job?")) {
+              deleteRequestForBoardJob(id);
             }
           }}
         >
           {" "}
-          Delete Board
+          Delete Job
         </button>
       </>
     );
   };
 
-//   const deleteRequestForBoard = (id) => {
-//     deleteBoard(id)
-//       .then(() => {
-//         getAllBoardsForUser();
-//       })
-//       .then(() => navigate("/"));
-//   };
+  const deleteRequestForBoardJob = (id) => {
+    deleteBoardJob(id)
+      .then(() => navigate(`/boards/${boardId}`));
+  };
 
   return (
     <>
-      <h1>{board.title}</h1>
-      <button
-        onClick={() => {
-        }}
-      >
-        Edit Board
-      </button>
-      {renderDeleteButton(id)}
-      <h2>Priorities</h2>
-      <h2>Goal</h2>
-      <div>{board.goal}</div>
-      <h2>Requirements</h2>
-      <div>{board.requirements}</div>
-      <h3>Ready To Apply</h3>
-      <h3>Applied</h3>
-      <h3>Interviewed</h3>
-      <h3>Offered</h3>
-      <h3>Denied</h3>
-      <h3></h3>
+      <h1>{job?.job?.title}</h1>
+      <h2>{job?.company?.name}</h2>
+      <button onClick={() => {}}>Edit Job</button>
+      {renderDeleteButton(jobId)}
+      <h2>Job Ratings</h2>
+      <div>{job?.salary_rating}</div>
+      <div>{job?.location_rating}</div>
+      <div>{job?.culture_rating}</div>
+      <div>{job?.leadership_rating}</div>
+      <div>{job?.team_rating}</div>
     </>
   );
 };

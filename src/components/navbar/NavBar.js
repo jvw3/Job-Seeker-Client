@@ -51,7 +51,7 @@ export const NavBar = ({ token, setToken }) => {
                 token
                   ?
                   <button className="button is-outlined" onClick={() => {
-                    setToken('')
+                    localStorage.removeItem("gamer_token");
                     navigate('/login')
                   }}>Logout</button>
                   :

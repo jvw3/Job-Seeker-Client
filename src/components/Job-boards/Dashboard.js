@@ -43,7 +43,6 @@ useEffect(() => {
                 </>
             )
         }
-    <div>Create New Board</div>
     <div>Upcoming Interviews</div>
     <div>Upcoming Recruiting Calls</div>
     <div>Upcoming Networking Calls</div>

@@ -8,11 +8,10 @@ export const BoardView = () => {
 
   const { id } = useParams();
   const navigate = useNavigate();
-  console.log(id)
 
   useEffect(() => {
-    getAllJobsForBoard(id).then((jobsForBoard) => {
-      setBoard(jobsForBoard);
+    getSingleBoardForUser(id).then((userJobs) => {
+      setBoard(userJobs);
     });
   }, []);
 
@@ -59,9 +58,19 @@ const renderDeleteButton = (id) => {
       <div>{board.goal}</div>
       <h2>Requirements</h2>
       <div>{board.requirements}</div>
-<br></br>
+      <br></br>
+      <h1>Current Jobs</h1>
+      <button
+        onClick={() => {
+          navigate(`/${id}/createjob`);
+        }}
+      >
+        {" "}
+        Add New Job
+      </button>
       <JobList
-      boardId={id}
+        userBoardCategories={board.categories}
+        boardId={id}
       />
     </>
   );
