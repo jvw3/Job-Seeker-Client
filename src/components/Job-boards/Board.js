@@ -39,7 +39,7 @@ const renderDeleteButton = (id) => {
       .then(() => {
         getAllBoardsForUser();
       })
-      .then(() => navigate("/"));
+      .then(() => navigate("/dashboard"));
   };
 
   return (
@@ -68,8 +68,16 @@ const renderDeleteButton = (id) => {
         {" "}
         Add New Job
       </button>
+      <button
+        onClick={() => {
+          navigate(`/boards/${id}/managecategories`);
+        }}
+      >
+        {" "}
+        Manage Categories
+      </button>
       <JobList
-        userBoardCategories={board.categories}
+        userBoardCategories={board?.categories}
         boardId={id}
       />
     </>
