@@ -16,11 +16,11 @@ export const JobList = ({ userBoardCategories, boardId }) => {
 
   return (
     <>
-    {userBoardCategories?.map((category) => (
+    {userBoardCategories?.map((boardCategory) => (
         <BoardCategoryContent
-        key={`category--${category.id}`}
-        categoryId={category.id}
-        categoryName={category.name}
+        key={`category--${boardCategory.id}`}
+        categoryId={boardCategory?.id}
+        categoryName={boardCategory?.name}
         boardId={boardId}
         />
       ))}

@@ -4,7 +4,6 @@ import {
   deleteBoard,
   getAllBoardsForUser,
   getAllJobsForBoard,
-  getAllJobsForBoardAndCategory,
   getSingleBoardForUser,
 } from "../managers/BoardManager";
 
@@ -13,7 +12,7 @@ export const BoardCategoryContent = ({ categoryId, categoryName, boardId }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getAllJobsForBoardAndCategory(boardId, categoryId).then((userJobs) => {
+    getAllJobsForBoard(boardId).then((userJobs) => {
       setBoardJobs(userJobs);
     });
   }, []);
@@ -24,7 +23,7 @@ export const BoardCategoryContent = ({ categoryId, categoryName, boardId }) => {
       <h2>{categoryName}</h2>
       {boardJobs.map((boardJob) => (
         <>
-        { categoryId === boardJob.category
+        { categoryId === boardJob?.category
           ? <>
           <div>{boardJob?.job?.title}</div>
           <div>{boardJob?.company?.name}</div>

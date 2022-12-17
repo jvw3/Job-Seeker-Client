@@ -27,7 +27,7 @@ useEffect(() => {
       requirements: board.requirements,
     };
 
-    updateBoard(boardToApi, id).then(() => navigate("/"));
+    updateBoard(boardToApi, id).then(() => navigate(`/boards/${id}`));
   };
 
   return (

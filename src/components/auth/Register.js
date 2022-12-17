@@ -1,7 +1,7 @@
 import { useRef } from "react"
 import { Link } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
-import { registerUser } from "../../managers/AuthManager"
+import { registerUser } from "../managers/AuthManager"
 
 export const Register = ({setToken}) => {
   const firstName = useRef()
@@ -9,6 +9,7 @@ export const Register = ({setToken}) => {
   const email = useRef()
   const username = useRef()
   const bio = useRef()
+  const current_role = useRef()
   const password = useRef()
   const verifyPassword = useRef()
   const passwordDialog = useRef()
@@ -16,7 +17,7 @@ export const Register = ({setToken}) => {
 
   const handleRegister = (e) => {
     e.preventDefault()
-    
+
     if (password.current.value === verifyPassword.current.value) {
       const newUser = {
         username: username.current.value,
@@ -24,14 +25,15 @@ export const Register = ({setToken}) => {
         last_name: lastName.current.value,
         email: email.current.value,
         password: password.current.value,
-        bio: bio.current.value
+        bio: bio.current.value,
+        current_role: current_role.current.value
       }
 
       registerUser(newUser)
         .then(res => {
-          if ("valid" in res && res.valid) {
+          if ("successful" in res && res.successful) {
             setToken(res.token)
-            navigate("/")
+            navigate("/login")
           }
         })
     } else {
@@ -42,7 +44,7 @@ export const Register = ({setToken}) => {
   return (
     <section className="columns is-centered">
       <form className="column is-two-thirds" onSubmit={handleRegister}>
-      <h1 className="title">Rare Publishing</h1>
+        <h1 className="title">Rare Publishing</h1>
         <p className="subtitle">Create an account</p>
         <div className="field">
           <label className="label">First Name</label>
@@ -77,35 +79,65 @@ export const Register = ({setToken}) => {
           <div className="field-body">
             <div className="field">
               <p className="control is-expanded">
-                <input className="input" type="password" placeholder="Password" ref={password} />
+                <input
+                  className="input"
+                  type="password"
+                  placeholder="Password"
+                  ref={password}
+                />
               </p>
             </div>
 
             <div className="field">
               <p className="control is-expanded">
-                <input className="input" type="password" placeholder="Verify Password" ref={verifyPassword} />
+                <input
+                  className="input"
+                  type="password"
+                  placeholder="Verify Password"
+                  ref={verifyPassword}
+                />
               </p>
             </div>
           </div>
         </div>
 
         <div className="field">
+          <label className="label">Current Role:</label>
+          <div className="control">
+            <input
+              className="textarea"
+              placeholder="Where are you working?"
+              ref={current_role}
+            ></input>
+          </div>
+        </div>
+        <div className="field">
           <label className="label">Bio</label>
           <div className="control">
-            <textarea className="textarea" placeholder="Tell us about yourself..." ref={bio}></textarea>
+            <textarea
+              className="textarea"
+              placeholder="Tell us about yourself..."
+              ref={bio}
+            ></textarea>
           </div>
         </div>
 
         <div className="field is-grouped">
           <div className="control">
-            <button className="button is-link" type="submit">Submit</button>
+            <button
+              className="button is-link"
+              type="submit"
+            >
+              Submit
+            </button>
           </div>
           <div className="control">
-            <Link to="/login" className="button is-link is-light">Cancel</Link>
+            <Link to="/login" className="button is-link is-light">
+              Cancel
+            </Link>
           </div>
         </div>
-
       </form>
     </section>
-  )
+  );
 }

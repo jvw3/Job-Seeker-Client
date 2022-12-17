@@ -58,9 +58,27 @@ export const getAllCategories = () => {
         .then(res => res.json())
     }
 
+export const getAllTags = () => {
+    return fetch("http://localhost:8000/tags", {
+        headers:{
+            "Authorization": `Token ${localStorage.getItem("seeker_token")}`
+        }
+    })
+        .then(res => res.json())
+    }
+
 
 export const getSingleBoardForUser = (id) => {
     return fetch(`http://localhost:8000/boards/${id}`, {
+        headers:{
+            "Authorization": `Token ${localStorage.getItem("seeker_token")}`
+        }
+    })
+        .then(res => res.json())
+    }
+
+export const getSingleJob = (id) => {
+    return fetch(`http://localhost:8000/jobs/${id}`, {
         headers:{
             "Authorization": `Token ${localStorage.getItem("seeker_token")}`
         }
@@ -94,6 +112,22 @@ export const getAllJobsForBoardAndCategory = (boardId, categoryId) => {
   }).then((res) => res.json());
 };
 
+export const getAllBoardJobTagsForBoardJob = (boardJobId) => {
+  return fetch(`http://localhost:8000/boardjobtags?boardjob=${boardJobId}`, {
+    headers: {
+      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
+    },
+  }).then((res) => res.json());
+};
+
+export const getAllBoardCategoriesForBoard = (boardId) => {
+  return fetch(`http://localhost:8000/boardcategories?board=${boardId}`, {
+    headers: {
+      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
+    },
+  }).then((res) => res.json());
+};
+
 export const createBoard = (board) => {
   return fetch("http://localhost:8000/boards", {
     method: "POST",
@@ -116,6 +150,28 @@ export const createBoardJob = (boardJob) => {
   }).then((res) => res.json());
 };
 
+export const createBoardJobTag = (boardJobTag) => {
+  return fetch("http://localhost:8000/boardjobtags", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
+    },
+    body: JSON.stringify(boardJobTag),
+  }).then((res) => res.json());
+};
+
+export const createBoardCategory = (boardCategory) => {
+  return fetch("http://localhost:8000/boardcategories", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
+    },
+    body: JSON.stringify(boardCategory),
+  }).then((res) => res.json());
+};
+
 export const updateBoard = (board, id) => {
   return fetch(`http://localhost:8000/boards/${id}`, {
     method: "PUT",
@@ -124,6 +180,17 @@ export const updateBoard = (board, id) => {
       Authorization: `Token ${localStorage.getItem("seeker_token")}`,
     },
     body: JSON.stringify(board),
+  });
+};
+
+export const updateBoardJob = (boardJob, id) => {
+  return fetch(`http://localhost:8000/boardjobs/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
+    },
+    body: JSON.stringify(boardJob),
   });
 };
 
@@ -143,5 +210,34 @@ export const deleteBoardJob = (id) => {
     headers: {
       Authorization: `Token ${localStorage.getItem("seeker_token")}`,
     },
+  });
+};
+
+export const deleteBoardJobTag = (id) => {
+  return fetch(`http://localhost:8000/boardjobtags/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
+    },
+  });
+};
+export const deleteBoardCategory = (id) => {
+  return fetch(`http://localhost:8000/boardcategories/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
+    },
+  });
+};
+
+export const addTag = (boardJobId, boardJob) => {
+  return fetch(`http://localhost:8000/boardJobs/${boardJobId}/addtag`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
+    },
+    body: JSON.stringify(boardJob),
   });
 };
