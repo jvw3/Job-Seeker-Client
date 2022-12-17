@@ -49,9 +49,28 @@ export const IndividualJobDetails = () => {
     <>
       <h1>{job?.job?.title}</h1>
       <h2>{job?.company?.name}</h2>
-      <button onClick={() => {}}>Edit Job</button>
+      <button
+        onClick={() => {
+          navigate(`/boards/${boardId}/jobs/${job.id}/editjob`);
+        }}
+      >
+        Edit Job
+      </button>
       {renderDeleteButton(jobId)}
       <h2>Job Ratings</h2>
+      <div>
+        <h3>Tags</h3>
+        <button
+          onClick={() => {
+            navigate(`/boards/${boardId}/jobs/${job.id}/managetags`);
+          }}
+        >
+          Manage Tags
+        </button>
+        {job?.tags?.map((tag) => (
+          <div>{tag.name}</div>
+        ))}
+      </div>
       <div>{job?.salary_rating}</div>
       <div>{job?.location_rating}</div>
       <div>{job?.culture_rating}</div>
