@@ -1,16 +1,24 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { createBoard, createBoardJob, getAllCategories, getAllCompanies, getAllJobs, getAllTags } from "../managers/BoardManager";
+import {
+  createBoard,
+  createBoardJob,
+  getAllBoardJobTagsForBoardJob,
+  getAllCategories,
+  getAllCompanies,
+  getAllJobs,
+  getAllTags,
+  getSingleJobForUser,
+  updateBoardJob
+} from "../managers/BoardManager";
+import { BoardCategoryContent } from "./BoardCatergoryContent";
 
-export const JobForm = () => {
+export const JobEdit = () => {
   const [jobs, setJobs] = useState([]);
   const [companies, setCompanies] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [tags, setTags] = useState([]);
-  const [checkedOptions, setCheckedOptions] = useState(new Set())
-
-
   const { boardId } = useParams();
+  const { jobId } = useParams();
   const navigate = useNavigate();
   const [boardJob, setBoardJob] = useState({
     job: 0,
@@ -32,11 +40,33 @@ export const JobForm = () => {
     category: 0
   });
 
+// When using serializers with Django, and you're creating an edit form. You have to basically create a copy of your state so you can create a custom object that can be sent to the server.
   useEffect(() => {
-    getAllJobs().then((allJobs) => {
-      setJobs(allJobs);
-    });
+    getSingleJobForUser(jobId)
+      .then((singleBoardJob) => {
+        const updatedBoardJob = {
+          job: singleBoardJob?.job?.id,
+          custom_job: singleBoardJob.custom_job,
+          company: singleBoardJob.company.id,
+          custom_company: singleBoardJob.custom_job,
+          has_applied: singleBoardJob.has_applied,
+          has_interviewed: singleBoardJob.has_interviewed,
+          interview_rounds: singleBoardJob.interview_rounds,
+          received_offer: singleBoardJob.received_offer,
+          salary: singleBoardJob.salary,
+          location: singleBoardJob.location,
+          salary_rating: singleBoardJob.salary_rating,
+          location_rating: singleBoardJob.location_rating,
+          culture_rating: singleBoardJob.culture_rating,
+          leadership_rating: singleBoardJob.leadership_rating,
+          team_rating: singleBoardJob.team_rating,
+          board: parseInt(boardId),
+          category: singleBoardJob.category,
+        };
+        setBoardJob(updatedBoardJob);
+      })
   }, []);
+
 
   useEffect(() => {
     getAllJobs().then((allJobs) => {
@@ -44,11 +74,6 @@ export const JobForm = () => {
     });
   }, []);
 
-  useEffect(() => {
-    getAllTags().then((allTags) => {
-      setTags(allTags);
-    });
-  }, []);
 
   useEffect(() => {
     getAllCompanies().then((allCompanies) => {
@@ -64,16 +89,33 @@ export const JobForm = () => {
 
 
   // const handleChange = (event) => {
-  //   let updatedList = [...checkedOptions]
+  //   let updatedList = [...checkedOptions];
   //   if (event.target.checked) {
   //     updatedList = [...checkedOptions, parseInt(event.target.value)];
   //   } else {
-  //     updatedList.splice(checkedOptions.indexOf(event.target.value), 1);
+  //     if (checkedOptions.indexOf(parseInt(event.target.value)) >= 1) {
+  //       updatedList.splice(checkedOptions.indexOf(parseInt(event.target.value)), 1);
+  //     } else {
+  //       updatedList.shift()
+  //     }
   //   }
   //   setCheckedOptions(updatedList);
   // };
 
-  const postRequestForJob = (event) => {
+
+  // const checkTag = (tagId) => {
+  //   for (const check of checkedOptions) {
+  //     if (check === tagId) {
+  //       return true
+  //     }
+  //   }
+  //   return false
+  // }
+
+
+
+
+  const putRequestForJob = (event) => {
     event.preventDefault();
 
     const boardJobToApi = {
@@ -93,17 +135,17 @@ export const JobForm = () => {
       leadership_rating: boardJob.leadership_rating,
       team_rating: boardJob.team_rating,
       board: parseInt(boardJob.board),
-      category: parseInt(boardJob.category),
-      tags: Array.from(checkedOptions)
+      category: parseInt(boardJob.category)
     };
 
-    createBoardJob(boardJobToApi).then(() => navigate(`/boards/${boardId}`));
+    updateBoardJob(boardJobToApi, jobId)
+      .then(() => navigate(-1));
   };
 
   return (
     <>
       <main>
-        <h1>New Job</h1>
+        <h1>Edit Job</h1>
       </main>
       <form>
         <fieldset>
@@ -236,34 +278,12 @@ export const JobForm = () => {
             }}
           />
         </fieldset>
-        <fieldset>
-          <div className="form-group">
-            <label htmlFor="age">Tags:</label>
-            {tags.map((tag) => (
-              <div>
-                {tag.name}
-                <input
-                  value={tag.id}
-                  onChange={(event) => {
-                    const copy = new Set(checkedOptions)
-                    if (copy.has(tag.id)) {
-                      copy.delete(tag.id)
-                    } else {
-                      copy.add(tag.id)
-                    }setCheckedOptions(copy)
-                  }}
-                  type="checkbox"
-                />
-              </div>
-            ))}
-          </div>
-        </fieldset>
         <button
           size="lg"
           color="violet"
-          onClick={(clickEvent) => postRequestForJob(clickEvent)}
+          onClick={(clickEvent) => putRequestForJob(clickEvent)}
         >
-          Create New Job!
+          Save Changes!
         </button>
       </form>
     </>
