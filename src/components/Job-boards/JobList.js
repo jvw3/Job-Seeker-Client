@@ -4,74 +4,30 @@ import {
   deleteBoard,
   getAllBoardsForUser,
   getAllJobsForBoard,
+  getAllJobsForBoardAndCategory,
+  getSingleBoardForUser,
 } from "../managers/BoardManager";
+import { BoardCategoryContent } from "./BoardCatergoryContent";
 
-export const JobList = ({boardId}) => {
-  const [jobs, setJobs] = useState([]);
 
-  const navigate = useNavigate();
+export const JobList = ({ userBoardCategories, boardId }) => {
 
-  useEffect(() => {
-    getAllJobsForBoard(boardId).then((userJobs) => {
-      setJobs(userJobs);
-    });
-  }, []);
 
-  const renderDeleteButton = (id) => {
-    return (
-      <>
-        <button
-          className="button is-small is-danger is-focused"
-          onClick={() => {
-            if (window.confirm("Are you sure you want to delete this Board?")) {
-              deleteRequestForBoard(id);
-            }
-          }}
-        >
-          {" "}
-          Delete Board
-        </button>
-      </>
-    );
-  };
-
-  const deleteRequestForBoard = (id) => {
-    deleteBoard(id)
-      .then(() => {
-        getAllBoardsForUser();
-      })
-      .then(() => navigate("/"));
-  };
 
   return (
     <>
-      <h1>Current Jobs</h1>
-      <button
-        onClick={() => {
-          navigate(`/addjob`);
-        }}
-      >     Add New Job
-      </button>
-      <h3>Ready To Apply</h3>
-      <h3>Applied</h3>
-      <h3>Interviewed</h3>
-      <h3>Offered</h3>
-      <h3>Denied</h3>
-      {jobs.map((job) => (
-        <>
-          <div>{job?.job?.title}</div>
-          <div>{job?.company?.name}</div>
-          <button
-            onClick={() => {
-              navigate(`/boards/${boardId}/jobs/${job.id}`);
-            }}
-          >
-            {" "}
-            View Details
-          </button>
-        </>
+    {userBoardCategories?.map((boardCategory) => (
+        <BoardCategoryContent
+        key={`category--${boardCategory.id}`}
+        categoryId={boardCategory?.id}
+        categoryName={boardCategory?.name}
+        boardId={boardId}
+        />
       ))}
-      <h3></h3>
     </>
   );
 };
+
+// boardJobs?.map((boardJob) => {
+//   renderBoardJobsInMatchingCategoryColumn(boardJob, cat);
+// });

@@ -14,7 +14,7 @@ export const LoginUser = (user) => {
   }).then(res => res.json())
 }
 
-export const RegisterUser = (newUser) => {
+export const registerUser = (newUser) => {
   return fetch("http://localhost:8000/register", {
     method: "POST",
     headers: {
