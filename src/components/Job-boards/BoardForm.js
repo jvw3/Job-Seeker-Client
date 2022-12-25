@@ -48,7 +48,7 @@ export const BoardForm = () => {
             placeholder="How would you describe your job search?"
             value={board.title}
             onChange={(evt) => {
-              const copy = structuredClone(board);
+              const copy = {...board};
               copy.title = evt.target.value;
               setBoard(copy);
             }}
@@ -64,7 +64,7 @@ export const BoardForm = () => {
             placeholder="What is your goal?"
             value={board.goal}
             onChange={(evt) => {
-              const copy = structuredClone(board);
+              const copy = {...board};
               copy.goal = evt.target.value;
               setBoard(copy);
             }}
@@ -80,7 +80,7 @@ export const BoardForm = () => {
             placeholder="What are your job requirements?"
             value={board.requirements}
             onChange={(evt) => {
-              const copy = structuredClone(board);
+              const copy = {...board};
               copy.requirements = evt.target.value;
               setBoard(copy);
             }}
