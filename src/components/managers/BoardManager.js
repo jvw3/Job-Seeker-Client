@@ -126,6 +126,7 @@ export const createBoard = (board) => {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Token ${localStorage.getItem("seeker_token")}`,
+      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
     },
     body: JSON.stringify(board),
   }).then((res) => res.json());
@@ -171,6 +172,7 @@ export const updateBoard = (board, id) => {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
       Authorization: `Token ${localStorage.getItem("seeker_token")}`,
     },
     body: JSON.stringify(board),

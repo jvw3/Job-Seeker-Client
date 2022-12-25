@@ -14,6 +14,7 @@ export const JobSeeker = () => {
   }
 
 
+
   return (
     <>
       <div className="grid-cols-1">
