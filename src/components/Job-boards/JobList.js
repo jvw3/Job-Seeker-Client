@@ -16,14 +16,16 @@ export const JobList = ({ userBoardCategories, boardId }) => {
 
   return (
     <>
-    {userBoardCategories?.map((boardCategory) => (
-        <BoardCategoryContent
-        key={`category--${boardCategory.id}`}
-        categoryId={boardCategory?.id}
-        categoryName={boardCategory?.name}
-        boardId={boardId}
-        />
-      ))}
+      <div className="grid grid-cols-5 gap-5">
+        {userBoardCategories?.map((boardCategory) => (
+          <BoardCategoryContent
+            key={`category--${boardCategory.id}`}
+            categoryId={boardCategory?.id}
+            categoryName={boardCategory?.name}
+            boardId={boardId}
+          />
+        ))}
+      </div>
     </>
   );
 };

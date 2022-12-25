@@ -13,7 +13,7 @@ import {
   deleteBoardCategory,
   createBoardCategory,
 } from "../managers/BoardManager";
-import "./ManageBoardTags.css";
+
 export const ManageBoardCategories = () => {
   const [categories, setCategories] = useState([]);
   const [jobTags, setJobTags] = useState([]);
@@ -59,15 +59,16 @@ export const ManageBoardCategories = () => {
   return (
     <>
       <main>
-        <h1>Manage Tags </h1>
+        <h1 className="text-3xl">Manage Categories </h1>
         <button
+          className="transition duration-500 ease-in-out text-white bg-black hover:bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300  shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
           onClick={() => {
             navigate(-1);
           }}
         >
           Back To board
         </button>
-        <h2>Current Tags</h2>
+        <h2 className="text-xl">Current Categories</h2>
         {boardCategories.map((boardCategory) => (
           <button
             onClick={() => {
@@ -79,12 +80,12 @@ export const ManageBoardCategories = () => {
                 );
               });
             }}
-            className=""
+            className="transition-all duration-500 ease-in-out text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300  shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
           >
             {boardCategory?.category?.name}
           </button>
         ))}
-        <h2>Selectable Tags</h2>
+        <h2 className="text-xl">Selectable Categories</h2>
         {categories.map((category) => (
           <button
             onClick={(evt) => {
@@ -103,7 +104,7 @@ export const ManageBoardCategories = () => {
                 );
               });
             }}
-            className=""
+            className="transition-all duration-500 ease-in-out text-white bg-black hover:bg-grey focus:ring-4 focus:outline-none focus:ring-blue-300  shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
           >
             {category.name}
           </button>

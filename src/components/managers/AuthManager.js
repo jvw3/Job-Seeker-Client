@@ -24,3 +24,11 @@ export const registerUser = (newUser) => {
     body: JSON.stringify(newUser)
   }).then(res => res.json())
 }
+
+export const getCurrentUser = () => {
+  return fetch(`http://localhost:8000/currentseeker`, {
+    headers: {
+      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
+    },
+  }).then((res) => res.json());
+};
