@@ -4,6 +4,7 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
     "node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}",
   ],
+  plugins: [require("@tailwindcss/forms")],
   theme: {
     screens: {
       sm: "640px",
@@ -27,7 +28,14 @@ module.exports = {
         "seeker-gray": "#e2e8f0",
         "home-blue": "#0b0b41",
         "home-orange": "#8e4318",
+        "google-gray": "#1A1C20",
+      },
+      backgroundImage: {
+        pinkswirl:
+          "url('../src/components/views/HompageImages/richard-horvath-_nWaeTF6qo0-unsplash.jpg')",
+        home: "url('../src/components/views/HompageImages/purpleyblueimage.jpg')",
       },
     },
   },
 };
+
