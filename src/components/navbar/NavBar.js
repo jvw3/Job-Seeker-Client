@@ -9,7 +9,8 @@ export const NavBar = ({ token, setToken }) => {
   const renderNav = () => {
       return (
         <>
-          <nav className="h-20 flex justify-between bg-gradient-to-r from-home-orange via-home-blue to-home-orange">
+          <nav className="h-20 flex justify-between bg-pinkswirl
+          backdrop-filter">
             <div className="flex">
               <a className="navbar-item" href="/">
                 <h1 className="text-white text-2xl p-4 font-mono ">

@@ -25,7 +25,7 @@ export const Dashboard = () => {
     let today = new Date();
     if (today.getHours() < 12) {
       return "Good Morning, ";
-    } else if (today.getHours() > 12 && today.getHours() < 17) {
+    } else if (today.getHours() >= 12 && today.getHours() <= 17) {
       return "Good Afternoon, ";
     } else {
       return "Good Evening, ";
@@ -34,12 +34,14 @@ export const Dashboard = () => {
 
   return (
     <>
-      <main className="flex-col w-full bg-gray-800">
-        <div className="h-1/5 m-4 border  rounded-md">
-          <h1 className="text-3xl">
+      <main className="flex-col w-full bg-pinkswirl">
+        <div className="h-1/6">
+          <h1 className="text-3xl text-white mt-4 ml-4">
             {" "}
             {returnTimeAdjustWelcomeText()} {currentUser.firstName}{" "}
           </h1>
+        </div>
+        <div className="h-1/5 m-4 rounded-md bg-pinkswirl bg-cover backdrop-filter backdrop-blur-md">
           <button
             className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
             onClick={() => {
@@ -49,7 +51,7 @@ export const Dashboard = () => {
             Create New Board
           </button>
         </div>
-        <div className="h-1/5 m-4 border  rounded-md">
+        <div className="h-1/4 m-4  rounded-md p-2 bg-pinkswirl bg-cover text-white shadow-2xl bg-opacity-70">
           {boards.map((board) => (
             <>
               <div key={`board--${board.id}`}>
@@ -70,10 +72,8 @@ export const Dashboard = () => {
             </>
           ))}
         </div>
-        <h1 className="text-4xl">Dashboard</h1>
-        <div className=" border m-4 rounded-md grow">
-          <div>
-          </div>
+        <div className=" border m-4 rounded-md grow bg-white h-2/6">
+          <div></div>
           <div>Upcoming Interviews</div>
           <div>Upcoming Recruiting Calls</div>
           <div>Upcoming Networking Calls</div>
