@@ -12,6 +12,7 @@ import {
   updateBoardJob
 } from "../managers/BoardManager";
 import { BoardCategoryContent } from "./BoardCatergoryContent";
+import { Select } from "react-select"
 
 export const JobEdit = () => {
   const [jobs, setJobs] = useState([]);

@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { createBoard, createBoardJob, getAllCategories, getAllCompanies, getAllJobs, getAllTags } from "../managers/BoardManager";
+import { Listbox } from '@headlessui/react'
 
 export const JobForm = () => {
   const [jobs, setJobs] = useState([]);
