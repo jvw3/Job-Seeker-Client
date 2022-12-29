@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
-import { Select } from "react-select";
 import { useNavigate } from "react-router-dom";
-import { getAllBoardsForUser } from "../managers/BoardManager";
-import { getContactsForUser, getAllContactsByNameSearch } from "../managers/NetworkManager";
+import { getContactsForUser, getAllContactsByNameSearch, sendConnectionFilterRequest } from "../managers/NetworkManager";
 import { IconBrandLinkedin, IconArrowNarrowUp } from "@tabler/icons";
 
 export const NetworkHome = () => {
   const [contacts, setContacts] = useState([]);
   const [searchedTitle, setSearchedTitle] = useState("")
+  const [sortValue, setSortValue] = useState("")
+  const [connectionFilterValue, setConnectionFilterValue] = useState("")
   const sortOptions = [
     {"value": 0,
     "text": "Sort Options",
@@ -209,30 +209,61 @@ export const NetworkHome = () => {
           </div>
           <div className="flex justify-evenly">
             <button
+              className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
               onClick={() => {
-                const clearSearch = ""
-                resetSearchAndFilter(clearSearch)
+                getContactsForUser().then((userContacts) => {
+                  setContacts(userContacts);
+                  setConnectionFilterValue("0");
+                  setSearchedTitle("");
+                });
               }}
             >
               Reset
             </button>
             {renderSearchBar()}
             <div>
-              <select options={sortOptions}></select>
+              <select>
+                <option value={0}>Sort Options</option>
+                <option value={8}>Name ↓</option>
+                <option value={7}>Name ↑</option>
+                <option value={6}>Number Of Contacts ↓</option>
+                <option value={5}>Number Of Contacts ↑</option>
+                <option value={4}>Connection Level ↓</option>
+                <option value={3}>Connection Level ↑</option>
+                <option value={2}>Last Contact Date ↓</option>
+                <option value={1}>Last Contact Date ↑</option>
+              </select>
               <button className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2">
                 Sort Contacts
               </button>
             </div>
             <div>
-              <select>
+              <select
+                value={connectionFilterValue}
+                onChange={(evt) => {
+                  const copy = evt.target.value;
+                  setConnectionFilterValue(copy);
+                }}
+              >
                 <option value={0}>Connection Level</option>
                 <option value={5}>Level 5</option>
                 <option value={4}>Level 4</option>
                 <option value={3}>Level 3</option>
                 <option value={2}>Level 2</option>
                 <option value={1}>Level 1</option>
+                <option value={">3"}>Contacts above level 3</option>
+                <option value={"<3"}>Contacts below level 3</option>
               </select>
-              <button className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2">
+              <button
+                onClick={() => {
+                  sendConnectionFilterRequest(connectionFilterValue).then(
+                    (userContacts) => {
+                      setContacts(userContacts);
+                    }
+                  );
+                }}
+                className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
+              >
                 Filter
               </button>
             </div>
