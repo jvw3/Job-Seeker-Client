@@ -23,6 +23,9 @@ module.exports = {
       // => @media (min-width: 1536px) { ... }
     },
     extend: {
+      width: {
+        "9/10": "20rem"
+      },
       colors: {
         "seeker-blue": "#1d4ed8",
         "seeker-gray": "#e2e8f0",
