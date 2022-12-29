@@ -1,22 +1,14 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getContactsForUser, getAllContactsByNameSearch, sendConnectionFilterRequest } from "../managers/NetworkManager";
-import { IconBrandLinkedin, IconArrowNarrowUp } from "@tabler/icons";
+import { IconBrandLinkedin, IconTrash } from "@tabler/icons";
 
 export const NetworkHome = () => {
   const [contacts, setContacts] = useState([]);
   const [searchedTitle, setSearchedTitle] = useState("")
   const [sortValue, setSortValue] = useState("")
   const [connectionFilterValue, setConnectionFilterValue] = useState("")
-  const sortOptions = [
-    {"value": 0,
-    "text": "Sort Options",
-  },{
-    "value": 1,
-    "text": "Name",
-    "icon": IconArrowNarrowUp
-  }
-  ]
+
   const navigate = useNavigate();
 
   const resetSearchAndFilter = () => {
@@ -24,6 +16,7 @@ export const NetworkHome = () => {
     this.searchedTitle.value = ""
   }
 
+  // UseEffect: Fetches All Contacts for a User.
   useEffect(() => {
     getContactsForUser().then((userContacts) => {
       setContacts(userContacts);
@@ -39,18 +32,18 @@ export const NetworkHome = () => {
   const renderNetworkTable = () => {
     return (
       <>
-        <table className="shadow-2xl border-pinkswirl">
+        <table className="shadow-2xl w-10/12">
           <thead className="bg-gray-100">
             <tr>
               <th
                 scope="col"
-                className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
+                className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 border-transparent rounded-tl-md"
               >
                 Name
               </th>
               <th
                 scope="col"
-                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 border-transparent"
               >
                 Current Role
               </th>
@@ -59,6 +52,12 @@ export const NetworkHome = () => {
                 className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
               >
                 Company
+              </th>
+              <th
+                scope="col"
+                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+              >
+                Date of Last Contact
               </th>
               <th
                 scope="col"
@@ -86,12 +85,9 @@ export const NetworkHome = () => {
               </th>
               <th
                 scope="col"
-                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 border-transparent rounded-tr-md"
               >
-                Edit
-              </th>
-              <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                <span className="sr-only">Edit</span>
+                Manage Contact
               </th>
             </tr>
           </thead>
@@ -112,6 +108,9 @@ export const NetworkHome = () => {
                   </td>
                   <td className="hitespace-nowrap px-3 py-4 text-sm text-gray-500">
                     {contact.current_company}
+                  </td>
+                  <td className="hitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    {contact.last_contact}
                   </td>
                   <td className="text-center hitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                     {contact.number_of_contacts}
@@ -138,13 +137,33 @@ export const NetworkHome = () => {
                       className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-4  text-center mr-2 mb-2"
                     >
                       {" "}
-                      Edit Contact
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => navigate(`/network/contact/${contact.id}`)}
+                      className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-4  text-center mr-2 mb-2"
+                    >
+                      {" "}
+                      <IconTrash />
                     </button>
                   </td>
                 </tr>
               </>
             ))}
           </tbody>
+          <tfoot className="bg-gray-100 h-10">
+            <tr>
+              <th className="rounded-bl-md border-separate" scope="row"></th>
+              <th scope="row"></th>
+              <th scope="row"></th>
+              <th scope="row"></th>
+              <th scope="row"></th>
+              <th scope="row"></th>
+              <th scope="row"></th>
+              <th scope="row"></th>
+              <th className="rounded-br-md border-separate" scope="row"></th>
+            </tr>
+          </tfoot>
         </table>
       </>
     );
@@ -171,7 +190,7 @@ export const NetworkHome = () => {
           <div className="">
             <input
               type="text"
-              className="input"
+              className="w-56 rounded-md h-10"
               placeholder="Search contacts by name"
               onKeyDown={handleKeyPress}
               onChange={(changeEvent) => {
@@ -180,7 +199,7 @@ export const NetworkHome = () => {
               }}
             ></input>
             <button
-              className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
+              className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm h-10 px-4 py-2 text-center mr-2 mb-2"
               onClick={() => {
                 sendContactSearchRequestToApi(searchedTitle);
               }}
@@ -194,8 +213,8 @@ export const NetworkHome = () => {
 
   return (
     <>
-      <main className="w-full flex-col">
-        <h1 className="text-4xl">Network</h1>
+      <main className="w-full flex-col bg-pinkswirl">
+        <h1 className="text-4xl text-white">Network</h1>
         <div>
           <div>
             <button
@@ -222,7 +241,7 @@ export const NetworkHome = () => {
             </button>
             {renderSearchBar()}
             <div>
-              <select>
+              <select className="h-10 rounded-md">
                 <option value={0}>Sort Options</option>
                 <option value={8}>Name ↓</option>
                 <option value={7}>Name ↑</option>
@@ -233,12 +252,13 @@ export const NetworkHome = () => {
                 <option value={2}>Last Contact Date ↓</option>
                 <option value={1}>Last Contact Date ↑</option>
               </select>
-              <button className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2">
+              <button className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm h-10 px-4 py-2 text-center mr-2 mb-2">
                 Sort Contacts
               </button>
             </div>
             <div>
               <select
+                className="h-10 rounded-md"
                 value={connectionFilterValue}
                 onChange={(evt) => {
                   const copy = evt.target.value;
@@ -262,13 +282,15 @@ export const NetworkHome = () => {
                     }
                   );
                 }}
-                className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
+                className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm h-10 px-4 py-2 text-center mr-2 mb-2"
               >
                 Filter
               </button>
             </div>
           </div>
-          {renderNetworkTable()}
+          <div className="flex justify-center mt-10">
+            {renderNetworkTable()}
+          </div>
         </div>
       </main>
     </>
