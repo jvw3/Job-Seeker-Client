@@ -25,16 +25,16 @@ export const BoardCategoryContent = ({ categoryId, categoryName, boardId }) => {
           <>
             {categoryId === boardJob?.category ? (
               <>
-                <div>
-                  <div className="border-solid border object-fit p-2.5 rounded-md shadow-lg
+                <div className="mt-4">
+                  <div className="bg-white border-solid border object-fit p-2.5 rounded-md shadow-xl
                   hover:scale-105
-                  hover:shadow-xl
+                  hover:shadow-2xl
                   transition-all">
                     <div className="text-xl font-medium">{boardJob?.job?.title}</div>
                     <div>{boardJob?.company?.name}</div>
                     <div className="flex flex-wrap">
                       {boardJob?.tags?.map((tag) => (
-                        <span className="bg-black text-white text-sm font-medium mt-1 mb-1 mr-2 px-2.5 py-0.5 rounded dark:bg-gray-200 dark:text-blue-800">
+                        <span className=" text-white text-sm font-medium mt-1 mb-1 mr-2 px-2.5 py-0.5 rounded dark:bg-gray-200 dark:text-blue-800">
                           {tag.name}
                         </span>
                       ))}
