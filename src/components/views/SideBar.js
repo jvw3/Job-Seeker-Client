@@ -7,7 +7,7 @@ const [open, setOpen] = useState(true)
 const [activeSideBarTab, setActiveSidebarTab] = useState(false)
 
   const location = useLocation()
-  console.log(location)
+
   return (
     <>
       <main
