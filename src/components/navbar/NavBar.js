@@ -6,10 +6,15 @@ export const NavBar = ({ token, setToken }) => {
   const navbar = useRef();
 
   const NavLogoText = "< JobSeeker />"
+
+  const location = useLocation();
+
   const renderNav = () => {
+    if (location.pathname !== "/login"){
       return (
         <>
-          <nav className="h-20 flex justify-between bg-gradient-to-r from-home-orange via-home-blue to-home-orange">
+          <nav className="h-20 flex justify-between bg-pinkswirl
+          backdrop-filter">
             <div className="flex">
               <a className="navbar-item" href="/">
                 <h1 className="text-white text-2xl p-4 font-mono ">
@@ -17,7 +22,7 @@ export const NavBar = ({ token, setToken }) => {
                 </h1>
               </a>
             </div>
-            <div className="flex w-3/12 gap-4 " ref={navbar}>
+            <div className="flex w-4/12 gap-4 " ref={navbar}>
               <Link to="/about" className="text-white text-xl font-mono">
                 About
               </Link>
@@ -37,6 +42,9 @@ export const NavBar = ({ token, setToken }) => {
           </nav>
         </>
       );
+    } else {
+      return ""
+    }
   };
   return renderNav();
 };

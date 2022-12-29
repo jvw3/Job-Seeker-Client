@@ -16,6 +16,8 @@ import { InterviewPrep } from "../interviews/InterviewPrepHome";
 import { IndividualInterviewDetails } from "../interviews/InterviewDetails";
 import { InterviewForm } from "../interviews/InterviewForm";
 import { NetworkHome } from "../network/NetworkHome";
+import { ContactForm } from "../network/AddContact";
+import { ContactEdit } from "../network/EditContact";
 
 export const ApplicationViews = ({ token, setToken }) => {
   return (
@@ -55,6 +57,8 @@ export const ApplicationViews = ({ token, setToken }) => {
               element={<IndividualInterviewDetails />}
             />
             <Route path="/createinterview" element={<InterviewForm />} />
+            <Route path="/createcontact" element={<ContactForm />} />
+            <Route path="/network/contact/:contactId" element={<ContactEdit />} />
             <Route path="/editinterview/:interviewId" element={<InterviewForm />} />
             <Route path="/network" element={<NetworkHome />} />
           </Routes>

@@ -121,7 +121,6 @@ export const Register = ({setToken}) => {
             ></textarea>
           </div>
         </div>
-
         <div className="field is-grouped">
           <div className="control">
             <button

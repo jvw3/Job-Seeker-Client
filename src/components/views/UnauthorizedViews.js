@@ -14,7 +14,6 @@ import { Register } from "../auth/Register";
 import { InterviewPrep } from "../interviews/InterviewPrepHome";
 import { IndividualInterviewDetails } from "../interviews/InterviewDetails";
 import { InterviewForm } from "../interviews/InterviewForm";
-import { NetworkHome } from "../network/NetworkHome";
 import { HomePageLanding } from "./HomePageLanding";
 import { HomePageAbout } from "./HomePageAbout";
 

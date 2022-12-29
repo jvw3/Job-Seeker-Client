@@ -7,13 +7,13 @@ const [open, setOpen] = useState(true)
 const [activeSideBarTab, setActiveSidebarTab] = useState(false)
 
   const location = useLocation()
-  console.log(location)
+
   return (
     <>
       <main
         className={`min-h-screen ${
           open ? "w-72" : "w-20"
-        } duration-500 bg-home-blue text-white px-4 backdrop-blur-sm`}
+        } duration-500 bg-pinkswirl bg-cover text-white px-4`}
       >
         <div className="py-3 flex justify-end">
           <IconMenu2 onClick={() => setOpen(!open)} />

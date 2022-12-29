@@ -50,35 +50,38 @@ export const IndividualJobDetails = () => {
   };
 
   return (
-      <main>
+    <main className="bg-pinkswirl w-full">
+      <div className="text-white">
         <h1 className="text-3xl">{job?.job?.title}</h1>
         <h2 className="text-2xl">{job?.company?.name}</h2>
-        <div class="inline-flex rounded-md shadow-sm" role="group">
-          <button
-            className=" text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-lg shadow-blue-500/50 font-medium rounded-l-lg text-sm px-4 py-2 text-center  mb-2"
-            onClick={() => {
-              navigate(`/boards/${boardId}/jobs/${job.id}/editjob`);
-            }}
-          >
-            Edit Job
-          </button>
-          {renderDeleteButton(jobId)}
-        </div>
-        <br></br>
-        <div className="flex justify-evenly w-1/6">
-          <div className="flex">
+        <div className="flex justify-evenly w-1/6 mt-2 mb-2">
+          <div className="flex justify-between">
             <div>
-              <IconCurrencyDollar />
+              <IconCurrencyDollar size={30} />
             </div>
-            <div>{job.salary}</div>
+            <div className="text-xl">{job.salary}</div>
           </div>
           <div className="flex">
             <div>
-              <IconMapPin />
+              <IconMapPin size={30} />
             </div>
-            <div>{job.location}</div>
+            <div className="text-xl">{job.location}</div>
           </div>
         </div>
+      </div>
+      <div class="inline-flex rounded-md shadow-sm" role="group">
+        <button
+          className=" text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-lg shadow-blue-500/50 font-medium rounded-l-lg text-sm px-4 py-2 text-center  mb-2"
+          onClick={() => {
+            navigate(`/boards/${boardId}/jobs/${job.id}/editjob`);
+          }}
+        >
+          Edit Job
+        </button>
+        {renderDeleteButton(jobId)}
+      </div>
+      <br></br>
+      <div className="border bg-white ml-10 mr-10 p-5 rounded-md">
         <h3 className="text-xl">Tags</h3>
         <button
           className="transition ease-in-out text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
@@ -123,6 +126,7 @@ export const IndividualJobDetails = () => {
             </button>
           </>
         ))}
-      </main>
+      </div>
+    </main>
   );
 };
