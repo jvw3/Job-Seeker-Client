@@ -1,9 +1,89 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { deleteBoard, getAllBoardsForUser, getAllJobsForBoard, getSingleBoardForUser } from "../managers/BoardManager";
+import {
+  deleteBoard,
+  getAllBoardsForUser,
+  getAllJobsForBoard,
+  getSingleBoardForUser,
+  getAllBoardCategoriesForBoard,
+  getAllCategories,
+  deleteBoardCategory,
+  createBoardCategory,
+} from "../managers/BoardManager";
 import { JobList } from "./JobList";
 
 export const BoardView = () => {
+  const [categories, setCategories] = useState([]);
+  const [boardCategories, setBoardCategories] = useState([]);
+
+
+  const { jobId } = useParams();
+  const { boardId } = useParams();
+
+  useEffect(() => {
+    getAllCategories().then((allCategories) => {
+      setCategories(allCategories);
+    });
+  }, []);
+
+  // Function: This function handles receiving responses that are a message from the server, versus the requested
+  const handleCreateBoardCategory = (data) => {
+    if (data.hasOwnProperty('message')) {
+      alert(data.message)
+    } else {
+      return data
+    }
+  }
+
+  const manageBoardCategories = () => {
+    return (
+      <div>
+        <h1 className="text-3xl">Manage Categories </h1>
+        <h2 className="text-xl">Current Categories</h2>
+        {boardCategories.map((boardCategory) => (
+          <button
+            onClick={() => {
+              deleteBoardCategory(boardCategory.id).then(() => {
+                getAllBoardCategoriesForBoard(id).then(
+                  (updateUserBoardCategories) => {
+                    setBoardCategories(updateUserBoardCategories);
+                  }
+                );
+              });
+            }}
+            className="transition-all duration-500 ease-in-out text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300  shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
+          >
+            {boardCategory?.category?.name}
+          </button>
+        ))}
+        <h2 className="text-xl">Selectable Categories</h2>
+        {categories.map((category) => (
+          <button
+            onClick={(evt) => {
+              evt.preventDefault();
+
+              const boardCategory = {
+                board: parseInt(id),
+                category: category.id,
+              };
+
+              createBoardCategory(boardCategory).then((data) => {
+                handleCreateBoardCategory(data)
+              }).then(() => {
+                getAllBoardCategoriesForBoard(id).then((updateUserJobTags) => {
+                  setBoardCategories(updateUserJobTags);
+                });
+              });
+            }}
+            className="transition-all duration-500 ease-in-out text-white bg-black hover:bg-grey focus:ring-4 focus:outline-none focus:ring-blue-300  shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
+          >
+            {category.name}
+          </button>
+        ))}
+      </div>
+    );
+  };
+
   const [board, setBoard] = useState({});
 
   const { id } = useParams();
@@ -15,7 +95,13 @@ export const BoardView = () => {
     });
   }, []);
 
-const renderDeleteButton = (id) => {
+  useEffect(() => {
+    getAllBoardCategoriesForBoard(id).then((categories) => {
+      setBoardCategories(categories);
+    });
+  }, []);
+
+  const renderDeleteButton = (id) => {
     return (
       <>
         <button
@@ -35,7 +121,6 @@ const renderDeleteButton = (id) => {
     );
   };
 
-
   const deleteRequestForBoard = (id) => {
     deleteBoard(id)
       .then(() => {
@@ -46,13 +131,9 @@ const renderDeleteButton = (id) => {
 
   return (
     <>
-      <main className="bg-pinkswirl">
+      <main className="bg-pinkswirl h-screen">
         <div className="p-4 text-white">
-          <h1 className="text-4xl">{board.title}</h1>
-          <h2 className="text-2xl">Goal</h2>
-          <div>{board.goal}</div>
-          <h2 className="text-2xl text-white">Requirements</h2>
-          <div>{board.requirements}</div>
+          <h1 className="text-4xl ">{board.title}</h1>
         </div>
         <div className="ml-10 mr-10 mt-5">
           <div class="inline-flex rounded-md shadow-sm" role="group">
@@ -69,8 +150,18 @@ const renderDeleteButton = (id) => {
             </button>
             {renderDeleteButton(id)}
           </div>
-          <div className="border p-4 rounded-md bg-white shadow-lg">
-            <h2 className="text-2xl">Priorities</h2>
+          <div className="flex justify-evenly h-48">
+            <div className="border p-4 rounded-md bg-white shadow-lg w-3/12">
+              <h2 className="text-2xl text-black">Priorities</h2>
+            </div>
+            <div className="border p-4 rounded-md bg-white shadow-lg w-3/12">
+              <h2 className="text-2xl text-black">Goal</h2>
+              <div>{board.goal}</div>
+            </div>
+            <div className="border p-4 rounded-md bg-white shadow-lg w-3/12">
+              <h2 className="text-2xl text-black">Requirements</h2>
+              <div>{board.requirements}</div>
+            </div>
           </div>
           <br></br>
           <div className="mt-4  pb-12 sm:pb-8">
@@ -109,9 +200,9 @@ const renderDeleteButton = (id) => {
             </div>
           </div>
           <h2 className="text-3xl">Current Jobs</h2>
-          <div class="inline-flex rounded-md shadow-sm" role="group">
+          <div class="shadow-sm btn-group">
             <button
-              className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-l-lg text-sm px-4 py-2 text-center mb-2"
+              className="btn text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium text-sm px-4 py-2 text-center mb-2"
               onClick={() => {
                 navigate(`/${id}/createjob`);
               }}
@@ -120,7 +211,7 @@ const renderDeleteButton = (id) => {
               Add New Job
             </button>
             <button
-              className="transition ease-in-out text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-lg shadow-blue-500/50 font-medium rounded-r-lg text-sm px-4 py-2 text-center mb-2"
+              className="btn transition ease-in-out text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-lg shadow-blue-500/50 font-medium  text-sm px-4 py-2 text-center mb-2"
               onClick={() => {
                 navigate(`/boards/${id}/managecategories`);
               }}
@@ -128,6 +219,29 @@ const renderDeleteButton = (id) => {
               {" "}
               Manage Categories
             </button>
+            <label htmlFor="my-modal" className="btn">
+              Manage Categories
+            </label>
+            <input type="checkbox" id="my-modal" className="modal-toggle" />
+            <div className="modal">
+              <div className="modal-box">
+                <h3 className="font-bold text-lg">Manage Board Categories</h3>
+                {manageBoardCategories()}
+                <div className="modal-action">
+                  <label
+                    onClick={() => {
+                      getSingleBoardForUser(id).then((userBoard) => {
+                        setBoard(userBoard);
+                      });
+                    }}
+                    htmlFor="my-modal"
+                    className="btn"
+                  >
+                    Save Changes
+                  </label>
+                </div>
+              </div>
+            </div>
           </div>
           <div className="border p-5 rounded-md bg-white shadow-lg">
             <JobList userBoardCategories={board?.categories} boardId={id} />
