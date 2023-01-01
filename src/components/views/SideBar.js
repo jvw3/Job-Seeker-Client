@@ -21,7 +21,9 @@ const [activeSideBarTab, setActiveSidebarTab] = useState(false)
         <div className="mt-4 flex flex-col gap-4 relative">
           <Link
             to="/dashboard"
-            className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-blue-900 rounded-md ${location.pathname === '/dashboard' ? "bg-blue-500" : ""}`}
+            className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-blue-900 rounded-md ${
+              location.pathname === "/dashboard" ? "bg-blue-500" : ""
+            }`}
           >
             <div className="">
               <IconLayoutDashboard />
@@ -36,7 +38,9 @@ const [activeSideBarTab, setActiveSidebarTab] = useState(false)
           </Link>
           <Link
             to="/boards"
-            className={`flex items-center text-sm gap-3.5 font-medium p-2 pr-0 hover:bg-blue-900 rounded-md ${location.pathname === '/boards' ? "bg-blue-500" : ""}`}
+            className={`flex items-center text-sm gap-3.5 font-medium p-2 pr-0 hover:bg-blue-900 rounded-md ${
+              location.pathname === "/boards" ? "bg-blue-500" : ""
+            }`}
           >
             <div>
               <IconListDetails />
@@ -51,7 +55,9 @@ const [activeSideBarTab, setActiveSidebarTab] = useState(false)
           </Link>
           <Link
             to="/interviewprep"
-            className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-blue-900 rounded-md ${location.pathname === '/interviewprep' ? "bg-blue-500" : ""}`}
+            className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-blue-900 rounded-md ${
+              location.pathname === "/interviewprep" ? "bg-blue-500" : ""
+            }`}
           >
             <div>
               <IconTie />
@@ -66,7 +72,9 @@ const [activeSideBarTab, setActiveSidebarTab] = useState(false)
           </Link>
           <Link
             to="/network"
-            className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-blue-900 rounded-md ${location.pathname === '/network' ? "bg-blue-500" : ""}`}
+            className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-blue-900 rounded-md ${
+              location.pathname === "/network" ? "bg-blue-500" : ""
+            }`}
           >
             <div>
               <IconNetwork />
@@ -81,7 +89,9 @@ const [activeSideBarTab, setActiveSidebarTab] = useState(false)
           </Link>
           <Link
             to="/dashboard"
-            className="flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-blue-900 rounded-md"
+            className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-blue-900 rounded-md ${
+              location.pathname === "/files" ? "bg-blue-500" : ""
+            }`}
           >
             <div>
               <IconFiles />
@@ -96,7 +106,9 @@ const [activeSideBarTab, setActiveSidebarTab] = useState(false)
           </Link>
           <Link
             to="/dashboard"
-            className="flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-blue-900 rounded-md"
+            className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-blue-900 rounded-md ${
+              location.pathname === "/resources" ? "bg-blue-500" : ""
+            }`}
           >
             <div>
               <IconBrowserCheck />
@@ -110,8 +122,10 @@ const [activeSideBarTab, setActiveSidebarTab] = useState(false)
             </h2>
           </Link>
           <Link
-            to="/dashboard"
-            className="flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-blue-900 rounded-md"
+            to="/profile"
+            className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-blue-900 rounded-md ${
+              location.pathname === "/profile" ? "bg-blue-500" : ""
+            }`}
           >
             <div>
               <IconUserCheck />
@@ -134,8 +148,8 @@ const [activeSideBarTab, setActiveSidebarTab] = useState(false)
             <h2
               onClick={() => {
                 localStorage.removeItem("seeker_token");
-                navigate("/")
-                window.location.reload("/")
+                navigate("/");
+                window.location.reload("/");
               }}
               className={`whitespace-pre duration-500 ${
                 !open ? "opacity-0 overflow-hidden" : ""
