@@ -11,13 +11,13 @@ import {
   createBoardCategory,
 } from "../managers/BoardManager";
 import { JobList } from "./JobList";
+import { IconX } from "@tabler/icons";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export const BoardView = () => {
   const [categories, setCategories] = useState([]);
   const [boardCategories, setBoardCategories] = useState([]);
-
 
   const { jobId } = useParams();
   const { boardId } = useParams();
@@ -30,12 +30,12 @@ export const BoardView = () => {
 
   // Function: This function handles receiving responses that are a message from the server, versus the requested
   const handleCreateBoardCategory = (data) => {
-    if (data.hasOwnProperty('message')) {
-      toast.info(data.message)
+    if (data.hasOwnProperty("message")) {
+      toast.info(data.message);
     } else {
-      return data
+      return data;
     }
-  }
+  };
 
   const manageBoardCategories = () => {
     return (
@@ -69,14 +69,17 @@ export const BoardView = () => {
                 category: category.id,
               };
 
-              createBoardCategory(boardCategory).then((data) => {
-                handleCreateBoardCategory(data)
-              }).then(() => {
-                getAllBoardCategoriesForBoard(id)
-                  .then((updateUserJobTags) => {
-                    setBoardCategories(updateUserJobTags);
-                  })
-              });
+              createBoardCategory(boardCategory)
+                .then((data) => {
+                  handleCreateBoardCategory(data);
+                })
+                .then(() => {
+                  getAllBoardCategoriesForBoard(id).then(
+                    (updateUserJobTags) => {
+                      setBoardCategories(updateUserJobTags);
+                    }
+                  );
+                });
             }}
             className="transition-all duration-500 ease-in-out text-white bg-black hover:bg-grey focus:ring-4 focus:outline-none focus:ring-blue-300  shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
           >
@@ -222,12 +225,23 @@ export const BoardView = () => {
               {" "}
               Manage Categories
             </button>
-            <label htmlFor="my-modal" className="btn">
+            <label htmlFor="category-modal" className="btn">
               Manage Categories
             </label>
-            <input type="checkbox" id="my-modal" className="modal-toggle" />
+            <input type="checkbox" id="category-modal" className="modal-toggle" />
             <div className="modal">
               <div className="modal-box">
+                <label
+                  htmlFor="category-modal"
+                  className="btn btn-sm btn-square absolute right-2 top-2"
+                  onClick={() => {
+                    getSingleBoardForUser(id).then((userJob) => {
+                      setBoard(userJob);
+                    });
+                  }}
+                >
+                  <IconX />
+                </label>
                 <h3 className="font-bold text-lg">Manage Board Categories</h3>
                 {manageBoardCategories()}
                 <div className="modal-action">
@@ -235,9 +249,11 @@ export const BoardView = () => {
                     onClick={() => {
                       getSingleBoardForUser(id).then((userBoard) => {
                         setBoard(userBoard);
+                      }).then(() => {
+                        toast.success("Your categories have been saved.")
                       });
                     }}
-                    htmlFor="my-modal"
+                    htmlFor="category-modal"
                     className="btn"
                   >
                     Save Changes
