@@ -6,6 +6,8 @@ import {
   getAllInterviewsForBoardJob, updateBoardJob
 } from "../managers/BoardManager";
 import { IconMapPin, IconCurrencyDollar, IconBrandCashapp, IconCrown, IconFriends, IconMap2, IconUsers, IconX } from '@tabler/icons'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const IndividualJobDetails = () => {
   const { boardId } = useParams();
@@ -88,19 +90,23 @@ export const IndividualJobDetails = () => {
     };
 
     updateBoardJob(boardJobToApi, jobId);
+
+    toast.success("Your Job Ratings have been saved.");
   };
+
+
   const renderJobRatingsBox = () => {
     return (
       <>
         <div className="text-2xl">Job Ratings</div>
-        <label htmlFor="jobratings-modal" className="btn">
+        <label htmlFor="jobrating-modal" className="btn">
           Edit Ratings
         </label>
-        <input type="checkbox" id="jobratings-modal" className="modal-toggle" />
+        <input type="checkbox" id="jobrating-modal" className="modal-toggle" />
         <div className="modal">
           <div className="modal-box relative">
             <label
-              htmlFor="jobratings-modal"
+              htmlFor="jobrating-modal"
               className="btn btn-sm btn-circle absolute right-2 top-2"
               onClick={() => {
                 getSingleJobForUser(jobId).then((userJob) => {
@@ -250,10 +256,10 @@ export const IndividualJobDetails = () => {
               <label
                 onClick={(clickEvent) => {
                   putRequestForJob(clickEvent).then((userJob) => {
-                    setBoardJob(userJob);
+                    setBoardJob(userJob)
                   });
                 }}
-                htmlFor="jobratings-modal"
+                htmlFor="jobrating-modal"
                 className="btn"
               >
                 Save Ratings
@@ -264,7 +270,7 @@ export const IndividualJobDetails = () => {
                     setBoardJob(userJob);
                   });
                 }}
-                htmlFor="jobratings-modal"
+                htmlFor="jobrating-modal"
                 className="btn"
               >
                 Close
@@ -405,6 +411,7 @@ export const IndividualJobDetails = () => {
           </>
         ))}
       </div>
+      <ToastContainer pauseOnHover={false} autoClose={2500} />
     </main>
   );
 };
