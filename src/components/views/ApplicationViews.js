@@ -18,6 +18,8 @@ import { InterviewForm } from "../interviews/InterviewForm";
 import { NetworkHome } from "../network/NetworkHome";
 import { ContactForm } from "../network/AddContact";
 import { ContactEdit } from "../network/EditContact";
+import { ResourceNotFound } from "../errorPages/NotFound";
+import { InterviewPrepForm } from "../interviews/InterviewPrepForm";
 
 export const ApplicationViews = ({ token, setToken }) => {
   return (
@@ -25,6 +27,7 @@ export const ApplicationViews = ({ token, setToken }) => {
       {token ? (
         <>
           <Routes>
+            <Route path="*" element={<ResourceNotFound />} />
             <Route element={<Authorized token={token} />} />
             <Route
               path="/register"
@@ -57,9 +60,16 @@ export const ApplicationViews = ({ token, setToken }) => {
               element={<IndividualInterviewDetails />}
             />
             <Route path="/createinterview" element={<InterviewForm />} />
+            <Route path="/createinterviewprep" element={<InterviewPrepForm />} />
             <Route path="/createcontact" element={<ContactForm />} />
-            <Route path="/network/contact/:contactId" element={<ContactEdit />} />
-            <Route path="/editinterview/:interviewId" element={<InterviewForm />} />
+            <Route
+              path="/network/contact/:contactId"
+              element={<ContactEdit />}
+            />
+            <Route
+              path="/editinterview/:interviewId"
+              element={<InterviewForm />}
+            />
             <Route path="/network" element={<NetworkHome />} />
           </Routes>
         </>

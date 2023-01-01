@@ -42,6 +42,8 @@ export const IndividualInterviewDetails = () => {
 
   return (
     <>
+    <main className="flex-col">
+
       <h1 className="text-3xl">
         {interview?.board_job?.company?.name} Interview
       </h1>
@@ -70,6 +72,7 @@ export const IndividualInterviewDetails = () => {
           ))}
         </>
       ))}
+    </main>
     </>
   );
 };

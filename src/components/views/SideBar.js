@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { IconMenu2, IconLayoutDashboard, IconListDetails, IconNetwork, IconUserCheck, IconLogout, IconTie } from "@tabler/icons"
+import { IconMenu2, IconLayoutDashboard, IconListDetails, IconNetwork, IconUserCheck, IconLogout, IconTie, IconFiles, IconBrowserCheck } from "@tabler/icons"
 export const SidebarNav = ({ token, setToken }) => {
   const navigate = useNavigate();
 const [open, setOpen] = useState(true)
@@ -77,6 +77,36 @@ const [activeSideBarTab, setActiveSidebarTab] = useState(false)
               }`}
             >
               Network
+            </h2>
+          </Link>
+          <Link
+            to="/dashboard"
+            className="flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-blue-900 rounded-md"
+          >
+            <div>
+              <IconFiles />
+            </div>
+            <h2
+              className={`whitespace-pre duration-500 ${
+                !open ? "opacity-0 overflow-hidden" : ""
+              }`}
+            >
+              Files
+            </h2>
+          </Link>
+          <Link
+            to="/dashboard"
+            className="flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-blue-900 rounded-md"
+          >
+            <div>
+              <IconBrowserCheck />
+            </div>
+            <h2
+              className={`whitespace-pre duration-500 ${
+                !open ? "opacity-0 overflow-hidden" : ""
+              }`}
+            >
+              Resources
             </h2>
           </Link>
           <Link
