@@ -8,6 +8,7 @@ import {
 import { IconMapPin, IconCurrencyDollar, IconBrandCashapp, IconCrown, IconFriends, IconMap2, IconUsers, IconX } from '@tabler/icons'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { ManageTags } from "./ManageBoardTags";
 
 export const IndividualJobDetails = () => {
   const { boardId } = useParams();
@@ -256,7 +257,7 @@ export const IndividualJobDetails = () => {
               <label
                 onClick={(clickEvent) => {
                   putRequestForJob(clickEvent).then((userJob) => {
-                    setBoardJob(userJob)
+                    setBoardJob(userJob);
                   });
                 }}
                 htmlFor="jobrating-modal"
@@ -279,15 +280,17 @@ export const IndividualJobDetails = () => {
           </div>
         </div>
         <div className="stats shadow">
-          <div className="stat">
+          <div className="stat bg-slate-50">
             <div className="stat-figure text-blue-500">
               <IconBrandCashapp size={30} />
             </div>
-            <div className="stat-title">Salary Rating</div>
-            <div className="stat-value">{boardJob?.salary_rating}</div>
-            <div className="stat-desc">Jan 1st - Feb 1st</div>
+            <div className="stat-title text-blue-500">Salary Rating</div>
+            <div className="stat-value text-blue-500">
+              {boardJob?.salary_rating}
+            </div>
+            <div className="stat-desc text-blue-500">Jan 1st - Feb 1st</div>
           </div>
-          <div className="stat">
+          <div className="stat bg-slate-50">
             <div className="stat-figure text-blue-500">
               <IconMap2 size={30} />
             </div>
@@ -295,7 +298,7 @@ export const IndividualJobDetails = () => {
             <div className="stat-value">{boardJob?.location_rating}</div>
             <div className="stat-desc">↗︎ 400 (22%)</div>
           </div>
-          <div className="stat">
+          <div className="stat bg-slate-50">
             <div className="stat-figure text-blue-500">
               <IconFriends size={30} />
             </div>
@@ -303,7 +306,7 @@ export const IndividualJobDetails = () => {
             <div className="stat-value">{boardJob?.culture_rating}</div>
             <div className="stat-desc">↗︎ 400 (22%)</div>
           </div>
-          <div className="stat">
+          <div className="stat bg-slate-50">
             <div className="stat-figure text-blue-500">
               <IconCrown size={30} />
             </div>
@@ -311,7 +314,7 @@ export const IndividualJobDetails = () => {
             <div className="stat-value">{boardJob?.leadership_rating}</div>
             <div className="stat-desc">↗︎ 400 (22%)</div>
           </div>
-          <div className="stat">
+          <div className="stat bg-slate-50">
             <div className="stat-figure text-blue-500">
               <IconUsers size={30} />
             </div>
@@ -374,6 +377,42 @@ export const IndividualJobDetails = () => {
       {renderJobRatingsBox()}
       <div className="border bg-white ml-10 mr-10 p-5 rounded-md">
         <h3 className="text-xl">Tags</h3>
+        <label htmlFor="category-modal" className="btn">
+          Manage Tags
+        </label>
+        <input type="checkbox" id="category-modal" className="modal-toggle" />
+        <div className="modal">
+          <div className="modal-box">
+            <label
+              htmlFor="category-modal"
+              className="btn btn-sm btn-square absolute right-2 top-2"
+              onClick={() => {
+                getSingleJobForUser(jobId).then((userBoard) => {
+                  setBoardJob(userBoard);
+                });
+              }}
+            >
+              <IconX />
+            </label>
+            <h3 className="font-bold text-lg">Manage Tags</h3>
+            <ManageTags />
+            <div className="modal-action">
+              <label
+                onClick={() => {
+                  getSingleJobForUser(jobId).then((userBoard) => {
+                        setBoardJob(userBoard);
+                      }).then(() => {
+                        toast.success("Your tags have been saved.")
+                      });
+                }}
+                htmlFor="category-modal"
+                className="btn"
+              >
+                Save Changes
+              </label>
+            </div>
+          </div>
+        </div>
         <button
           className="transition ease-in-out text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
           onClick={() => {

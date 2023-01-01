@@ -27,16 +27,7 @@ const navigate = useNavigate();
   return (
     <>
       <main className="flex-col w-full h-full">
-        <h1>Manage Tags </h1>
-        <button
-          className="transition duration-500 ease-in-out text-white bg-black hover:bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300  shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
-          onClick={() => {
-            navigate(-1);
-          }}
-        >
-          Back To Job
-        </button>
-        <div className="flex-col justify-center w-full border">
+        <div className="flex-col justify-center w-full">
           <div className="w-1/2">
             <h2>Current Tags</h2>
             {jobTags?.map((jobTag) => (
