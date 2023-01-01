@@ -103,17 +103,17 @@ export const JobForm = () => {
 
   return (
     <>
-      <main>
-        <h1>New Job</h1>
-      </main>
-      <form>
+      <main className="flex-col w-full bg-pinkswirl">
+        <div className="h-1/6 ">
+          <h1 className="text-white text-4xl p-5">Add New Job</h1>
+        </div>
+        <div className="w-full h-5/6 flex justify-center">
+          <div className="border p-10 rounded -md bg-white w-4/5 h-5/6 flex-col">
+        <form className="flex-col">
         <fieldset>
           <div className="forminputfield">
-            <label className="formlabel" htmlFor="job">
-              What is the name of the position?
-            </label>
             <select
-              className="form-control"
+              className="rounded-md"
               value={boardJob.job}
               required
               autoFocus
@@ -137,11 +137,8 @@ export const JobForm = () => {
         </fieldset>
         <fieldset>
           <div className="forminputfield">
-            <label className="formlabel" htmlFor="job">
-              What is the name of the Company?
-            </label>
             <select
-              className="form-control"
+              className="form-control rounded-md"
               value={boardJob.company}
               required
               autoFocus
@@ -164,11 +161,8 @@ export const JobForm = () => {
         </fieldset>
         <fieldset>
           <div className="forminputfield">
-            <label className="formlabel" htmlFor="category">
-              Choose a category:
-            </label>
             <select
-              className="form-control"
+              className="rounded-md"
               value={boardJob.category}
               required
               autoFocus
@@ -189,7 +183,7 @@ export const JobForm = () => {
             </select>
           </div>
         </fieldset>
-        <div className="radio">
+        <div className=" flex w-3/12">
           <label htmlFor="applied-yes"></label>
           <input
             type="checkbox"
@@ -205,13 +199,13 @@ export const JobForm = () => {
           />
           Have you Applied?
         </div>
-        <fieldset className="formSection">
+        <fieldset className="flex-col">
           <label htmlFor="name">What is the Salary?</label>
           <input
             required
             autoFocus
             type="number"
-            className="form-control"
+            className="rounded-md"
             placeholder="Amount in dollars"
             value={boardJob.salary}
             onChange={(evt) => {
@@ -227,7 +221,7 @@ export const JobForm = () => {
             required
             autoFocus
             type="text"
-            className="form-control"
+            className="form-input rounded-md"
             placeholder="Amount in dollars"
             value={boardJob.location}
             onChange={(evt) => {
@@ -241,9 +235,10 @@ export const JobForm = () => {
           <div className="form-group">
             <label htmlFor="age">Tags:</label>
             {tags.map((tag) => (
-              <div>
+              <div className="flex">
                 {tag.name}
                 <input
+                  className="checkbox checkbox-sm"
                   value={tag.id}
                   onChange={(event) => {
                     const copy = new Set(checkedOptions)
@@ -261,12 +256,17 @@ export const JobForm = () => {
         </fieldset>
         <button
           size="lg"
+          className="btn transition ease-in-out text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4  focus:ring-blue-300 shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
           color="violet"
           onClick={(clickEvent) => postRequestForJob(clickEvent)}
         >
           Create New Job!
         </button>
       </form>
+          </div>
+        </div>
+
+      </main>
     </>
   );
 };

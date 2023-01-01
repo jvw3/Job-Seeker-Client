@@ -1,20 +1,30 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getContactsForUser, getAllContactsByNameSearch, sendConnectionFilterRequest } from "../managers/NetworkManager";
-import { IconBrandLinkedin, IconTrash } from "@tabler/icons";
+import {
+  getContactsForUser,
+  getAllContactsByNameSearch,
+  sendConnectionFilterRequest,
+  sendAscendingSortNameRequest,
+  sendDescendingSortNameRequest,
+  sendAscendingSortContactNumberRequest,
+  sendDescendingSortContactNumberRequest,
+  sendAscendingSortConnectionLevelRequest,
+  sendDescendingSortConnectionLevelRequest,
+  sendAscendingSortLastContactRequest,
+  sendDescendingSortLastContactRequest
+} from "../managers/NetworkManager";
+import { IconBrandLinkedin, IconTrash, IconSearch} from "@tabler/icons";
+
 
 export const NetworkHome = () => {
   const [contacts, setContacts] = useState([]);
-  const [searchedTitle, setSearchedTitle] = useState("")
-  const [sortValue, setSortValue] = useState("")
-  const [connectionFilterValue, setConnectionFilterValue] = useState("")
+  const [searchedTitle, setSearchedTitle] = useState("");
+  const [sortValue, setSortValue] = useState("");
+  const [connectionFilterValue, setConnectionFilterValue] = useState("");
 
   const navigate = useNavigate();
 
-  const resetSearchAndFilter = () => {
-    setSearchedTitle("")
-    this.searchedTitle.value = ""
-  }
+
 
   // UseEffect: Fetches All Contacts for a User.
   useEffect(() => {
@@ -171,45 +181,160 @@ export const NetworkHome = () => {
 
   // Function: Sends request to server for the clients that are filtered by the search term state typed by the user.
   const sendContactSearchRequestToApi = (value) => {
-      getAllContactsByNameSearch(value).then((filteredContactsArray) => {
+    getAllContactsByNameSearch(value).then((filteredContactsArray) => {
+      setContacts(filteredContactsArray);
+    });
+  };
+
+  const sendSortRequestToApi = (sortValue) => {
+    if (sortValue == "8") {
+      sendAscendingSortNameRequest().then((filteredContactsArray) => {
         setContacts(filteredContactsArray);
       });
-    };
+    } else if (sortValue == "7") {
+      sendDescendingSortNameRequest().then((filteredContactsArray) => {
+        setContacts(filteredContactsArray);
+      });
+    } else if (sortValue == "6") {
+      sendAscendingSortContactNumberRequest().then((filteredContactsArray) => {
+        setContacts(filteredContactsArray);
+      });
+    } else if (sortValue == "5") {
+      sendDescendingSortContactNumberRequest().then((filteredContactsArray) => {
+        setContacts(filteredContactsArray);
+      });
+    } else if (sortValue == "4") {
+      sendAscendingSortConnectionLevelRequest().then((filteredContactsArray) => {
+        setContacts(filteredContactsArray);
+      });
+    } else if (sortValue == "3") {
+      sendDescendingSortConnectionLevelRequest().then((filteredContactsArray) => {
+        setContacts(filteredContactsArray);
+      });
+    } else if (sortValue == "2") {
+      sendAscendingSortLastContactRequest().then((filteredContactsArray) => {
+        setContacts(filteredContactsArray);
+      });
+    } else if (sortValue == "1") {
+      sendDescendingSortLastContactRequest().then((filteredContactsArray) => {
+        setContacts(filteredContactsArray);
+      });
+    }
+  };
 
-    // Allows User to submit search on network home, by clicking enter.
-    const handleKeyPress = (e) => {
-      if (e.keyCode === 13) {
-        sendContactSearchRequestToApi(searchedTitle);
-      }
-    };
+  // Allows User to submit search on network home, by clicking enter.
+  const handleKeyPress = (e) => {
+    if (e.keyCode === 13) {
+      sendContactSearchRequestToApi(searchedTitle);
+    }
+  };
 
-    // Renders the search bar that allows users to search contacts by their name.
-    const renderSearchBar = () => {
-      return (
-        <>
-          <div className="">
-            <input
-              type="text"
-              className="w-56 rounded-md h-10"
-              placeholder="Search contacts by name"
-              onKeyDown={handleKeyPress}
-              onChange={(changeEvent) => {
-                let searchCopy = changeEvent.target.value;
-                setSearchedTitle(searchCopy);
-              }}
-            ></input>
-            <button
-              className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm h-10 px-4 py-2 text-center mr-2 mb-2"
-              onClick={() => {
-                sendContactSearchRequestToApi(searchedTitle);
-              }}
-            >
-              Submit
-            </button>
-          </div>
-        </>
-      );
-    };
+  // Renders the search bar that allows users to search contacts by their name.
+  const renderSearchBar = () => {
+    return (
+      <>
+        <button
+          className=" btn text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
+          onClick={() => {
+            getContactsForUser()
+              .then((userContacts) => {
+                setContacts(userContacts);
+                setSortValue("0");
+                setConnectionFilterValue("0");
+              })
+              .then(() => setSearchedTitle(""));
+          }}
+        >
+          Reset
+        </button>
+        <div className="input-group w-1/4">
+          <input
+            type="text"
+            className="w-56 rounded-md h-10"
+            placeholder="Search contacts by name"
+            onKeyDown={handleKeyPress}
+            onChange={(changeEvent) => {
+              let searchCopy = changeEvent.target.value;
+              setSearchedTitle(searchCopy);
+            }}
+          ></input>
+          <button
+            className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm h-10 px-4 py-2 text-center mr-2 mb-2"
+            onClick={() => {
+              sendContactSearchRequestToApi(searchedTitle);
+            }}
+          >
+            <IconSearch />
+          </button>
+        </div>
+      </>
+    );
+  };
+
+  const renderSortAndFilterBars = () => {
+    return (
+      <>
+        <div>
+          <select
+            onChange={(evt) => {
+              const copy = evt.target.value;
+              setSortValue(copy);
+            }}
+            className="h-10 rounded-md"
+          >
+            <option value={0}>Sort Options</option>
+            <option value={8}>Name ↑</option>
+            <option value={7}>Name ↓</option>
+            <option value={6}>Number Of Contacts ↑</option>
+            <option value={5}>Number Of Contacts ↓</option>
+            <option value={4}>Connection Level ↑</option>
+            <option value={3}>Connection Level ↓</option>
+            <option value={2}>Last Contact Date ↑</option>
+            <option value={1}>Last Contact Date ↓</option>
+          </select>
+          <button
+            onClick={() => {
+              sendSortRequestToApi(sortValue);
+            }}
+            className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm h-10 px-4 py-2 text-center mr-2 mb-2"
+          >
+            Sort Contacts
+          </button>
+        </div>
+        <div>
+          <select
+            className="h-10 rounded-md"
+            value={connectionFilterValue}
+            onChange={(evt) => {
+              const copy = evt.target.value;
+              setConnectionFilterValue(copy);
+            }}
+          >
+            <option value={0}>Connection Level</option>
+            <option value={5}>Level 5</option>
+            <option value={4}>Level 4</option>
+            <option value={3}>Level 3</option>
+            <option value={2}>Level 2</option>
+            <option value={1}>Level 1</option>
+            <option value={">3"}>Contacts above level 3</option>
+            <option value={"<3"}>Contacts below level 3</option>
+          </select>
+          <button
+            onClick={() => {
+              sendConnectionFilterRequest(connectionFilterValue).then(
+                (userContacts) => {
+                  setContacts(userContacts);
+                }
+              );
+            }}
+            className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm h-10 px-4 py-2 text-center mr-2 mb-2"
+          >
+            Filter
+          </button>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
@@ -218,7 +343,7 @@ export const NetworkHome = () => {
         <div>
           <div>
             <button
-              className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
+              className="btn text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
               onClick={() => {
                 navigate(`/createcontact`);
               }}
@@ -226,71 +351,15 @@ export const NetworkHome = () => {
               Add Contact
             </button>
           </div>
-          <div className="flex justify-evenly">
-            <button
-              className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
-              onClick={() => {
-                getContactsForUser().then((userContacts) => {
-                  setContacts(userContacts);
-                  setConnectionFilterValue("0");
-                  setSearchedTitle("");
-                });
-              }}
-            >
-              Reset
-            </button>
+          <div className="flex-col">
+            <div className="flex">
             {renderSearchBar()}
-            <div>
-              <select className="h-10 rounded-md">
-                <option value={0}>Sort Options</option>
-                <option value={8}>Name ↓</option>
-                <option value={7}>Name ↑</option>
-                <option value={6}>Number Of Contacts ↓</option>
-                <option value={5}>Number Of Contacts ↑</option>
-                <option value={4}>Connection Level ↓</option>
-                <option value={3}>Connection Level ↑</option>
-                <option value={2}>Last Contact Date ↓</option>
-                <option value={1}>Last Contact Date ↑</option>
-              </select>
-              <button className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm h-10 px-4 py-2 text-center mr-2 mb-2">
-                Sort Contacts
-              </button>
+            {renderSortAndFilterBars()}
             </div>
-            <div>
-              <select
-                className="h-10 rounded-md"
-                value={connectionFilterValue}
-                onChange={(evt) => {
-                  const copy = evt.target.value;
-                  setConnectionFilterValue(copy);
-                }}
-              >
-                <option value={0}>Connection Level</option>
-                <option value={5}>Level 5</option>
-                <option value={4}>Level 4</option>
-                <option value={3}>Level 3</option>
-                <option value={2}>Level 2</option>
-                <option value={1}>Level 1</option>
-                <option value={">3"}>Contacts above level 3</option>
-                <option value={"<3"}>Contacts below level 3</option>
-              </select>
-              <button
-                onClick={() => {
-                  sendConnectionFilterRequest(connectionFilterValue).then(
-                    (userContacts) => {
-                      setContacts(userContacts);
-                    }
-                  );
-                }}
-                className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm h-10 px-4 py-2 text-center mr-2 mb-2"
-              >
-                Filter
-              </button>
-            </div>
-          </div>
           <div className="flex justify-center mt-10">
             {renderNetworkTable()}
           </div>
+        </div>
         </div>
       </main>
     </>

@@ -55,3 +55,68 @@ export const sendConnectionFilterRequest = (connectionValue) => {
     },
   }).then((res) => res.json());
 };
+
+export const sendAscendingSortNameRequest = () => {
+  return fetch(`http://localhost:8000/contacts?sortby=name&order=asc`, {
+    headers: {
+      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
+    },
+  }).then((res) => res.json());
+};
+
+export const sendDescendingSortNameRequest = () => {
+  return fetch(`http://localhost:8000/contacts?sortby=name&order=desc`, {
+    headers: {
+      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
+    },
+  }).then((res) => res.json());
+};
+
+export const sendAscendingSortContactNumberRequest = () => {
+  return fetch(`http://localhost:8000/contacts?sortby=contactnumber&order=asc`, {
+    headers: {
+      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
+    },
+  }).then((res) => res.json());
+};
+
+export const sendDescendingSortContactNumberRequest = () => {
+  return fetch(`http://localhost:8000/contacts?sortby=contactnumber&order=desc`, {
+    headers: {
+      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
+    },
+  }).then((res) => res.json());
+};
+
+export const sendAscendingSortConnectionLevelRequest = () => {
+  return fetch(`http://localhost:8000/contacts?sortby=contactnumber&order=asc`, {
+    headers: {
+      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
+    },
+  }).then((res) => res.json());
+};
+
+export const sendDescendingSortConnectionLevelRequest = () => {
+  return fetch(`http://localhost:8000/contacts?sortby=connection&order=desc`, {
+    headers: {
+      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
+    },
+  }).then((res) => res.json());
+};
+
+
+export const sendAscendingSortLastContactRequest = () => {
+  return fetch(`http://localhost:8000/contacts?sortby=lastcontact&order=asc`, {
+    headers: {
+      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
+    },
+  }).then((res) => res.json());
+};
+
+export const sendDescendingSortLastContactRequest = () => {
+  return fetch(`http://localhost:8000/contacts?sortby=lastcontact&order=desc`, {
+    headers: {
+      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
+    },
+  }).then((res) => res.json());
+};

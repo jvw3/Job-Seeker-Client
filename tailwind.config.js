@@ -1,10 +1,8 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
-    "node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}",
   ],
-  plugins: [require("@tailwindcss/forms")],
+  plugins: [require("@tailwindcss/forms"), require("@tailwindcss/typography"), require("daisyui")],
   theme: {
     screens: {
       sm: "640px",
@@ -24,7 +22,7 @@ module.exports = {
     },
     extend: {
       width: {
-        "9/10": "20rem"
+        "9/10": "20rem",
       },
       colors: {
         "seeker-blue": "#1d4ed8",
@@ -37,8 +35,8 @@ module.exports = {
         pinkswirl:
           "url('../src/components/views/HompageImages/richard-horvath-_nWaeTF6qo0-unsplash.jpg')",
         home: "url('../src/components/views/HompageImages/purpleyblueimage.jpg')",
+        notfound: "url('../src/components/views/HompageImages/6373669.jpg')",
       },
     },
   },
 };
-
