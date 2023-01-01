@@ -11,6 +11,8 @@ import {
   createBoardCategory,
 } from "../managers/BoardManager";
 import { JobList } from "./JobList";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const BoardView = () => {
   const [categories, setCategories] = useState([]);
@@ -29,7 +31,7 @@ export const BoardView = () => {
   // Function: This function handles receiving responses that are a message from the server, versus the requested
   const handleCreateBoardCategory = (data) => {
     if (data.hasOwnProperty('message')) {
-      alert(data.message)
+      toast.info(data.message)
     } else {
       return data
     }
@@ -70,9 +72,10 @@ export const BoardView = () => {
               createBoardCategory(boardCategory).then((data) => {
                 handleCreateBoardCategory(data)
               }).then(() => {
-                getAllBoardCategoriesForBoard(id).then((updateUserJobTags) => {
-                  setBoardCategories(updateUserJobTags);
-                });
+                getAllBoardCategoriesForBoard(id)
+                  .then((updateUserJobTags) => {
+                    setBoardCategories(updateUserJobTags);
+                  })
               });
             }}
             className="transition-all duration-500 ease-in-out text-white bg-black hover:bg-grey focus:ring-4 focus:outline-none focus:ring-blue-300  shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
@@ -247,6 +250,7 @@ export const BoardView = () => {
             <JobList userBoardCategories={board?.categories} boardId={id} />
           </div>
         </div>
+        <ToastContainer pauseOnHover={false} autoClose={2500} />
       </main>
     </>
   );
