@@ -258,7 +258,15 @@ export const IndividualJobDetails = () => {
               >
                 Save Ratings
               </label>
-              <label htmlFor="jobratings-modal" className="btn">
+              <label
+                onClick={() => {
+                  getSingleJobForUser(jobId).then((userJob) => {
+                    setBoardJob(userJob);
+                  });
+                }}
+                htmlFor="jobratings-modal"
+                className="btn"
+              >
                 Close
               </label>
             </div>
