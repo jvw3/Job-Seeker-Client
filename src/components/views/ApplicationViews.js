@@ -20,12 +20,10 @@ import { ContactForm } from "../network/AddContact";
 import { ContactEdit } from "../network/EditContact";
 import { ResourceNotFound } from "../errorPages/NotFound";
 import { InterviewPrepForm } from "../interviews/InterviewPrepForm";
+import { UserProfile } from "../../profile/UserProfile";
 
 export const ApplicationViews = ({ token, setToken }) => {
   return (
-    <>
-      {token ? (
-        <>
           <Routes>
             <Route path="*" element={<ResourceNotFound />} />
             <Route element={<Authorized token={token} />} />
@@ -71,16 +69,7 @@ export const ApplicationViews = ({ token, setToken }) => {
               element={<InterviewForm />}
             />
             <Route path="/network" element={<NetworkHome />} />
+            <Route path="/profile" element={<UserProfile />} />
           </Routes>
-        </>
-      ) : (
-        <>
-          <Routes>
-            <Route path="/login" element={<Login setToken={setToken} />} />
-            <Route path="/" element={<HomePageLanding setToken={setToken} />} />
-          </Routes>
-        </>
-      )}
-    </>
   );
 };
