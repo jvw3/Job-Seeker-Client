@@ -279,8 +279,8 @@ export const IndividualJobDetails = () => {
             </div>
           </div>
         </div>
-        <div className="stats shadow">
-          <div className="stat bg-slate-50">
+        <div className="stats shadow text-blue-500">
+          <div className="stat bg-slate-50 ">
             <div className="stat-figure text-blue-500">
               <IconBrandCashapp size={30} />
             </div>
@@ -368,7 +368,7 @@ export const IndividualJobDetails = () => {
             <Link to="/dashboard">Dashboard</Link>
           </li>
           <li>
-            <Link to={`/boards/${boardId}`}>Board</Link>
+            <Link to={`/boards/${boardId}`}>My Board</Link>
           </li>
           <li>Job Details</li>
         </ul>
