@@ -8,8 +8,9 @@ export const Dashboard = () => {
   const [boards, setBoards] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
   const [upcomingInterviews, setUpcomingInterviews] = useState([])
-  const [activeTab, setActiveTab] = useState(false)
   const navigate = useNavigate();
+  const [interviewTabActive, setInterviewTabActive] = useState(true)
+  const [meetingTabActive, setMeetingTabActive] = useState(false)
 
   useEffect(() => {
     getAllBoardsForUser().then((userBoards) => {
@@ -41,21 +42,74 @@ export const Dashboard = () => {
     }
   };
 
-    const renderInterviewPrepButton = (prep) => {
+    const renderInterviewPrepButton = (interviewId) => {
       return (
         <>
-          {prep === null ? (
-            <button className="btn transition-all duration-500 ease-in-out text-white bg-black hover:bg-grey focus:ring-4 focus:outline-none focus:ring-blue-300  shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-4 py-2 pb-12 text-center mr-2 mb-2">
+          {interviewId === null ? (
+            <button
+              onClick={() => {
+                navigate(`/createinterview`);
+              }}
+              className="btn transition-all duration-500 ease-in-out text-white bg-black hover:bg-grey focus:ring-4 focus:outline-none focus:ring-blue-300  shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-4 py-2 pb-12 text-center mr-2 mb-2"
+            >
               Create your interview Prep!
             </button>
           ) : (
-            <button className="btn transition-all duration-500 ease-in-out text-white bg-black hover:bg-grey focus:ring-4 focus:outline-none focus:ring-blue-300  shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2">
+            <button
+              onClick={() => {
+                navigate(`/interviews/${interviewId}`);
+              }}
+              className="btn transition-all duration-500 ease-in-out text-white bg-black hover:bg-grey focus:ring-4 focus:outline-none focus:ring-blue-300  shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
+            >
               Prepare for interview
             </button>
           )}
         </>
       );
     };
+
+    const controlInterviewTab = () => {
+      if (!interviewTabActive) {
+        setInterviewTabActive(true)
+        setMeetingTabActive(false)
+      } else {
+        return
+      }
+    }
+
+    const controlMeetingTab = () => {
+      if (!meetingTabActive) {
+        setMeetingTabActive(true)
+        setInterviewTabActive(false)
+      } else {
+        return
+      }
+    }
+
+    const renderUpcomingInterviews = () => {
+      return <div className="flex h-1/4 justify-evenly">
+        {upcomingInterviews.map((upcomingInterview) => (
+          <div className="w-1/4 border flex-col card bg-white shadow-xl justify-evenly p-4">
+            <div className="card-title">
+              {upcomingInterview?.board_job?.job?.title}
+            </div>
+            <div>{upcomingInterview?.board_job?.company?.name}</div>
+            <div>{upcomingInterview.date}</div>
+            {renderInterviewPrepButton(upcomingInterview?.id)}
+          </div>
+        ))}
+      </div>;
+    }
+
+    const renderTabMenu = () => {
+      if (interviewTabActive) {
+        return renderUpcomingInterviews()
+      } else if (upcomingInterviews.length === 0) {
+        return "No upcoming Interviews"
+      }else {
+        return ""
+      }
+    }
 
   return (
     <>
@@ -97,20 +151,25 @@ export const Dashboard = () => {
             </>
           ))}
         </div>
-
-        <div className="">Upcoming Interviews</div>
-        <div className="flex h-1/4 justify-evenly">
-          {upcomingInterviews.map((upcomingInterview) => (
-            <div className="w-1/4 border flex-col card bg-white shadow-xl justify-evenly p-4">
-              <div className="card-title">
-                {upcomingInterview?.board_job?.job?.title}
-              </div>
-              <div>{upcomingInterview?.board_job?.company?.name}</div>
-              <div>{upcomingInterview.date}</div>
-              {renderInterviewPrepButton(upcomingInterview?.prep)}
-            </div>
-          ))}
+        <div className="tabs $ tabs-boxed w-96">
+          <a
+            onClick={() => {
+              controlInterviewTab();
+            }}
+            className={`tab ${interviewTabActive ? "tab-active" : ""}`}
+          >
+            Upcoming Interviews
+          </a>
+          <a
+            onClick={() => {
+              controlMeetingTab();
+            }}
+            className={`tab ${meetingTabActive ? "tab-active" : ""}`}
+          >
+            Upcoming Meetings
+          </a>
         </div>
+        {renderTabMenu()}
       </main>
     </>
   );
