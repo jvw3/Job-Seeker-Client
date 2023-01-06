@@ -97,6 +97,12 @@ export const NetworkHome = () => {
                 scope="col"
                 className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 border-transparent rounded-tr-md"
               >
+                Meeting Manager
+              </th>
+              <th
+                scope="col"
+                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 border-transparent rounded-tr-md"
+              >
                 Manage Contact
               </th>
             </tr>
@@ -140,6 +146,15 @@ export const NetworkHome = () => {
                   </td>
                   <td className=" py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                     {contact.notes}
+                  </td>
+                  <td>
+                    <button
+                      onClick={() => navigate(`/network/contact/${contact.id}`)}
+                      className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-4  text-center mr-2 mb-2"
+                    >
+                      {" "}
+                      View Details
+                    </button>
                   </td>
                   <td>
                     <button
@@ -339,7 +354,7 @@ export const NetworkHome = () => {
   return (
     <>
       <main className="w-full flex-col bg-pinkswirl">
-        <h1 className="text-4xl text-white">Network</h1>
+        <h1 className="text-5xl text-white font-roboto mt-2 mb-2">My Network</h1>
         <div>
           <div>
             <button
