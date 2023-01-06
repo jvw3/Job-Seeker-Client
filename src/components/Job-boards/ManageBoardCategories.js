@@ -42,6 +42,7 @@ export const ManageBoardCategories = () => {
 
   const { jobId } = useParams();
   const { boardId } = useParams();
+  console.log(boardId)
 
   useEffect(() => {
     getAllBoardCategoriesForBoard(boardId).then((categories) => {

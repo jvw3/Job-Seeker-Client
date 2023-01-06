@@ -7,10 +7,16 @@ import { UnauthorizedViews } from "./components/views/UnauthorizedViews"
 
 export const JobSeeker = () => {
   const [token, setTokenState] = useState(localStorage.getItem('seeker_token'))
+  const [userId, setUserIdState] = useState(localStorage.getItem('userId'))
+
 
   const setToken = (newToken) => {
     localStorage.setItem('seeker_token', newToken)
     setTokenState(newToken)
+  }
+  const setUserId = (newUser) => {
+    localStorage.setItem('userId', newUser)
+    setUserIdState(newUser)
   }
 
 
@@ -28,7 +34,7 @@ export const JobSeeker = () => {
         ) : (
           <>
             <NavBar token={token} setToken={setToken} />
-            <UnauthorizedViews token={token} setToken={setToken} />
+            <UnauthorizedViews token={token} setToken={setToken} setUserId={setUserId} userId={userId} />
           </>
         )}
       </div>

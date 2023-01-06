@@ -32,6 +32,14 @@ export const getSingleInterviewForUser = (id) => {
   }).then((res) => res.json());
 };
 
+export const getSinglePriorityRankForBoard = (id) => {
+  return fetch(`http://localhost:8000/priorityranks?board=${id}`, {
+    headers: {
+      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
+    },
+  }).then((res) => res.json());
+};
+
 export const getAllBoardsForUser = () => {
     return fetch("http://localhost:8000/boards", {
         headers:{
@@ -187,6 +195,17 @@ export const updateBoardJob = (boardJob, id) => {
       Authorization: `Token ${localStorage.getItem("seeker_token")}`,
     },
     body: JSON.stringify(boardJob),
+  });
+};
+
+export const updatePriorityRankForBoard = (priorityRank, id) => {
+  return fetch(`http://localhost:8000/priorityranks/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
+    },
+    body: JSON.stringify(priorityRank),
   });
 };
 

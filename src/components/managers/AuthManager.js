@@ -32,3 +32,11 @@ export const getCurrentUser = () => {
     },
   }).then((res) => res.json());
 };
+
+export const getCurrentSeeker = () => {
+  return fetch(`http://localhost:8000/seekers?current`, {
+    headers: {
+      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
+    },
+  }).then((res) => res.json());
+};

@@ -5,7 +5,7 @@ import { IconArrowLeft} from "@tabler/icons"
 import SalyDeskImage from "../views/HompageImages/Saly-10.png";
 
 
-export const Login = ({ setToken }) => {
+export const Login = ({ setToken, setUserId }) => {
   const username = useRef()
   const password = useRef()
   const navigate = useNavigate()
@@ -22,6 +22,7 @@ export const Login = ({ setToken }) => {
     LoginUser(user).then(res => {
       if ("valid" in res && res.valid) {
         setToken(res.token)
+        setUserId(res.userId)
         navigate("/dashboard")
       }
       else {

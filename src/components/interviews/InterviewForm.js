@@ -3,10 +3,8 @@ import { useState, useEffect } from "react";
 import { createInterview } from "../managers/InterviewManager";
 
 export const InterviewForm = () => {
-  
-  
     const { jobId } = useParams()
-  
+
     const [interview, setInterview] = useState({
     board_job: jobId,
     date: "",

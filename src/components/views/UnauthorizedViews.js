@@ -17,11 +17,11 @@ import { InterviewForm } from "../interviews/InterviewForm";
 import { HomePageLanding } from "./HomePageLanding";
 import { HomePageAbout } from "./HomePageAbout";
 
-export const UnauthorizedViews = ({ token, setToken }) => {
+export const UnauthorizedViews = ({ token, setToken, setUserId }) => {
   return (
     <>
       <Routes>
-        <Route path="/login" element={<Login setToken={setToken} />} />
+        <Route path="/login" element={<Login setToken={setToken} setUserId={setUserId} />} />
         <Route path="/" element={<HomePageLanding setToken={setToken} />} />
         <Route path="/about" element={<HomePageAbout setToken={setToken} />} />
         <Route path="/register" element={<Register setToken={setToken} />} />

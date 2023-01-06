@@ -22,7 +22,7 @@ export const InterviewPrep = () => {
     });
   }, []);
 
-  const renderInterviewPrepButton = (prep) => {
+  const renderInterviewPrepButton = (prep, interviewId) => {
     return (
       <>
         {prep === null ? (
@@ -30,7 +30,12 @@ export const InterviewPrep = () => {
             Create your interview Prep!
           </button>
         ) : (
-          <button className="transition-all duration-500 ease-in-out text-white bg-black hover:bg-grey focus:ring-4 focus:outline-none focus:ring-blue-300  shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2">
+          <button
+            onClick={() => {
+              navigate(`/interviews/${interviewId}`);
+            }}
+            className="transition-all duration-500 ease-in-out text-white bg-black hover:bg-grey focus:ring-4 focus:outline-none focus:ring-blue-300  shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
+          >
             Prepare for interview
           </button>
         )}
@@ -42,12 +47,6 @@ export const InterviewPrep = () => {
     <>
       <main className="ml-10 mt-10">
         <h1 className="text-4xl">Interview Prep</h1>
-        <button
-          onClick={() => navigate("/createinterviewprep")}
-          className="transition-all duration-500 ease-in-out text-white bg-black hover:bg-grey focus:ring-4 focus:outline-none focus:ring-blue-300  shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
-        >
-          Create New Interview Prep
-        </button>
         <h2 className="text-2xl">Upcoming Interviews</h2>
         <div className="flex justify-center">
           {upcomingInterviews.map((upcomingInterview) => (
@@ -55,7 +54,7 @@ export const InterviewPrep = () => {
               <div>{upcomingInterview?.board_job?.job?.title}</div>
               <div>{upcomingInterview?.board_job?.company?.name}</div>
               <div>{upcomingInterview.date}</div>
-              {renderInterviewPrepButton(upcomingInterview?.prep)}
+              {renderInterviewPrepButton(upcomingInterview?.prep, upcomingInterview?.id)}
             </div>
           ))}
         </div>

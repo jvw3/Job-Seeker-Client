@@ -9,18 +9,33 @@ import {
   getAllCategories,
   deleteBoardCategory,
   createBoardCategory,
+  getSinglePriorityRankForBoard,
+  updatePriorityRankForBoard,
 } from "../managers/BoardManager";
 import { JobList } from "./JobList";
+import {
+  IconMapPin,
+  IconCurrencyDollar,
+  IconBrandCashapp,
+  IconCrown,
+  IconFriends,
+  IconMap2,
+  IconUsers,
+  IconX,
+} from "@tabler/icons";
 import { ToastContainer, toast } from "react-toastify";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import "react-toastify/dist/ReactToastify.css";
 
 export const BoardView = () => {
   const [categories, setCategories] = useState([]);
   const [boardCategories, setBoardCategories] = useState([]);
-
-
-  const { jobId } = useParams();
+  const [priorityRankings, setPriorityRankings] = useState([]);
+  const [board, setBoard] = useState({});
   const { boardId } = useParams();
+  const navigate = useNavigate();
+
+  console.log(boardId);
 
   useEffect(() => {
     getAllCategories().then((allCategories) => {
@@ -28,14 +43,20 @@ export const BoardView = () => {
     });
   }, []);
 
+  useEffect(() => {
+    getSinglePriorityRankForBoard(boardId).then((rank) => {
+      setPriorityRankings(rank);
+    });
+  }, []);
+
   // Function: This function handles receiving responses that are a message from the server, versus the requested
   const handleCreateBoardCategory = (data) => {
-    if (data.hasOwnProperty('message')) {
-      toast.info(data.message)
+    if (data.hasOwnProperty("message")) {
+      toast.info(data.message);
     } else {
-      return data
+      return data;
     }
-  }
+  };
 
   const manageBoardCategories = () => {
     return (
@@ -46,7 +67,7 @@ export const BoardView = () => {
           <button
             onClick={() => {
               deleteBoardCategory(boardCategory.id).then(() => {
-                getAllBoardCategoriesForBoard(id).then(
+                getAllBoardCategoriesForBoard(boardId).then(
                   (updateUserBoardCategories) => {
                     setBoardCategories(updateUserBoardCategories);
                   }
@@ -65,18 +86,21 @@ export const BoardView = () => {
               evt.preventDefault();
 
               const boardCategory = {
-                board: parseInt(id),
+                board: parseInt(boardId),
                 category: category.id,
               };
 
-              createBoardCategory(boardCategory).then((data) => {
-                handleCreateBoardCategory(data)
-              }).then(() => {
-                getAllBoardCategoriesForBoard(id)
-                  .then((updateUserJobTags) => {
-                    setBoardCategories(updateUserJobTags);
-                  })
-              });
+              createBoardCategory(boardCategory)
+                .then((data) => {
+                  handleCreateBoardCategory(data);
+                })
+                .then(() => {
+                  getAllBoardCategoriesForBoard(boardId).then(
+                    (updateUserJobTags) => {
+                      setBoardCategories(updateUserJobTags);
+                    }
+                  );
+                });
             }}
             className="transition-all duration-500 ease-in-out text-white bg-black hover:bg-grey focus:ring-4 focus:outline-none focus:ring-blue-300  shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
           >
@@ -87,19 +111,14 @@ export const BoardView = () => {
     );
   };
 
-  const [board, setBoard] = useState({});
-
-  const { id } = useParams();
-  const navigate = useNavigate();
-
   useEffect(() => {
-    getSingleBoardForUser(id).then((userJobs) => {
+    getSingleBoardForUser(boardId).then((userJobs) => {
       setBoard(userJobs);
     });
-  }, []);
+  }, [priorityRankings]);
 
   useEffect(() => {
-    getAllBoardCategoriesForBoard(id).then((categories) => {
+    getAllBoardCategoriesForBoard(boardId).then((categories) => {
       setBoardCategories(categories);
     });
   }, []);
@@ -132,30 +151,142 @@ export const BoardView = () => {
       .then(() => navigate("/dashboard"));
   };
 
+  const handleOnDragEnd = (result) => {
+    if (!result.destination) return;
+    const items = Array.from(priorityRankings);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    setPriorityRankings(items);
+  };
+
+  const updatePriorityRankings = () => {
+    const arrayCopy = [...priorityRankings];
+    arrayCopy.forEach((ranking) => {
+      ranking.rank_value =
+        arrayCopy.findIndex((item) => item.name === ranking.name) + 1;
+    });
+    setPriorityRankings(arrayCopy);
+  };
+
+  const sendPriorityRankingsPutRequests = (event) => {
+    event.preventDefault();
+
+    priorityRankings.map((rank) => {
+      let priorityRankingToApi = {
+        board: parseInt(boardId),
+        name: rank.name,
+        rank_value: rank.rank_value,
+      };
+
+      updatePriorityRankForBoard(priorityRankingToApi, rank.id).then(() => {
+        getSinglePriorityRankForBoard(boardId).then((rank) => {
+          setPriorityRankings(rank);
+        });
+      });
+    });
+  };
+
+  // function: conditionally renders the matching icon for the draggable element title.
+  const renderIconForDraggableListItem = (itemName) => {
+    if (itemName === "salary") {
+      return <IconBrandCashapp />;
+    } else if (itemName === "location") {
+      return <IconMapPin />;
+    } else if (itemName === "culture") {
+      return <IconFriends />;
+    } else if (itemName === "leadership") {
+      return <IconCrown />;
+    } else {
+      return <IconUsers />;
+    }
+  };
+
+  // function: renders vertical drag and drop list responsible for controlling priority rankings.
+  const renderPriorityDragList = () => {
+    return (
+      <DragDropContext onDragEnd={handleOnDragEnd}>
+        <Droppable droppableId="priorities">
+          {(provided) => {
+            return (
+              <ul
+                {...provided.draggableProps}
+                {...provided.dragHandleProps}
+                ref={provided.innerRef}
+              >
+                {priorityRankings.map((priority, index) => {
+                  return (
+                    <Draggable
+                      draggableId={priority.name}
+                      key={priority.id}
+                      index={index}
+                    >
+                      {(provided) => {
+                        return (
+                          <li
+                            className="border rounded-md h-8 text-blue-500 flex gap-x-2"
+                            key={priority.id}
+                            index={index}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            ref={provided.innerRef}
+                          >
+                            {priority.name}{" "}
+                            {renderIconForDraggableListItem(priority.name)}
+                          </li>
+                        );
+                      }}
+                    </Draggable>
+                  );
+                })}
+                {provided.placeholder}
+              </ul>
+            );
+          }}
+        </Droppable>
+      </DragDropContext>
+    );
+  };
+
   return (
     <>
-      <main className="bg-pinkswirl h-screen">
+      <main className="bg-pinkswirl h-full w-screen overflow-y-auto">
         <div className="p-4 text-white">
           <h1 className="text-4xl ">{board.title}</h1>
         </div>
-        <div className="ml-10 mr-10 mt-5">
+        <div className="ml-10 mr-10 mt-5 h-screen">
           <div class="inline-flex rounded-md shadow-sm" role="group">
             <button
               type="button"
-              data-mdb-ripple="true"
-              data-mdb-ripple-color="light"
-              className="transition-all duration-500 ease-in-out text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300  shadow-lg shadow-blue-500/50 font-medium rounded-l-lg text-sm px-4 py-2 text-center mb-2"
+              className="  bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300  shadow-lg shadow-blue-500/50 font-medium rounded-l-lg text-sm px-4 py-2 text-center mb-2 btn-outline"
               onClick={() => {
-                navigate(`/boards/${id}/edit`);
+                navigate(`/boards/${boardId}/edit`);
               }}
             >
               Edit Board
             </button>
-            {renderDeleteButton(id)}
+            {renderDeleteButton(boardId)}
           </div>
-          <div className="flex justify-evenly h-48">
-            <div className="border p-4 rounded-md bg-white shadow-lg w-3/12">
+          <div className="flex justify-evenly h-72">
+            <div className="p-4 rounded-md bg-white shadow-lg w-3/12">
               <h2 className="text-2xl text-black">Priorities</h2>
+              {renderPriorityDragList()}
+              <button
+                className="btn glass ease-in-out text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300  shadow-lg shadow-blue-500/50 font-medium text-sm px-4 py-2 text-center "
+                onClick={(event) => {
+                  updatePriorityRankings();
+                  sendPriorityRankingsPutRequests(event)
+                    .then(() => {
+                      getSingleBoardForUser(boardId);
+                    })
+                    .then((board) => {
+                      setBoard(board);
+                    });
+                  toast.success("Your priority rankings have been updated.");
+                }}
+              >
+                Update Rankings
+              </button>
             </div>
             <div className="border p-4 rounded-md bg-white shadow-lg w-3/12">
               <h2 className="text-2xl text-black">Goal</h2>
@@ -207,37 +338,50 @@ export const BoardView = () => {
             <button
               className="btn text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium text-sm px-4 py-2 text-center mb-2"
               onClick={() => {
-                navigate(`/${id}/createjob`);
+                navigate(`/${boardId}/createjob`);
               }}
             >
               {" "}
               Add New Job
             </button>
-            <button
-              className="btn transition ease-in-out text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-lg shadow-blue-500/50 font-medium  text-sm px-4 py-2 text-center mb-2"
-              onClick={() => {
-                navigate(`/boards/${id}/managecategories`);
-              }}
+            <label
+              htmlFor="category-modal"
+              className="btn rounded-r-md text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium text-sm px-4 py-2 text-center mb-2"
             >
-              {" "}
-              Manage Categories
-            </button>
-            <label htmlFor="my-modal" className="btn">
               Manage Categories
             </label>
-            <input type="checkbox" id="my-modal" className="modal-toggle" />
+            <input
+              type="checkbox"
+              id="category-modal"
+              className="modal-toggle"
+            />
             <div className="modal">
               <div className="modal-box">
+                <label
+                  htmlFor="category-modal"
+                  className="btn btn-sm btn-square absolute right-2 top-2"
+                  onClick={() => {
+                    getSingleBoardForUser(boardId).then((userJob) => {
+                      setBoard(userJob);
+                    });
+                  }}
+                >
+                  <IconX />
+                </label>
                 <h3 className="font-bold text-lg">Manage Board Categories</h3>
                 {manageBoardCategories()}
                 <div className="modal-action">
                   <label
                     onClick={() => {
-                      getSingleBoardForUser(id).then((userBoard) => {
-                        setBoard(userBoard);
-                      });
+                      getSingleBoardForUser(boardId)
+                        .then((userBoard) => {
+                          setBoard(userBoard);
+                        })
+                        .then(() => {
+                          toast.success("Your categories have been saved.");
+                        });
                     }}
-                    htmlFor="my-modal"
+                    htmlFor="category-modal"
                     className="btn"
                   >
                     Save Changes
@@ -246,8 +390,14 @@ export const BoardView = () => {
               </div>
             </div>
           </div>
-          <div className="border p-5 rounded-md bg-white shadow-lg">
-            <JobList userBoardCategories={board?.categories} boardId={id} />
+          <div className="flex-row h-72">
+            <JobList
+              userBoardCategories={board?.categories}
+              boardJobs={board?.jobs}
+              boardId={boardId}
+              setBoardOfTopLevelComponent={setBoard}
+              priorityRankings={priorityRankings}
+            />
           </div>
         </div>
         <ToastContainer pauseOnHover={false} autoClose={2500} />
