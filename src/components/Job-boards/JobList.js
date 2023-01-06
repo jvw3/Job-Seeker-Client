@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { DragDropContext } from "react-beautiful-dnd";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   deleteBoard,
@@ -10,19 +11,26 @@ import {
 import { BoardCategoryContent } from "./BoardCatergoryContent";
 
 
-export const JobList = ({ userBoardCategories, boardId }) => {
-
-
-
+export const JobList = ({
+  userBoardCategories,
+  boardId,
+  boardJobs,
+  setBoardOfTopLevelComponent,
+  priorityRankings,
+}) => {
   return (
     <>
-      <div className="grid grid-cols-5 gap-5">
+      <div className="flex bg-slate-50 h-5/6 w-full">
         {userBoardCategories?.map((boardCategory) => (
           <BoardCategoryContent
             key={`category--${boardCategory.id}`}
             categoryId={boardCategory?.id}
             categoryName={boardCategory?.name}
             boardId={boardId}
+            boardJobs={boardJobs}
+            setBoardOfTopLevelComponent={setBoardOfTopLevelComponent}
+            priorityRankings={priorityRankings}
+            userBoardCategories={userBoardCategories}
           />
         ))}
       </div>
