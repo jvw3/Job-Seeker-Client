@@ -24,6 +24,9 @@ module.exports = {
       width: {
         "9/10": "20rem",
       },
+      fontFamily: {
+        'roboto': ['Roboto', 'sans-serif']
+      },
       colors: {
         "seeker-blue": "#1d4ed8",
         "seeker-gray": "#e2e8f0",
