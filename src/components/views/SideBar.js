@@ -88,40 +88,6 @@ const [activeSideBarTab, setActiveSidebarTab] = useState(false)
             </h2>
           </Link>
           <Link
-            to="/dashboard"
-            className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-blue-900 rounded-md ${
-              location.pathname === "/files" ? "bg-blue-500" : ""
-            }`}
-          >
-            <div>
-              <IconFiles />
-            </div>
-            <h2
-              className={`whitespace-pre duration-500 ${
-                !open ? "opacity-0 overflow-hidden" : ""
-              }`}
-            >
-              Files
-            </h2>
-          </Link>
-          <Link
-            to="/dashboard"
-            className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-blue-900 rounded-md ${
-              location.pathname === "/resources" ? "bg-blue-500" : ""
-            }`}
-          >
-            <div>
-              <IconBrowserCheck />
-            </div>
-            <h2
-              className={`whitespace-pre duration-500 ${
-                !open ? "opacity-0 overflow-hidden" : ""
-              }`}
-            >
-              Resources
-            </h2>
-          </Link>
-          <Link
             to="/profile"
             className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-blue-900 rounded-md ${
               location.pathname === "/profile" ? "bg-blue-500" : ""
