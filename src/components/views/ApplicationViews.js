@@ -32,7 +32,7 @@ export const ApplicationViews = ({ token, setToken }) => {
               element={<Register setToken={setToken} />}
             />
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/boards/:id" element={<BoardView />} />
+            <Route path="/boards/:boardId" element={<BoardView />} />
             <Route
               path="boards/:boardId/managecategories"
               element={<ManageBoardCategories />}
