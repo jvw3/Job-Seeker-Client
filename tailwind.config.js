@@ -1,8 +1,30 @@
 module.exports = {
-  content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  plugins: [
+    require("@tailwindcss/forms"),
+    require("@tailwindcss/typography"),
+    require("daisyui"),
   ],
-  plugins: [require("@tailwindcss/forms"), require("@tailwindcss/typography"), require("daisyui")],
+  daisyui: {
+    themes: [
+      {
+        mytheme: {
+          primary: "#f8fafc",
+          secondary: "#1d4ed8",
+          accent: "#37cdbe",
+          neutral: "#3d4451",
+        },
+      },
+      {
+        othertheme: {
+          primary: "#1d4ed8",
+          secondary: "#f8fafc",
+          accent: "#37cdbe",
+          neutral: "#3d4451",
+        },
+      },
+    ],
+  },
   theme: {
     screens: {
       sm: "640px",
@@ -24,8 +46,13 @@ module.exports = {
       width: {
         "9/10": "20rem",
       },
+      height: {
+        89: "89vh",
+        75: "75vh",
+      },
       fontFamily: {
-        'roboto': ['Roboto', 'sans-serif']
+        roboto: ["Roboto", "sans-serif"],
+        quicksand: ["Quicksand, sans-serif"],
       },
       colors: {
         "seeker-blue": "#1d4ed8",
