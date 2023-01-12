@@ -94,6 +94,14 @@ export const getAllJobsForBoard = (id) => {
   }).then((res) => res.json());
 };
 
+export const getActiveBoard = () => {
+  return fetch(`http://localhost:8000/boards?active`, {
+    headers: {
+      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
+    },
+  }).then((res) => res.json());
+};
+
 export const getAllInterviewsForBoardJob = (id) => {
   return fetch(`http://localhost:8000/interviews?boardjob=${id}`, {
     headers: {
