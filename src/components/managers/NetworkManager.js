@@ -9,8 +9,51 @@ export const getContactsForUser = () => {
   }).then((res) => res.json());
 };
 
+export const getMeetingTypes = () => {
+  return fetch(`http://localhost:8000/meetingtypes`, {
+    headers: {
+      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
+    },
+  }).then((res) => res.json());
+};
+
+export const getMySchedule = () => {
+  return fetch(`http://localhost:8000/networkmeetings?myschedule`, {
+    headers: {
+      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
+    },
+  }).then((res) => res.json());
+};
+
+export const getCompletedNetworkMeetings = () => {
+  return fetch(`http://localhost:8000/networkmeetings?completed`, {
+    headers: {
+      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
+    },
+  }).then((res) => res.json());
+};
+
+export const getUpcomingMeetingsForUser = () => {
+  return fetch(`http://localhost:8000/networkmeetings?upcoming`, {
+    headers: {
+      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
+    },
+  }).then((res) => res.json());
+};
+
 export const createContact = (contact) => {
   return fetch("http://localhost:8000/contacts", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
+    },
+    body: JSON.stringify(contact),
+  }).then((res) => res.json());
+};
+
+export const createNetworkMeeting = (contact) => {
+  return fetch("http://localhost:8000/networkmeetings", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -119,4 +162,13 @@ export const sendDescendingSortLastContactRequest = () => {
       Authorization: `Token ${localStorage.getItem("seeker_token")}`,
     },
   }).then((res) => res.json());
+};
+
+export const deleteContact = (id) => {
+  return fetch(`http://localhost:8000/contacts/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
+    },
+  });
 };

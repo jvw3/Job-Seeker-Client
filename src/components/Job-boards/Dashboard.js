@@ -1,20 +1,32 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCurrentUser } from "../managers/AuthManager";
-import { getAllBoardsForUser } from "../managers/BoardManager";
+import { getActiveBoard, getAllBoardsForUser } from "../managers/BoardManager";
 import { getUpcomingInterviewsForUser } from "../managers/InterviewManager";
+import { getUpcomingMeetingsForUser } from "../managers/NetworkManager"
+import {
+  IconMapPin,
+  IconCurrencyDollar,
+  IconBrandCashapp,
+  IconCrown,
+  IconFriends,
+  IconMap2,
+  IconUsers,
+  IconX,
+} from "@tabler/icons";
 
 export const Dashboard = () => {
-  const [boards, setBoards] = useState([]);
+  const [activeBoard, setActiveBoard] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
   const [upcomingInterviews, setUpcomingInterviews] = useState([])
+  const [upcomingMeetings, setUpcomingMeetings] = useState([])
   const navigate = useNavigate();
   const [interviewTabActive, setInterviewTabActive] = useState(true)
   const [meetingTabActive, setMeetingTabActive] = useState(false)
 
   useEffect(() => {
-    getAllBoardsForUser().then((userBoards) => {
-      setBoards(userBoards);
+    getActiveBoard().then((userBoards) => {
+      setActiveBoard(userBoards);
     });
   }, []);
 
@@ -27,6 +39,12 @@ export const Dashboard = () => {
   useEffect(() => {
     getUpcomingInterviewsForUser().then((upcomingInterviews) => {
       setUpcomingInterviews(upcomingInterviews);
+    });
+  }, []);
+
+  useEffect(() => {
+    getUpcomingMeetingsForUser().then((upcomingMeetings) => {
+      setUpcomingMeetings(upcomingMeetings);
     });
   }, []);
 
@@ -50,7 +68,7 @@ export const Dashboard = () => {
               onClick={() => {
                 navigate(`/createinterview`);
               }}
-              className="btn transition-all duration-500 ease-in-out text-white bg-black hover:bg-grey focus:ring-4 focus:outline-none focus:ring-blue-300  shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-4 py-2 pb-12 text-center mr-2 mb-2"
+              className="btn text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
             >
               Create your interview Prep!
             </button>
@@ -59,7 +77,7 @@ export const Dashboard = () => {
               onClick={() => {
                 navigate(`/interviews/${interviewId}`);
               }}
-              className="btn transition-all duration-500 ease-in-out text-white bg-black hover:bg-grey focus:ring-4 focus:outline-none focus:ring-blue-300  shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
+              className="btn text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
             >
               Prepare for interview
             </button>
@@ -86,88 +104,178 @@ export const Dashboard = () => {
       }
     }
 
+    const formatTime = (date) => {
+      const interviewDate = new Date(date);
+      const formattedInterviewDate = interviewDate.toLocaleString();
+      return formattedInterviewDate;
+    };
+
     const renderUpcomingInterviews = () => {
-      return <div className="flex h-1/4 justify-evenly">
-        {upcomingInterviews.map((upcomingInterview) => (
-          <div className="w-1/4 border flex-col card bg-white shadow-xl justify-evenly p-4">
-            <div className="card-title">
-              {upcomingInterview?.board_job?.job?.title}
+      return (
+        <div className="flex h-1/3 justify-evenly">
+          {upcomingInterviews.map((upcomingInterview) => (
+            <div
+              key={`interview--${upcomingInterview.id}`}
+              className="w-1/4 h-3/4 mt-7 border flex-col card bg-white shadow-xl justify-evenly p-4 hover:-translate-y-2 transition-all ease-in-ou duration-300"
+            >
+              <div className="card-title text-slate-600">
+                {upcomingInterview?.board_job?.job?.title}
+              </div>
+              <div className="text-seeker-blue">
+                {upcomingInterview?.board_job?.company?.name}
+              </div>
+              <div className="text-seeker-blue">
+                {formatTime(upcomingInterview.date)}
+              </div>
+              {renderInterviewPrepButton(upcomingInterview?.id)}
             </div>
-            <div>{upcomingInterview?.board_job?.company?.name}</div>
-            <div>{upcomingInterview.date}</div>
-            {renderInterviewPrepButton(upcomingInterview?.id)}
-          </div>
-        ))}
-      </div>;
+          ))}
+        </div>
+      );
+    }
+
+
+    const renderUpcomingMeetings = () => {
+      return (
+        <div className="flex h-1/3 justify-evenly">
+          {upcomingMeetings.map((upcomingMeeting) => (
+            <div
+              key={`activeBoard--${upcomingMeeting.id}`}
+              className="w-1/4 h-3/4 mt-7 border flex-col card bg-white shadow-xl justify-evenly p-4 hover:-translate-y-2 transition-all ease-in-ou duration-300"
+            >
+              <div className="card-title text-slate-600">
+                {setUpcomingMeetings?.board_job?.job?.title}
+              </div>
+              <div className="text-seeker-blue">
+                {upcomingMeeting?.board_job?.company?.name}
+              </div>
+              <div className="text-seeker-blue">{upcomingMeeting.date}</div>
+            </div>
+          ))}
+        </div>
+      );
     }
 
     const renderTabMenu = () => {
-      if (interviewTabActive) {
+      if (interviewTabActive && upcomingInterviews.length > 0) {
         return renderUpcomingInterviews()
-      } else if (upcomingInterviews.length === 0) {
-        return "No upcoming Interviews"
-      }else {
-        return ""
+      } else if (interviewTabActive && upcomingInterviews.length > 0) {
+        return (
+          <div className="flex h-full place-content-center m-12">
+            <div className="text-5xl text-white">No Upcoming Interviews</div>
+          </div>
+        );
+      } else if (meetingTabActive && upcomingMeetings.length > 0) {
+        return renderUpcomingMeetings()
+      } else if (meetingTabActive && upcomingMeetings.length === 0) {
+        return (
+          <div className="flex h-full place-content-center m-12">
+            <div className="text-5xl text-white">No Upcoming Meetings</div>
+          </div>
+        );
+      }
+    }
+
+    const renderPriorityandIcon = (priorityName) => {
+      if (priorityName === "salary") {
+        return  <IconBrandCashapp />;
+      } else if (priorityName === "location") {
+        return <IconMapPin />;
+      } else if (priorityName === "culture") {
+        return <IconFriends />;
+      } else if (priorityName === "leadership") {
+        return <IconCrown />;
+      } else {
+        return <IconUsers />;
       }
     }
 
   return (
     <>
-      <main className="flex-col w-full bg-pinkswirl">
-        <div className="h-1/6">
-          <h1 className="text-3xl text-white mt-4 ml-4">
+      <main className="flex-col w-full h-screen bg-pinkswirl">
+        <div className="mb-10">
+          <h1 className="text-5xl mt-4 ml-4 font-quicksand text-white pt-4 pl-4">
             {" "}
             {returnTimeAdjustWelcomeText()} {currentUser.firstName}{" "}
           </h1>
         </div>
-        <div className="h-1/5 m-4 rounded-md bg-pinkswirl bg-cover">
-          <button
-            className=" btn text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
-            onClick={() => {
-              navigate(`/createboard`);
-            }}
-          >
-            Create New Board
-          </button>
+        <div className="h-3/6 flex-col justify-evenly space-y-20">
+          <div className="h-96 bg-slate-50 bg-cover rounded-md ml-16 mr-16">
+            <div className="rounded-md h-full">
+              {activeBoard.map((activeBoard) => (
+                <>
+                  <div key={`activeBoard--${activeBoard.id}`}>
+                    <div className="w-full flex justify-center">
+                      <div className="flex-col">
+                        <h2 className="text-4xl text-seeker-blue pt-3 pb-3">
+                          {activeBoard.title}
+                        </h2>
+                        <button
+                          className="ml-28 mt-2 btn text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
+                          onClick={() => {
+                            navigate(`/boards/${activeBoard.id}`);
+                          }}
+                        >
+                          View Board
+                        </button>
+                      </div>
+                    </div>
+                    <div className="flex mt-2 h-54">
+                      <div className="w-2/6  m-5 p-4 rounded-md bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700  shadow-xl shadow-blue-500/50 text-white">
+                        <h3 className="text-3xl">Priorities</h3>
+                        {activeBoard?.priorities?.map((priority) => {
+                          return (
+                            <div
+                              key={`priority--${priority.id}`}
+                              className="flex w-52 gap-x-4"
+                            >
+                              {priority?.name}{" "}
+                              {renderPriorityandIcon(priority.name)}
+                            </div>
+                          );
+                        })}
+                      </div>
+                      <div className="w-2/6  m-5 p-4 rounded-md bg-white text-white shadow-xl shadow-blue-500/50 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700">
+                        <h3 className="text-3xl">Goal</h3>
+                        <h4 className="mt-4">{activeBoard.goal}</h4>
+                      </div>
+                      <div className="w-2/6  m-5 p-4 rounded-md bg-white text-white shadow-xl shadow-blue-500/50 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700">
+                        <h3 className="text-3xl ">Requirements</h3>
+                        <h4 className="mt-4">{activeBoard.requirements}</h4>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              ))}
+            </div>
+          </div>
         </div>
-        <div className="h-1/4 m-4  rounded-md p-2 bg-pinkswirl bg-cover text-white shadow-2xl bg-opacity-70">
-          {boards.map((board) => (
-            <>
-              <div key={`board--${board.id}`}>
-                <h2 className="text-2xl">{board.title}</h2>
-                <button
-                  className="btn text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
-                  onClick={() => {
-                    navigate(`/boards/${board.id}`);
-                  }}
-                >
-                  View Board
-                </button>
-                <h3 className="text-xl">Goal</h3>
-                <h4>{board.goal}</h4>
-                <h3 className="text-xl">Requirements</h3>
-                <h4>{board.requirements}</h4>
-              </div>
-            </>
-          ))}
-        </div>
-        <div className="tabs $ tabs-boxed w-96">
-          <a
-            onClick={() => {
-              controlInterviewTab();
-            }}
-            className={`tab ${interviewTabActive ? "tab-active" : ""}`}
+        <div className="w-full flex justify-center">
+          <div
+            data-theme="othertheme"
+            className="tabs bg-secondary tabs-boxed w-96"
           >
-            Upcoming Interviews
-          </a>
-          <a
-            onClick={() => {
-              controlMeetingTab();
-            }}
-            className={`tab ${meetingTabActive ? "tab-active" : ""}`}
-          >
-            Upcoming Meetings
-          </a>
+            <a
+              onClick={() => {
+                controlInterviewTab();
+              }}
+              className={` transition-all ease-in-out tab ${
+                interviewTabActive ? "tab-active" : "text-primary"
+              }`}
+            >
+              Upcoming Interviews
+            </a>
+            <a
+              onClick={() => {
+                controlMeetingTab();
+              }}
+              className={`tab ${
+                meetingTabActive ? "tab-active" : "text-primary"
+              }`}
+            >
+              Upcoming Meetings
+            </a>
+          </div>
         </div>
         {renderTabMenu()}
       </main>

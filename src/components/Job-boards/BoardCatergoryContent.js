@@ -30,13 +30,14 @@ export const BoardCategoryContent = ({
           job: singleBoardJob?.job?.id,
           custom_job: singleBoardJob.custom_job,
           company: singleBoardJob.company.id,
-          custom_company: singleBoardJob.custom_job,
+          custom_company: singleBoardJob.custom_company,
           has_applied: singleBoardJob.has_applied,
           has_interviewed: singleBoardJob.has_interviewed,
           interview_rounds: singleBoardJob.interview_rounds,
           received_offer: singleBoardJob.received_offer,
           salary: singleBoardJob.salary,
           location: singleBoardJob.location,
+          work_status: singleBoardJob.work_status,
           salary_rating: singleBoardJob.salary_rating,
           location_rating: singleBoardJob.location_rating,
           culture_rating: singleBoardJob.culture_rating,
@@ -88,6 +89,7 @@ export const BoardCategoryContent = ({
       received_offer: boardJob.received_offer,
       salary: boardJob.salary,
       location: boardJob.location,
+      work_status: boardJob.work_status,
       salary_rating: boardJob.salary_rating,
       location_rating: boardJob.location_rating,
       culture_rating: boardJob.culture_rating,
@@ -104,19 +106,27 @@ export const BoardCategoryContent = ({
       
   };
 
+
   const returnConditional = (boardJob) => {
     if (categoryId === boardJob?.category) {
       return (
         <>
           <div
-            className={` bg-white border-solid border object-fit p-2.5 rounded-md shadow-xl
+            className={` bg-white border-solid border basis-1/6  p-2.5 rounded-md shadow-xl
                       `}
           >
-            <div className="flex">
+            <div className="flex-col">
               <div className={`text-xl font-medium`}>
-                {boardJob?.job?.title}
+                {boardJob?.custom_job === ""
+                  ? boardJob?.job?.title
+                  : boardJob?.custom_job}
               </div>
-              <div>{boardJob?.company?.name}</div>
+              <div>
+                {boardJob?.custom_company === ""
+                  ? boardJob?.company?.name
+                  : boardJob?.custom_company}
+              </div>
+              <div>{boardJob.work_status}</div>
               <div className="">
                 <div className="flex flex-wrap">
                   {boardJob?.tags?.map((tag) => (
@@ -141,7 +151,7 @@ export const BoardCategoryContent = ({
                 </button>
               </div>
             </div>
-            <div className="tabs tabs-boxed">
+            <div className="tabs tabs-boxed bg-seeker-blue">
               {userBoardCategories?.map((cat) => {
                 return (
                   <a
@@ -170,12 +180,14 @@ export const BoardCategoryContent = ({
 
   return (
     <>
-      <div>
-        <h2 className="text-2xl text-center">{categoryName}</h2>
-        <div className="border ">
-          {boardJobs?.map((boardJob) => {
-            return <div>{returnConditional(boardJob)}</div>;
-          })}
+      <div className="w-60 flex-1 overflow-y-auto">
+        <div className="">
+          <h2 className="text-xl text-secondary text-center ">{categoryName}</h2>
+          <div className="space-y-5">
+            {boardJobs?.map((boardJob) => {
+              return <div>{returnConditional(boardJob)}</div>;
+            })}
+          </div>
         </div>
       </div>
     </>

@@ -40,3 +40,11 @@ export const getCurrentSeeker = () => {
     },
   }).then((res) => res.json());
 };
+
+export const getAllSeekers = () => {
+  return fetch(`http://localhost:8000/seekers`, {
+    headers: {
+      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
+    },
+  }).then((res) => res.json());
+};

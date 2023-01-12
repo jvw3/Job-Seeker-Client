@@ -34,7 +34,7 @@ export const BoardForm = () => {
 
   return (
     <>
-      <main className="flex-col w-full bg-pinkswirl">
+      <main className="flex-col w-full bg-pinkswirl text-slate-500">
         <div className="h-1/6 ">
           <h1 className="text-white text-4xl p-5">New Board</h1>
         </div>
@@ -116,9 +116,9 @@ export const BoardForm = () => {
                       {category.name}
                       <input
                         value={category.id}
-                        className="h-4 w-4 checkbox rounded border-gray-300 text-indigo-600
+                        className="h-4 w-4 checkbox rounded checkbox-secondary
                         ml-2
-                        focus:ring-indigo-500"
+                        focus:ring-secondary"
                         onChange={(event) => {
                           const copy = new Set(checkedCategories);
                           if (copy.has(category.id)) {

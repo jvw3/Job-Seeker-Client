@@ -7,9 +7,10 @@ export const ResourceNotFound = () => {
 
   return (
     <>
-      <main className="bg-notfound w-full bg-contain bg-no-repeat flex justify-center items-end">
-        <div className="pb-80">
-          <div className="">The Page that you request does not exist</div>
+      <main className="h-screen w-full flex">
+        <div className="justify-center bg-notfound w-3/6 h-5/6 bg-cover flex-col">
+          <div></div>
+          <div className="flex">The Page that you request does not exist</div>
           <button
             onClick={() => {
               navigate(-1);
@@ -19,6 +20,7 @@ export const ResourceNotFound = () => {
             Please Go Back To Previous Page
           </button>
         </div>
+        <div className=""></div>
       </main>
     </>
   );

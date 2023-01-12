@@ -20,7 +20,7 @@ export const JobList = ({
 }) => {
   return (
     <>
-      <div className="flex bg-slate-50 h-5/6 w-full">
+      <div className="flex bg-slate-50 w-full overflow-auto">
         {userBoardCategories?.map((boardCategory) => (
           <BoardCategoryContent
             key={`category--${boardCategory.id}`}

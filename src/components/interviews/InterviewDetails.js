@@ -164,11 +164,18 @@ export const IndividualInterviewDetails = () => {
 
   return (
     <>
-      <main className="flex-col w-full bg-pinkswirl">
+      <main className="flex-col w-full bg-pinkswirl pt-5 pl-5">
         <h1 className="text-3xl">
-          {interview?.board_job?.company?.name} Interview
+          {interview?.board_job?.custom_company === ""
+            ? interview?.board_job?.company?.name
+            : interview?.board_job?.custom_company}{" "}
+          Interview
         </h1>
-        <h2 className="text-2xl">{interview?.board_job?.job?.title}</h2>
+        <h2 className="text-2xl">
+          {interview?.board_job?.custom_company === ""
+            ? interview?.board_job?.job?.title
+            : interview?.board_job?.custom_company}
+        </h2>
         <br></br>
         <button
           className=" text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-lg shadow-blue-500/50 font-medium rounded-l-lg text-sm px-4 py-2 text-center  mb-2"
@@ -184,36 +191,36 @@ export const IndividualInterviewDetails = () => {
         <p>{interview?.prep?.company_info}</p>
         <h2 className="text-2xl">Preparation Material:</h2>
         {renderAddCustomPrepModal()}
-        <div className="w-1/2 flex-col">
+        <div className="w-1/2 flex-col space-y-5 mt-10">
           {interview?.prep?.custom_preps?.map((customPrep) => (
             <>
-              <div className="bg-slate-50 border rounded-md h-36 w-5/6 flex-col relative">
-                <label
-                  htmlFor="deletecustomprep-modal"
-                  onClick={() => {}}
-                  className="btn btn-sm right-2 top-2 absolute w-12"
-                >
-                  <IconX />
-                </label>
-                <div>Title: {customPrep?.title}</div>
-                <div>Description: {customPrep?.description}</div>
-                <div>Content: {customPrep?.content}</div>
+              <div className="bg-slate-50 border rounded-md h-36 w-5/6 flex-col relative p-5">
+                <div className="text-2xl text-seeker-blue">
+                  Title: {customPrep?.title}
+                </div>
+                <div className=" text-seeker-blue">
+                  Description: {customPrep?.description}
+                </div>
+                <div className="text-seeker-blue">
+                  Content: {customPrep?.content}
+                </div>
                 {doFunc(customPrep?.id)}
               </div>
             </>
           ))}
         </div>
-        <h2 className="text-2xl">Questions To Ask:</h2>
-        {interview?.prep?.questions.map((question) => (
-          <div>{question.content}</div>
-        ))}
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        {renderAddPrepQuestionModal()}
         <ToastContainer />
       </main>
     </>
   );
 };
+
+// h2 className="text-2xl">Questions To Ask:</h2>
+//         {interview?.prep?.questions.map((question) => (
+//           <div>{question.content}</div>
+//         ))}
+//         <br></br>
+//         <br></br>
+//         <br></br>
+//         <br></br>
+//         {renderAddPrepQuestionModal()}

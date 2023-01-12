@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { createBoard, getAllCategories } from "../managers/BoardManager";
 import { getSingleContact, updateContact } from "../managers/NetworkManager";
 
-export const ContactEdit = () => {
+export const ContactEdit = ({ contactId, sendEditContactToast }) => {
   const [contact, setContact] = useState({
     name: "",
     current_role: "",
@@ -15,13 +15,13 @@ export const ContactEdit = () => {
     notes: "",
   });
 
-  const { contactId } = useParams();
+  console.log(contactId)
 
   useEffect(() => {
     getSingleContact(contactId).then((userContact) => {
       setContact(userContact);
     });
-  }, []);
+  }, [contactId]);
 
   const navigate = useNavigate();
 
@@ -39,14 +39,18 @@ export const ContactEdit = () => {
       notes: contact.notes,
     };
 
-    updateContact(contactToApi, contactId).then(() => navigate("/network"));
+    updateContact(contactToApi, contactId);
+  };
+
+  const updateContactHelperFunction = (clickEvent) => {
+    sendEditContactToast();
+    putRequestForContact(clickEvent);
   };
 
   return (
     <>
-      <main className="flex-col w-full bg-pinkswirl">
+      <main className="flex-col w-full h-full">
         <div className="h-1/6 ">
-          <h1 className="text-white text-4xl p-5">New Contact</h1>
         </div>
         <div className="w-full h-5/6 flex justify-center">
           <div className="border p-10 rounded -md bg-white w-4/5 h-5/6 flex-col">
@@ -225,9 +229,11 @@ export const ContactEdit = () => {
                 size="lg"
                 color="violet"
                 className="transition ease-in-out text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
-                onClick={(clickEvent) => putRequestForContact(clickEvent)}
+                onClick={(clickEvent) =>
+                  updateContactHelperFunction(clickEvent)
+                }
               >
-                Save Changes!
+                Save Changes
               </button>
             </form>
           </div>
