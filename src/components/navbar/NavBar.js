@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-
+import SeekerLogoZoom from "../views/HompageImages/SeekerLogoZoom.svg"
 export const NavBar = ({ token, setToken }) => {
   const navigate = useNavigate();
   const navbar = useRef();
@@ -10,32 +10,34 @@ export const NavBar = ({ token, setToken }) => {
   const location = useLocation();
 
   const renderNav = () => {
-    if (location.pathname !== "/login"){
+    if (location.pathname !== "/login" || location.pathname !== "/register") {
       return (
         <>
-          <nav className="h-20 flex justify-between bg-pinkswirl
-          backdrop-filter">
+          <nav
+            className="h-20 flex justify-between bg-pinkswirl
+          backdrop-filter"
+          >
             <div className="flex">
               <a className="navbar-item" href="/">
-                <h1 className="text-white text-2xl p-4 font-mono ">
-                  {NavLogoText}
-                </h1>
+                <div className="flex">
+                  <img className=" h-20 ml-5 mt-2" src={SeekerLogoZoom}></img>{" "}
+                  <div className="self-center ml-2 text-4xl font-roboto text-white">
+                    JobSeeker
+                  </div>
+                </div>
               </a>
             </div>
-            <div className="flex w-4/12 gap-4 " ref={navbar}>
-              <Link to="/about" className="text-white text-xl font-mono">
-                About
-              </Link>
-              <Link to="/features" className="text-white text-xl font-mono">
-                Features
-              </Link>
-              <Link to="/contact" className="text-white text-xl font-mono">
-                Contact 
-              </Link>
-              <Link to="/login" className="text-white text-xl font-mono">
+            <div className="flex w-3/12  " ref={navbar}>
+              <Link
+                to="/login"
+                className="text-white text-xl m-4 border rounded p-2 font-quicksand"
+              >
                 Log in
               </Link>
-              <Link to="/register" className="text-white text-xl font-mono  rounded-md h-fit p-2 bg-home-blue">
+              <Link
+                to="/register"
+                className="text-white text-xl font-quicksand  rounded-md h-fit m-4 bg-home-blue border p-2"
+              >
                 Sign Up Free
               </Link>
             </div>
@@ -43,7 +45,7 @@ export const NavBar = ({ token, setToken }) => {
         </>
       );
     } else {
-      return ""
+      return "";
     }
   };
   return renderNav();
