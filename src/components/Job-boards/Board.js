@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   deleteBoard,
   getAllBoardsForUser,
@@ -22,6 +22,9 @@ import {
   IconMap2,
   IconUsers,
   IconX,
+  IconTie,
+  IconReportMoney,
+  IconSend
 } from "@tabler/icons";
 import { ToastContainer, toast } from "react-toastify";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
@@ -34,8 +37,6 @@ export const BoardView = () => {
   const [board, setBoard] = useState({});
   const { boardId } = useParams();
   const navigate = useNavigate();
-
-  console.log(boardId);
 
   useEffect(() => {
     getAllCategories().then((allCategories) => {
@@ -250,12 +251,20 @@ export const BoardView = () => {
 
   return (
     <>
-      <main className="bg-pinkswirl h-full w-screen overflow-y-auto">
+      <main className="bg-pinkswirl h-screen w-screen overflow-y-auto">
         <div className="p-4 text-white">
-          <h1 className="text-4xl ">{board.title}</h1>
+          <h1 className="text-4xl font-quicksand ">{board.title}</h1>
         </div>
-        <div className="ml-10 mr-10 mt-5 h-screen">
-          <div class="inline-flex rounded-md shadow-sm" role="group">
+        <div className="ml-4 text-sm text-white breadcrumbs">
+          <ul>
+            <li>
+              <Link to="/dashboard">Dashboard</Link>
+            </li>
+            <li className="">My Board</li>
+          </ul>
+        </div>
+        <div className="ml-10 mr-10 mt-5">
+          <div className="inline-flex rounded-md shadow-sm" role="group">
             <button
               type="button"
               className="  bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300  shadow-lg shadow-blue-500/50 font-medium rounded-l-lg text-sm px-4 py-2 text-center mb-2 btn-outline"
@@ -288,51 +297,49 @@ export const BoardView = () => {
                 Update Rankings
               </button>
             </div>
-            <div className="border p-4 rounded-md bg-white shadow-lg w-3/12">
-              <h2 className="text-2xl text-black">Goal</h2>
-              <div>{board.goal}</div>
-            </div>
-            <div className="border p-4 rounded-md bg-white shadow-lg w-3/12">
-              <h2 className="text-2xl text-black">Requirements</h2>
-              <div>{board.requirements}</div>
-            </div>
-          </div>
-          <br></br>
-          <div className="mt-4  pb-12 sm:pb-8">
-            <div className="relative">
-              <div className="absolute inset-0 h-1/2" />
-              <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div className="mx-auto max-w-4xl">
-                  <dl className="rounded-lg bg-white shadow-lg sm:grid sm:grid-cols-3">
-                    <div className="flex flex-col border-b border-gray-100 p-6 text-center sm:border-0 sm:border-r">
-                      <dt className="order-2 mt-2 text-lg font-medium leading-6 text-black-500">
-                        Total Applications
-                      </dt>
-                      <dd className="order-1 text-5xl font-bold tracking-tight text-blue-600">
-                        {board.board_application_count}
-                      </dd>
+            <div className="space-y-8">
+              <div className="flex justify-evenly">
+                <div className="border p-4 rounded-md bg-white shadow-lg w-5/12">
+                  <h2 className="text-2xl text-black">Goal</h2>
+                  <div>{board.goal}</div>
+                </div>
+                <div className="border p-4 rounded-md bg-white shadow-lg w-5/12">
+                  <h2 className="text-2xl text-black">Requirements</h2>
+                  <div>{board.requirements}</div>
+                </div>
+              </div>
+              <div className="flex justify-center pl-3 pr-3">
+                <div className="stats shadow w-11/12">
+                  <div className="stat">
+                    <div className="stat-title text-seeker-blue">
+                      Total Applications <IconSend />
                     </div>
-                    <div className="flex flex-col border-t border-b border-gray-100 p-6 text-center sm:border-0 sm:border-l sm:border-r">
-                      <dt className="order-2 mt-2 text-lg font-medium leading-6 text-black-500">
-                        Total Completed Interviews
-                      </dt>
-                      <dd className="order-1 text-5xl font-bold tracking-tight text-blue-600">
-                        {board.board_completed_interview_count}
-                      </dd>
+                    <div className="stat-value text-seeker-blue">
+                      {board.board_application_count}
                     </div>
-                    <div className="flex flex-col border-t border-gray-100 p-6 text-center sm:border-0 sm:border-l">
-                      <dt className="order-2 mt-2 text-lg font-medium leading-6 text-black-500">
-                        Total Offers
-                      </dt>
-                      <dd className="order-1 text-5xl font-bold tracking-tight text-blue-600">
-                        {board.board_offer_count}
-                      </dd>
+                  </div>
+
+                  <div className="stat h-36 border">
+                    <div className="stat-title text-seeker-blue">
+                      Total Completed Interviews <IconTie />
                     </div>
-                  </dl>
+                    <div className="stat-value text-seeker-blue">
+                      {board.board_completed_interview_count}
+                    </div>
+                  </div>
+                  <div className="stat">
+                    <div className="stat-title text-seeker-blue">
+                      Total Offers <IconReportMoney />
+                    </div>
+                    <div className="stat-value text-seeker-blue">
+                      {board.board_offer_count}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+          <br></br>
           <h2 className="text-3xl">Current Jobs</h2>
           <div class="shadow-sm btn-group">
             <button
@@ -390,15 +397,15 @@ export const BoardView = () => {
               </div>
             </div>
           </div>
-          <div className="flex-row h-72">
-            <JobList
-              userBoardCategories={board?.categories}
-              boardJobs={board?.jobs}
-              boardId={boardId}
-              setBoardOfTopLevelComponent={setBoard}
-              priorityRankings={priorityRankings}
-            />
-          </div>
+        </div>
+        <div className="flex h-89 bg-slate-50 p-5 rounded-md ml-5 mr-5 mb-4">
+          <JobList
+            userBoardCategories={board?.categories}
+            boardJobs={board?.jobs}
+            boardId={boardId}
+            setBoardOfTopLevelComponent={setBoard}
+            priorityRankings={priorityRankings}
+          />
         </div>
         <ToastContainer pauseOnHover={false} autoClose={2500} />
       </main>
