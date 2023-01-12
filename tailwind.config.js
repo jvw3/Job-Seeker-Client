@@ -49,6 +49,7 @@ module.exports = {
       height: {
         89: "89vh",
         75: "75vh",
+        80: "80vh"
       },
       fontFamily: {
         roboto: ["Roboto", "sans-serif"],
