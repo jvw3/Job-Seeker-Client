@@ -26,11 +26,13 @@ export const MySchedule = () => {
 
   return (
     <>
-      <main className="w-full flex">
-        <div className=" w-full flex">
+      <main className="w-full h-full flex">
+        <div className=" w-full flex h-full">
           <div className="w-1/2">
-            <h2 className="text-center text-3xl mt-5 text-white">My Schedule</h2>
-            <div className="mt-10 space-y-8">
+            <h2 className="text-center text-3xl mt-5 text-white">
+              My Schedule
+            </h2>
+            <div className="mt-5 space-y-8 h-5/6 overflow-y-auto">
               {mySchedule.map((meeting) => {
                 return (
                   <div className="p-5 border rounded-lg ml-10 mr-10 bg-white">
@@ -58,8 +60,10 @@ export const MySchedule = () => {
             </div>
           </div>
           <div className="w-1/2">
-            <h2 className="text-center text-3xl mt-5 text-white">Completed Meetings</h2>
-            <div className="mt-10 space-y-8">
+            <h2 className="text-center text-3xl mt-5 text-white">
+              Completed Meetings
+            </h2>
+            <div className="mt-5 space-y-8 overflow-y-auto h-5/6">
               {completedMeetings.map((meeting) => {
                 return (
                   <div className="p-5 border rounded-lg ml-10 mr-10 bg-white">
