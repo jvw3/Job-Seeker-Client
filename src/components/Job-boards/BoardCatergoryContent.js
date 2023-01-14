@@ -116,21 +116,21 @@ export const BoardCategoryContent = ({
                       `}
           >
             <div className="flex-col">
-              <div className={`text-xl font-medium`}>
+              <div className={`text-xl font-medium text-seeker-blue`}>
                 {boardJob?.custom_job === ""
                   ? boardJob?.job?.title
                   : boardJob?.custom_job}
               </div>
-              <div>
+              <div className="text-slate-700">
                 {boardJob?.custom_company === ""
                   ? boardJob?.company?.name
                   : boardJob?.custom_company}
               </div>
-              <div>{boardJob.work_status}</div>
+              <div className="text-slate-700">{boardJob.work_status}</div>
               <div className="">
                 <div className="flex flex-wrap">
                   {boardJob?.tags?.map((tag) => (
-                    <span className=" text-white text-sm font-medium mt-1 mb-1 mr-2 px-2.5 py-0.5 rounded dark:bg-gray-200 dark:text-blue-800">
+                    <span className=" text-white text-sm font-medium mt-1 mb-1 mr-2 px-2.5 py-0.5 rounded bg-black">
                       {tag.name}
                     </span>
                   ))}
@@ -180,14 +180,16 @@ export const BoardCategoryContent = ({
 
   return (
     <>
-      <div className="w-60 flex-1 overflow-y-auto">
-        <div className="">
-          <h2 className="text-xl text-secondary text-center ">{categoryName}</h2>
-          <div className="space-y-5">
-            {boardJobs?.map((boardJob) => {
-              return <div>{returnConditional(boardJob)}</div>;
-            })}
-          </div>
+      <div className="w-60 flex-1 overflow-y-auto pl-3 pr-3">
+        <div className="sticky top-0 bg-slate-50">
+          <h2 className="text-xl text-secondary text-center">
+            {categoryName}
+          </h2>
+        </div>
+        <div className="space-y-5">
+          {boardJobs?.map((boardJob) => {
+            return <div>{returnConditional(boardJob)}</div>;
+          })}
         </div>
       </div>
     </>
