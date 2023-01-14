@@ -20,9 +20,12 @@ export const Dashboard = () => {
   const [currentUser, setCurrentUser] = useState({});
   const [upcomingInterviews, setUpcomingInterviews] = useState([])
   const [upcomingMeetings, setUpcomingMeetings] = useState([])
-  const navigate = useNavigate();
   const [interviewTabActive, setInterviewTabActive] = useState(true)
   const [meetingTabActive, setMeetingTabActive] = useState(false)
+  const [priorityTabActive, setPriorityTabActive] = useState(true)
+  const [goalTabActive, setGoalTabActive] = useState(false)
+  const [requirementsTabActive, setRequirementsTabActive] = useState(false)
+  const navigate = useNavigate();
 
   useEffect(() => {
     getActiveBoard().then((userBoards) => {
@@ -99,6 +102,33 @@ export const Dashboard = () => {
       if (!meetingTabActive) {
         setMeetingTabActive(true)
         setInterviewTabActive(false)
+      } else {
+        return
+      }
+    }
+    const controlPriorityTab = () => {
+      if (!priorityTabActive) {
+        setPriorityTabActive(true)
+        setGoalTabActive(false)
+        setRequirementsTabActive(false)
+      } else {
+        return
+      }
+    }
+    const controlGoalTab = () => {
+      if (!goalTabActive) {
+        setGoalTabActive(true)
+        setPriorityTabActive(false)
+        setRequirementsTabActive(false)
+      } else {
+        return
+      }
+    }
+    const controlRequirementsTab = () => {
+      if (!requirementsTabActive) {
+        setRequirementsTabActive(true)
+        setGoalTabActive(false)
+        setPriorityTabActive(false)
       } else {
         return
       }
@@ -190,6 +220,18 @@ export const Dashboard = () => {
       }
     }
 
+    const renderPrioritiesForActiveJobBoard = (board) => {
+      {
+        board?.priorities?.map((priority) => {
+          return (
+            <div key={`priority--${priority.id}`} className="flex w-52 gap-x-4">
+              {priority?.name} {renderPriorityandIcon(priority.name)}
+            </div>
+          );
+        });
+      }
+    }
+
   return (
     <>
       <main className="flex-col w-full h-screen bg-pinkswirl">
@@ -200,18 +242,21 @@ export const Dashboard = () => {
           </h1>
         </div>
         <div className="h-3/6 flex-col justify-evenly space-y-20">
-          <div className="h-96 bg-slate-50 bg-cover rounded-md ml-16 mr-16">
+          <div className="h-96 bg-cover rounded-md ml-16 mr-16">
             <div className="rounded-md h-full">
               {activeBoard.map((activeBoard) => (
                 <>
-                  <div key={`activeBoard--${activeBoard.id}`}>
+                  <div
+                    className="w-1/3 bg-slate-50 rounded-lg"
+                    key={`activeBoard--${activeBoard.id}`}
+                  >
                     <div className="w-full flex justify-center">
                       <div className="flex-col">
                         <h2 className="text-4xl text-seeker-blue pt-3 pb-3">
                           {activeBoard.title}
                         </h2>
                         <button
-                          className="ml-28 mt-2 btn text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
+                          className="ml-28 mt-2 text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4  dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
                           onClick={() => {
                             navigate(`/boards/${activeBoard.id}`);
                           }}
@@ -220,29 +265,77 @@ export const Dashboard = () => {
                         </button>
                       </div>
                     </div>
+                    <div  className=" bg-secondary tabs tabs-boxed w-fit ml-14 mt-3">
+                      <a
+                        onClick={() => {
+                          controlPriorityTab();
+                        }}
+                        className={`tab ${
+                          priorityTabActive
+                            ? "tab-active bg-white"
+                            : "text-primary"
+                        }`}
+                      >
+                        Priorities
+                      </a>
+                      <a
+                        className={`tab ${
+                          goalTabActive ? "tab-active bg-white" : "text-primary"
+                        }`}
+                        onClick={() => {
+                          controlGoalTab();
+                        }}
+                      >
+                        Goal
+                      </a>
+                      <a
+                        className={`tab ${
+                          requirementsTabActive
+                            ? "tab-active bg-white"
+                            : "text-primary"
+                        }`}
+                        onClick={() => {
+                          controlRequirementsTab();
+                        }}
+                      >
+                        Requirements
+                      </a>
+                    </div>
                     <div className="flex mt-2 h-54">
-                      <div className="w-2/6  m-5 p-4 rounded-md bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700  shadow-xl shadow-blue-500/50 text-white">
-                        <h3 className="text-3xl">Priorities</h3>
-                        {activeBoard?.priorities?.map((priority) => {
-                          return (
-                            <div
-                              key={`priority--${priority.id}`}
-                              className="flex w-52 gap-x-4"
-                            >
-                              {priority?.name}{" "}
-                              {renderPriorityandIcon(priority.name)}
-                            </div>
-                          );
-                        })}
-                      </div>
-                      <div className="w-2/6  m-5 p-4 rounded-md bg-white text-white shadow-xl shadow-blue-500/50 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700">
+                      {priorityTabActive ? (
+                        <div className="w-full  m-5 p-4 rounded-md bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700  shadow-xl shadow-blue-500/50 text-white">
+                          <h3 className="text-3xl">Priorities</h3>
+                          {activeBoard?.priorities?.map((priority) => {
+                            return (
+                              <div
+                                key={`priority--${priority.id}`}
+                                className="flex w-52 gap-x-4"
+                              >
+                                {priority?.name}{" "}
+                                {renderPriorityandIcon(priority.name)}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                      {
+                        goalTabActive
+                        ? <div className="w-full  m-5 p-4 rounded-md bg-white text-white shadow-xl shadow-blue-500/50 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700">
                         <h3 className="text-3xl">Goal</h3>
                         <h4 className="mt-4">{activeBoard.goal}</h4>
                       </div>
-                      <div className="w-2/6  m-5 p-4 rounded-md bg-white text-white shadow-xl shadow-blue-500/50 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700">
+                      : ""
+                      }
+                      {
+                        requirementsTabActive
+                        ? <div className="w-full  m-5 p-4 rounded-md bg-white text-white shadow-xl shadow-blue-500/50 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700">
                         <h3 className="text-3xl ">Requirements</h3>
                         <h4 className="mt-4">{activeBoard.requirements}</h4>
                       </div>
+                      : ""
+                      }
                     </div>
                   </div>
                 </>
