@@ -301,9 +301,9 @@ export const Dashboard = () => {
                         Requirements
                       </a>
                     </div>
-                    <div className="flex mt-2 h-54">
+                    <div className="flex mt-1 h-52">
                       {priorityTabActive ? (
-                        <div className="w-full  m-5 p-4 rounded-md bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700  shadow-xl shadow-blue-500/50 text-white">
+                        <div className="w-full h-44  m-5 p-2 rounded-md bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700  shadow-xl shadow-blue-500/50 text-white">
                           <h3 className="text-3xl">Priorities</h3>
                           {activeBoard?.priorities?.map((priority) => {
                             return (
@@ -346,7 +346,7 @@ export const Dashboard = () => {
         <div className="w-full flex justify-center">
           <div
             data-theme="othertheme"
-            className="tabs bg-secondary tabs-boxed w-96"
+            className="tabs bg-secondary tabs-boxed w-92"
           >
             <a
               onClick={() => {
