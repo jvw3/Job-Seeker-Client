@@ -30,7 +30,7 @@ export const NetworkHome = () => {
 
   return (
     <>
-      <main className="flex-col w-full bg-pinkswirl pt-8 pl-8">
+      <main className="flex-col h-screen w-screen bg-pinkswirl pt-8 pl-8">
         <div className="h-1/6">
           <h1 className="text-5xl text-white font-quicksand">
             My Network
