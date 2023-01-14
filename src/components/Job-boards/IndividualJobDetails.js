@@ -508,10 +508,10 @@ export const IndividualJobDetails = () => {
 
           <div className="text-sm breadcrumbs">
             <ul>
-              <li>
+              <li className="text-slate-500">
                 <Link to="/dashboard">Dashboard</Link>
               </li>
-              <li>
+              <li className="text-slate-500">
                 <Link to={`/boards/${boardId}`}>My Board</Link>
               </li>
               <li>Job Details</li>
