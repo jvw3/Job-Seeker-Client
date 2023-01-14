@@ -257,7 +257,7 @@ export const BoardView = () => {
         </div>
         <div className="ml-4 text-sm text-white breadcrumbs">
           <ul>
-            <li>
+            <li className="text-slate-500">
               <Link to="/dashboard">Dashboard</Link>
             </li>
             <li className="">My Board</li>
@@ -267,7 +267,7 @@ export const BoardView = () => {
           <div className="inline-flex rounded-md shadow-sm" role="group">
             <button
               type="button"
-              className="  bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300  shadow-lg shadow-blue-500/50 font-medium rounded-l-lg text-sm px-4 py-2 text-center mb-2 btn-outline"
+              className="  bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300  shadow-lg shadow-blue-500/50 font-medium rounded-l-lg text-sm px-4 py-2 text-center mb-2 btn-outline text-white"
               onClick={() => {
                 navigate(`/boards/${boardId}/edit`);
               }}
@@ -301,11 +301,11 @@ export const BoardView = () => {
               <div className="flex justify-evenly">
                 <div className="border p-4 rounded-md bg-white shadow-lg w-5/12">
                   <h2 className="text-2xl text-black">Goal</h2>
-                  <div>{board.goal}</div>
+                  <div className="text-seeker-blue">{board.goal}</div>
                 </div>
                 <div className="border p-4 rounded-md bg-white shadow-lg w-5/12">
                   <h2 className="text-2xl text-black">Requirements</h2>
-                  <div>{board.requirements}</div>
+                  <div className="text-seeker-blue">{board.requirements}</div>
                 </div>
               </div>
               <div className="flex justify-center pl-3 pr-3">
