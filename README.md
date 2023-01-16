@@ -23,7 +23,7 @@ Job Seeker is a web application that allows users to organize their job search b
 
 
 <h2>Entity Relationship Diagram</h2>
-[https://drawsql.app/teams/jonathan-woodard/diagrams/jobseeker/embed](https://drawsql.app/teams/jonathan-woodard/diagrams/jobseeker)
+https://drawsql.app/teams/jonathan-woodard/diagrams/jobseeker
 
 
 
