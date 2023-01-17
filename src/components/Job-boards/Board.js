@@ -62,8 +62,7 @@ export const BoardView = () => {
   const manageBoardCategories = () => {
     return (
       <div>
-        <h1 className="text-3xl">Manage Categories </h1>
-        <h2 className="text-xl">Current Categories</h2>
+        <h2 className="text-xl mt-2 mb-2 text-white">Current Categories</h2>
         {boardCategories.map((boardCategory) => (
           <button
             onClick={() => {
@@ -80,7 +79,7 @@ export const BoardView = () => {
             {boardCategory?.category?.name}
           </button>
         ))}
-        <h2 className="text-xl">Selectable Categories</h2>
+        <h2 className="text-xl text-white mt-2 mb-2">Selectable Categories</h2>
         {categories.map((category) => (
           <button
             onClick={(evt) => {
@@ -281,7 +280,7 @@ export const BoardView = () => {
               <h2 className="text-2xl text-black">Priorities</h2>
               {renderPriorityDragList()}
               <button
-                className="btn glass ease-in-out text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300  shadow-lg shadow-blue-500/50 font-medium text-sm px-4 py-2 text-center "
+                className="mt-2 rounded-lg ease-in-out text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br  shadow-lg shadow-blue-500/50 font-medium text-sm px-4 py-2 text-center "
                 onClick={(event) => {
                   updatePriorityRankings();
                   sendPriorityRankingsPutRequests(event)
@@ -340,10 +339,10 @@ export const BoardView = () => {
             </div>
           </div>
           <br></br>
-          <h2 className="text-3xl">Current Jobs</h2>
+          <h2 className="text-white text-3xl mb-3">Current Jobs</h2>
           <div class="shadow-sm btn-group">
             <button
-              className="btn text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium text-sm px-4 py-2 text-center mb-2"
+              className=" text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium text-sm px-4 py-2 text-center mb-2 rounded-l-lg"
               onClick={() => {
                 navigate(`/${boardId}/createjob`);
               }}
@@ -353,7 +352,7 @@ export const BoardView = () => {
             </button>
             <label
               htmlFor="category-modal"
-              className="btn rounded-r-md text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium text-sm px-4 py-2 text-center mb-2"
+              className="rounded-r-md text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium text-sm px-4 py-2 text-center mb-2"
             >
               Manage Categories
             </label>
@@ -363,7 +362,7 @@ export const BoardView = () => {
               className="modal-toggle"
             />
             <div className="modal">
-              <div className="modal-box">
+              <div className="modal-box bg-neutral">
                 <label
                   htmlFor="category-modal"
                   className="btn btn-sm btn-square absolute right-2 top-2"
@@ -375,7 +374,7 @@ export const BoardView = () => {
                 >
                   <IconX />
                 </label>
-                <h3 className="font-bold text-lg">Manage Board Categories</h3>
+                <h3 className="font-bold text-2xl text-white">Manage Board Categories</h3>
                 {manageBoardCategories()}
                 <div className="modal-action">
                   <label
@@ -389,7 +388,7 @@ export const BoardView = () => {
                         });
                     }}
                     htmlFor="category-modal"
-                    className="btn"
+                    className="btn text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700"
                   >
                     Save Changes
                   </label>
