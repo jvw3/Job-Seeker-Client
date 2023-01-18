@@ -3,25 +3,19 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useNavigate } from "react-router-dom";
 import { getAllJobsForBoard, getSingleBoardForUser, getSingleJob, getSingleJobForUser, updateBoardJob } from "../managers/BoardManager";
 
+// Board Category Content Component displays an individual column for a User's Board.
+
 export const BoardCategoryContent = ({
   categoryId,
   categoryName,
   boardId,
-  priorityRankings,
   userBoardCategories,
   setBoardOfTopLevelComponent,
   boardJobs
 }) => {
-  // const [boardJobs, setBoardJobs] = useState([]);
   const navigate = useNavigate();
   const [fetchValue, setFetchValue] = useState(0);
   const [boardJob, setBoardJob] = useState({});
-
-  // useEffect(() => {
-  //   getAllJobsForBoard(boardId).then((userJobs) => {
-  //     setBoardJobs(userJobs);
-  //   });
-  // }, []);
 
   useEffect(() => {
     if (fetchValue > 0) {
@@ -52,28 +46,6 @@ export const BoardCategoryContent = ({
       return;
     }
   }, [fetchValue]);
-
-  // const handleOnDragEnd = (result) => {
-  //   const { destination, source, draggableId } = result;
-
-  // if destination doesn't exist aka user dropped item outside of all dropzones.
-  // if (!destination) {
-  //   return;
-  // }
-  // if these conditions both evaluate to true, then the user dropped the draggable item back to its initial position and column.
-  //   if (
-  //     destination.droppableId === source.droppableId &&
-  //     destination.index === source.index
-  //   ) {
-  //     return;
-  //   }
-
-  //   const reorderedJobs = Array.from(boardJobs);
-  //   const [reorderedItem] = reorderedJobs.splice(source.index, 1);
-  //   reorderedJobs.splice(destination.index, 0, reorderedItem);
-
-  //   setBoardJobs(reorderedJobs);
-  // };
 
   const JobCategoryPutRequest = (event, boardJobId, catId) => {
     event.preventDefault();
@@ -112,7 +84,7 @@ export const BoardCategoryContent = ({
       return (
         <>
           <div
-            className={` bg-white border-solid border basis-1/6  p-2.5 rounded-md shadow-xl
+            className={` bg-white border-solid border basis-1/6  p-2.5 rounded-md shadow-md shadow-blue-500 ml-2 mr-2
                       `}
           >
             <div className="flex-col">
@@ -141,7 +113,7 @@ export const BoardCategoryContent = ({
               </div>
               <div>
                 <button
-                  className=" text-white bg-seeker-blue    shadow-blue-500/50 font-medium rounded-lg text-sm px-2 py-2 text-center mr-2 mb-2"
+                  className="px-2 py-2 mb-2 mr-2 text-sm font-medium text-center text-white rounded-lg bg-seeker-blue shadow-blue-500/50"
                   onClick={() => {
                     navigate(`/boards/${boardId}/jobs/${boardJob.id}`);
                   }}
@@ -180,9 +152,9 @@ export const BoardCategoryContent = ({
 
   return (
     <>
-      <div className="w-60 flex-1 overflow-y-auto pl-3 pr-3">
-        <div className="sticky top-0 bg-slate-50">
-          <h2 className="text-xl text-secondary text-center">
+      <div className="flex-1 pl-3 pr-3 overflow-y-auto w-60">
+        <div className="sticky top-0 pt-2 pb-2 bg-slate-50">
+          <h2 className="text-2xl text-center text-secondary">
             {categoryName}
           </h2>
         </div>

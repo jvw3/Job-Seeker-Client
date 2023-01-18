@@ -5,6 +5,7 @@ import { IconArrowLeft} from "@tabler/icons"
 import SalyDeskImage from "../views/HompageImages/Saly-10.png";
 import SeekerLogoBlueZoom from "../views/HompageImages/SeekerLogoBlueZoom.svg";
 
+// Login Component handles authenticating users on sign in.
 
 export const Login = ({ setToken, setUserId, setIsStaff }) => {
   const username = useRef()
@@ -33,11 +34,8 @@ export const Login = ({ setToken, setUserId, setIsStaff }) => {
     })
   }
 
-
-    const NavLogoText = "< JobSeeker />";
-
   return (
-    <main className="min-h-screen flex justify-center  bg-pinkswirl h-full">
+    <main className="flex justify-center h-full min-h-screen bg-pinkswirl">
       <div className="flex-col w-1/2 p-5">
         <button
           onClick={() => {
@@ -48,26 +46,26 @@ export const Login = ({ setToken, setUserId, setIsStaff }) => {
         </button>
         <div className="h-full">
           <div className="flex justify-center">
-            <section className="self-center border p-10 rounded-md bg-white w-3/4 flex-col h-1/2 mt-14">
+            <section className="flex-col self-center w-3/4 p-10 bg-white border rounded-md h-1/2 mt-14">
               <img className="w-1/2 mb-10 ml-32" src={SeekerLogoBlueZoom}></img>
               <form className="" onSubmit={handleLogin}>
                 <fieldset className="flex-col space-y-2">
-                  <div className="formSection rounded-md border border-gray-300 px-3 py-2 shadow-sm focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
+                  <div className="px-3 py-2 border border-gray-300 rounded-md shadow-sm formSection focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
                     <label className="block text-xs font-medium text-gray-900">
                       Username
                     </label>
                     <input
-                      className="form-input block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
+                      className="block w-full p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
                       type="text"
                       ref={username}
                     />
                   </div>
-                  <div className="formSection rounded-md border border-gray-300 px-3 py-2 shadow-sm focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
+                  <div className="px-3 py-2 border border-gray-300 rounded-md shadow-sm formSection focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
                     <label className="block text-xs font-medium text-gray-900">
                       Password
                     </label>
                     <input
-                      className="form-input block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
+                      className="block w-full p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
                       type="password"
                       ref={password}
                     />
@@ -76,7 +74,7 @@ export const Login = ({ setToken, setUserId, setIsStaff }) => {
                 <div className="field is-grouped">
                   <div className="control">
                     <button
-                      className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2 mt-4 w-40"
+                      className="w-40 px-4 py-2 mt-4 mb-2 mr-2 text-sm font-medium text-center text-white rounded-lg shadow-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-blue-500/50"
                       type="submit"
                     >
                       Log in
@@ -93,7 +91,7 @@ export const Login = ({ setToken, setUserId, setIsStaff }) => {
           </div>
         </div>
       </div>
-      <section className="bg-home w-1/2 flex justify-center">
+      <section className="flex justify-center w-1/2 bg-home">
         <img className="h-3/4" src={SalyDeskImage}></img>
       </section>
     </main>
