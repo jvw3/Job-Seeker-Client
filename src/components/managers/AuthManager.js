@@ -1,4 +1,4 @@
-
+// Auth Manager Component holds all Authentication related requests.
 
 export const LoginUser = (user) => {
   return fetch("http://localhost:8000/login", {
