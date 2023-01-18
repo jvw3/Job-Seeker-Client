@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { createCustomPrep, getSingleInterviewPrep } from "../managers/InterviewManager";
 
+// Add Custom Preps Component is a modal that handles the creation of new Custom Preps material.
+
 export const AddCustomPreps = ({ prepId, sendToast }) => {
   const [interviewPrep, setPrep] = useState(0)
   const [customPrep, setCustomPrep] = useState({
@@ -36,11 +38,10 @@ export const AddCustomPreps = ({ prepId, sendToast }) => {
   return (
     <>
       <main>
-        <h1 className="text-3xl">New Prep</h1>
       </main>
       <form>
-        <fieldset className="formSection">
-          <div className="formSection rounded-md border border-gray-300 px-3 py-2 shadow-sm focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
+        <fieldset className="mt-3 mb-3 space-y-3">
+          <div className="px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm formSection focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
             <label
               className="block text-xs font-medium text-gray-900"
               htmlFor="name"
@@ -51,7 +52,7 @@ export const AddCustomPreps = ({ prepId, sendToast }) => {
               required
               autoFocus
               type="text"
-              className="form-input block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
+              className="block w-full p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
               placeholder="Name this interview prep"
               value={customPrep.title}
               onChange={(evt) => {
@@ -61,7 +62,7 @@ export const AddCustomPreps = ({ prepId, sendToast }) => {
               }}
             />
           </div>
-          <div className="formSection rounded-md border border-gray-300 px-3 py-2 shadow-sm focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
+          <div className="px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm formSection focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
             <label
               className="block text-xs font-medium text-gray-900"
               htmlFor="name"
@@ -72,7 +73,7 @@ export const AddCustomPreps = ({ prepId, sendToast }) => {
               required
               autoFocus
               type="text"
-              className="form-input block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
+              className="block w-full p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
               placeholder="Describe this interview prep"
               value={customPrep.description}
               onChange={(evt) => {
@@ -82,7 +83,7 @@ export const AddCustomPreps = ({ prepId, sendToast }) => {
               }}
             />
           </div>
-          <div className="formSection rounded-md border border-gray-300 px-3 py-2 shadow-sm focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
+          <div className="px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm formSection focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
             <label
               className="block text-xs font-medium text-gray-900"
               htmlFor="name"
@@ -94,7 +95,7 @@ export const AddCustomPreps = ({ prepId, sendToast }) => {
               required
               autoFocus
               type="text"
-              className="form-input block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
+              className="block w-full p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
               placeholder="Write your content"
               value={customPrep.content}
               onChange={(evt) => {
@@ -106,10 +107,8 @@ export const AddCustomPreps = ({ prepId, sendToast }) => {
           </div>
         </fieldset>
         <button
-          onClick={(clickEvent) =>
-          newPrep(clickEvent)
-        }
-          className=" text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition ease-in-out focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
+          onClick={(clickEvent) => newPrep(clickEvent)}
+          className="px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white transition ease-in-out rounded-lg shadow-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-blue-500/50"
         >
           Add Custom Prep
         </button>
