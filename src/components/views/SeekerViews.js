@@ -9,20 +9,20 @@ import { IndividualJobDetails } from "../Job-boards/IndividualJobDetails";
 import { Authorized } from "./Authorized";
 import { JobEdit } from "../Job-boards/JobEdit";
 import { ManageTags } from "../Job-boards/ManageBoardTags";
-import { ManageBoardCategories } from "../Job-boards/ManageBoardCategories";
 import { Register } from "../auth/Register";
-import { HomePageLanding } from "./HomePageLanding";
 import { InterviewPrep } from "../interviews/InterviewPrepHome";
 import { IndividualInterviewDetails } from "../interviews/InterviewDetails";
 import { InterviewForm } from "../interviews/InterviewForm";
-import { ContactList } from "../network/ContactList";
 import { ContactForm } from "../network/AddContact";
 import { ContactEdit } from "../network/ContactEdit";
 import { ResourceNotFound } from "../errorPages/NotFound";
-import { InterviewPrepForm } from "../interviews/InterviewPrepForm";
 import { UserProfile } from "../profile/UserProfile";
 import { NetworkHome } from "../network/NetworkHome";
-import { BoardManager } from "../Job-boards/BoardManager";
+import { BoardManager } from "../Job-boards/ManageBoard";
+import { InterviewEdit } from "../interviews/InterviewEdit";
+import { IndividualContact } from "../network/IndividualContact";
+
+// Seeker Views Component handles the routes for an authorized seeker (regular-non admin user)
 
 export const SeekerViews = ({ token, setToken }) => {
   return (
@@ -32,10 +32,7 @@ export const SeekerViews = ({ token, setToken }) => {
       <Route path="/register" element={<Register setToken={setToken} />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/boards/:boardId" element={<BoardView />} />
-      <Route
-        path="boards/:boardId/managecategories"
-        element={<ManageBoardCategories />}
-      />
+
       <Route path="/createboard" element={<BoardForm />} />
       <Route
         path="/boards/:boardId/jobs/:jobId/managetags"
@@ -57,11 +54,11 @@ export const SeekerViews = ({ token, setToken }) => {
         element={<IndividualInterviewDetails />}
       />
       <Route path="jobs/:jobId/createinterview" element={<InterviewForm />} />
-      <Route path="/createinterviewprep" element={<InterviewPrepForm />} />
       <Route path="/createcontact" element={<ContactForm />} />
       <Route path="/network/contact/:contactId" element={<ContactEdit />} />
-      <Route path="/editinterview/:interviewId" element={<InterviewForm />} />
+      <Route path="/editinterview/:interviewId" element={<InterviewEdit />} />
       <Route path="/network" element={<NetworkHome />} />
+      <Route path="/contacts/:contactId" element={<IndividualContact />} />
       <Route path="/profile" element={<UserProfile />} />
       <Route path="/boardmanager" element={<BoardManager />} />
     </Routes>
