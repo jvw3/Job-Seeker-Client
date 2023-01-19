@@ -142,11 +142,11 @@ export const JobForm = () => {
     <>
       <main className="flex-col w-full bg-pinkswirl text-black">
         <div className="h-1/6 ">
-          <h1 className="text-white text-4xl p-5">Add New Job</h1>
+          <h1 className="text-white text-4xl p-5 font-quicksand">Add New Job</h1>
         </div>
         <div className="w-full h-5/6 flex justify-center">
-          <div className="border p-10 rounded-md bg-white w-4/5 h-5/6 flex-col">
-            <form className="flex-col">
+          <div className="border p-10 rounded-md bg-white w-2/5 h-80 flex-col">
+            <form className="flex-col space-y-2">
               <fieldset>
                 <div className="forminputfield">
                   <select
@@ -177,7 +177,6 @@ export const JobForm = () => {
                   className="form-control rounded-md"
                   value={boardJob.company}
                   required
-                  autoFocus
                   onChange={(evt) => {
                     const copy = { ...boardJob };
                     copy.company = evt.target.value;
@@ -201,7 +200,6 @@ export const JobForm = () => {
                     className="rounded-md"
                     value={boardJob.category}
                     required
-                    autoFocus
                     onChange={(evt) => {
                       const copy = { ...boardJob };
                       copy.category = evt.target.value;
@@ -244,7 +242,6 @@ export const JobForm = () => {
                 </label>
                 <input
                   required
-                  autoFocus
                   type="number"
                   className="form-input block border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
                   placeholder="Amount in dollars"
@@ -266,7 +263,6 @@ export const JobForm = () => {
                 </label>
                 <input
                   required
-                  autoFocus
                   type="text"
                   className="form-input block border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
                   placeholder="Office Location"
@@ -288,7 +284,6 @@ export const JobForm = () => {
                 </label>
                 <input
                   required
-                  autoFocus
                   type="text"
                   className="form-input block border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
                   placeholder="On-site, Hybrid, or Remote"
