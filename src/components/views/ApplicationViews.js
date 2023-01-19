@@ -3,23 +3,11 @@ import { useState, useEffect } from "react";
 import { AdminViews } from "./AdminViews";
 import { SeekerViews } from "./SeekerViews";
 
+// Application Views Component renders the correct user view depending on the isStaff property.
 
 
-
-
-export const ApplicationViews = ({ token, setToken }) => {
-  const [currentUser, setCurrentUser] = useState({})
-
-  useEffect(() => {
-    getCurrentUser().then((user) => {
-      setCurrentUser(user);
-    });
-  }, []);
-
-
-    if (currentUser.isStaff) {
-      return <AdminViews token={token} setToken={setToken} />;
-    } else {
+export const ApplicationViews = ({ token, setToken, isStaff }) => {
+    
       return <SeekerViews token={token} setToken={setToken} />;
-    }
+    
 };
