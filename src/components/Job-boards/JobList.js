@@ -10,6 +10,7 @@ import {
 } from "../managers/BoardManager";
 import { BoardCategoryContent } from "./BoardCatergoryContent";
 
+// Job List Component renders the entire list of columns/categories for a users job boards.
 
 export const JobList = ({
   userBoardCategories,
@@ -20,7 +21,7 @@ export const JobList = ({
 }) => {
   return (
     <>
-      <div className="flex bg-slate-50 w-full overflow-auto">
+      <div className="flex w-full overflow-x-auto bg-slate-50">
         {userBoardCategories?.map((boardCategory) => (
           <BoardCategoryContent
             key={`category--${boardCategory.id}`}

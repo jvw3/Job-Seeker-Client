@@ -19,6 +19,8 @@ import { ContactEdit } from "./ContactEdit";
 import { ToastContainer, toast } from "react-toastify";
 import { NetworkMeetingForm } from "./NetworkMeetingForm";
 
+// Contact List Component renders a table that holds all contacts.
+
 
 export const ContactList = () => {
   const [contacts, setContacts] = useState([]);
@@ -42,57 +44,14 @@ export const ContactList = () => {
   };
 
 
-  const renderEditContactModal = (contact) => {
-    return (
-      <>
-        <label
-          htmlFor="my-modal-editcontact"
-          className="btn text-xs w-10 h-8 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 text-white"
-        >
-          Edit
-        </label>
-        <input
-          type="checkbox"
-          id="my-modal-editcontact"
-          className="modal-toggle"
-        />
-        <div className="modal">
-          <div className="modal-box relative">
-            <label
-              htmlFor="my-modal-editcontact"
-              className="btn btn-sm btn-circle absolute right-2 top-2"
-            >
-              ✕
-            </label>
-            <h3 className="text-lg font-bold">Edit Contact</h3>
-            <div>
-              <ContactEdit sendEditContactToast={sendEditContactToast} contactId={contact.id} />
-            </div>
-            <div className="modal-action">
-              <label
-                onClick={() => {
-                  getContactsForUser().then((userContacts) => {
-                    setContacts(userContacts);
-                  });
-                }}
-                htmlFor="my-modal-editcontact"
-                className="btn"
-              >
-                Close
-              </label>
-            </div>
-          </div>
-        </div>
-      </>
-    );
-  }
+
 
   const renderCreateMeetingModal = (contact) => {
     return (
       <>
         <label
           htmlFor="my-modal-createmeeting"
-          className="btn text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium text-sm px-4 py-2 text-center mr-2 mb-2"
+          className="px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white shadow-lg btn bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80"
         >
           <IconCalendarEvent />
         </label>
@@ -103,10 +62,10 @@ export const ContactList = () => {
           className="modal-toggle"
         />
         <div className="modal">
-          <div className="modal-box relative">
+          <div className="relative modal-box">
             <label
               htmlFor="my-modal-createmeeting"
-              className="btn btn-sm btn-circle absolute right-2 top-2"
+              className="absolute btn btn-sm btn-circle right-2 top-2"
             >
               ✕
             </label>
@@ -134,7 +93,7 @@ export const ContactList = () => {
   const renderNetworkTable = () => {
     return (
       <>
-        <table className="shadow-2xl w-11/12">
+        <table className="w-11/12 shadow-2xl">
           <thead className="bg-gray-100">
             <tr>
               <th
@@ -181,19 +140,13 @@ export const ContactList = () => {
               </th>
               <th
                 scope="col"
-                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-              >
-                Notes
-              </th>
-              <th
-                scope="col"
                 className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 border-transparent rounded-tr-md"
               >
                 Manage Contact
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200 bg-white">
+          <tbody className="bg-white divide-y divide-gray-200">
             {contacts.map((contact) => (
               <>
                 <tr
@@ -203,22 +156,22 @@ export const ContactList = () => {
                   }  `}
                   key={`contact--${contact.id}`}
                 >
-                  <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                  <td className="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-6">
                     {contact.name}
                   </td>
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
                     {contact.current_role}
                   </td>
-                  <td className="hitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  <td className="px-3 py-4 text-sm text-gray-500 hitespace-nowrap">
                     {contact.current_company}
                   </td>
-                  <td className="hitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  <td className="px-3 py-4 text-sm text-gray-500 hitespace-nowrap">
                     {contact.last_contact}
                   </td>
-                  <td className="text-center hitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                  <td className="py-4 pl-4 pr-3 text-sm font-medium text-center text-gray-900 hitespace-nowrap sm:pl-6">
                     {contact.number_of_contacts}
                   </td>
-                  <td className="text-center hitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                  <td className="py-4 pl-4 pr-3 text-sm font-medium text-center text-gray-900 hitespace-nowrap sm:pl-6">
                     {contact.connection_level}
                   </td>
                   <td>
@@ -226,50 +179,25 @@ export const ContactList = () => {
                       onClick={() =>
                         openLinkInNewTab(`https://${contact.linked_in}`)
                       }
-                      className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-4  text-center mr-2 mb-2"
+                      className="px-4 mb-2 mr-2 text-sm font-medium text-center text-white rounded-lg shadow-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80"
                     >
                       <IconBrandLinkedin />
                     </button>
                   </td>
-                  <td className="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                    <label
-                      htmlFor="my-modal-notes"
-                      className="btn text-xs w-12 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 text-white "
-                    >
-                      View Notes
-                    </label>
-                    <input
-                      type="checkbox"
-                      id="my-modal-notes"
-                      className="modal-toggle"
-                    />
-                    <div className="modal">
-                      <div className="modal-box relative">
-                        <label
-                          htmlFor="my-modal-notes"
-                          className="btn btn-sm btn-circle absolute right-2 top-2"
-                        >
-                          ✕
-                        </label>
-                        <h3 className="text-lg font-bold">
-                          Notes about {contact.name}:
-                        </h3>
-                        <p className="py-4">{contact.notes}</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="btn-group mt-5">
-                    {renderEditContactModal(contact)}
+                  <td className="mt-5 btn-group">
+                    <button onClick={() => {navigate(`/contacts/${contact.id}`)}} className="px-4 py-2 mb-2 text-sm font-medium text-white rounded-l-lg shadow-lg ftext-center bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-blue-500/50 dark:focus:ring-blue-800">
+                      {" "}
+                      View Contact Details
+                    </button>
                     {renderDeleteButton(contact.id)}
-                    {renderCreateMeetingModal(contact)}
                   </td>
                 </tr>
               </>
             ))}
           </tbody>
-          <tfoot className="bg-gray-100 h-10">
+          <tfoot className="h-10 bg-gray-100">
             <tr>
-              <th className="rounded-bl-md border-separate" scope="row"></th>
+              <th className="border-separate rounded-bl-md" scope="row"></th>
               <th scope="row"></th>
               <th scope="row"></th>
               <th scope="row"></th>
@@ -278,7 +206,7 @@ export const ContactList = () => {
               <th scope="row"></th>
               <th scope="row"></th>
               <th scope="row"></th>
-              <th className="rounded-br-md border-separate" scope="row"></th>
+              <th className="border-separate rounded-br-md" scope="row"></th>
             </tr>
           </tfoot>
         </table>
@@ -341,7 +269,7 @@ export const ContactList = () => {
     return (
       <>
         <button
-          className=" btn text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
+          className="px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white rounded-lg shadow-lg btn bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80"
           onClick={() => {
             getContactsForUser()
               .then((userContacts) => {
@@ -354,10 +282,10 @@ export const ContactList = () => {
         >
           Reset
         </button>
-        <div className="input-group w-1/4">
+        <div className="w-1/4 input-group">
           <input
             type="text"
-            className="w-56 rounded-md h-10 text-slate-500"
+            className="w-56 h-10 rounded-md text-slate-500"
             placeholder="Search contacts by name"
             onKeyDown={handleKeyPress}
             onChange={(changeEvent) => {
@@ -366,7 +294,7 @@ export const ContactList = () => {
             }}
           ></input>
           <button
-            className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm h-10 px-4 py-2 text-center mr-2 mb-2"
+            className="h-10 px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white rounded-lg shadow-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80"
             onClick={() => {
               sendContactSearchRequestToApi(searchedTitle);
             }}
@@ -378,12 +306,6 @@ export const ContactList = () => {
     );
   };
 
-    //  Function: displays a toast (react toastify) giving feedback to the user that a contact has been updated.
-  const sendEditContactToast = () => {
-    toast.success("Your contact has been updated.", {
-      toastId: 'success1'
-    });
-  };
 
   const sendCreateNetworkMeetingToast = () => {
     toast.success("A new meeting has been updated.", {
@@ -416,7 +338,7 @@ export const ContactList = () => {
             onClick={() => {
               sendSortRequestToApi(sortValue);
             }}
-            className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm h-10 px-4 py-2 text-center mr-2 mb-2"
+            className="h-10 px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white rounded-lg shadow-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80"
           >
             Sort Contacts
           </button>
@@ -447,7 +369,7 @@ export const ContactList = () => {
                 }
               );
             }}
-            className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm h-10 px-4 py-2 text-center mr-2 mb-2"
+            className="h-10 px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white rounded-lg shadow-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80"
           >
             Filter
           </button>
@@ -460,9 +382,7 @@ export const ContactList = () => {
       return (
         <>
           <button
-            className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300
-          shadow-lg shadow-blue-500/50
-          dark:focus:ring-blue-800 font-medium text-sm px-4 py-2 text-center mb-2"
+            className="px-4 py-2 mb-2 text-sm font-medium text-center text-white rounded-r-lg shadow-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-blue-500/50 dark:focus:ring-blue-800"
             onClick={() => {
               if (
                 window.confirm("Are you sure you want to delete this Contact?")
@@ -487,11 +407,11 @@ export const ContactList = () => {
 
   return (
     <>
-      <main className=" w-full flex-col bg-pinkswirl">
+      <main className="flex-col w-full bg-pinkswirl">
         <div>
           <div>
             <button
-              className="btn text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
+              className="px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white rounded-lg shadow-lg btn bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80"
               onClick={() => {
                 navigate(`/createcontact`);
               }}
