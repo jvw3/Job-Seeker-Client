@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
-  deleteBoard,
-  deleteBoardJob,
   getSingleInterviewForUser,
 } from "../managers/BoardManager";
-import { deleteCustomPrep, deleteInterview } from "../managers/InterviewManager";
+import { deleteCustomPrep, deleteInterview, updateInterview } from "../managers/InterviewManager";
 import { AddCustomPreps } from "./AddCustomPreps";
-import { IconX } from "@tabler/icons";
+import { IconTrash,} from "@tabler/icons";
 import { ToastContainer, toast } from "react-toastify";
+
+// Individual Interview Details Component displays all interview related information for a user's interview.
 
 export const IndividualInterviewDetails = () => {
   const [interview, setInterview] = useState({});
@@ -21,11 +21,11 @@ export const IndividualInterviewDetails = () => {
     });
   }, []);
 
-  const renderDeleteButton = (id) => {
+  const renderDeleteButtonForInterview = (id) => {
     return (
       <>
         <button
-          className=" text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition ease-in-out focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-lg shadow-blue-500/50 font-medium rounded-r-lg text-sm px-4 py-2 text-center mr-2 mb-2"
+          className="px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white transition ease-in-out rounded-r-lg shadow-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-blue-500/50"
           onClick={() => {
             if (
               window.confirm("Are you sure you want to delete this Interview?")
@@ -40,6 +40,25 @@ export const IndividualInterviewDetails = () => {
       </>
     );
   };
+  const renderDeleteButtonForCustomPrep = (id) => {
+    return (
+      <>
+        <button
+          className="absolute top-0 right-0 px-4 py-2 mt-1 mb-2 mr-2 text-sm font-medium text-center text-white transition ease-in-out rounded-lg shadow-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-blue-500/50"
+          onClick={() => {
+            if (
+              window.confirm("Are you sure you want to delete this Custom Prep?")
+            ) {
+              deleteRequestForCustomPrep(id);
+            }
+          }}
+        >
+          {" "}
+          <IconTrash />
+        </button>
+      </>
+    );
+  };
 
     const deleteRequestForCustomPrep = (id) => {
       deleteCustomPrep(id)
@@ -48,7 +67,6 @@ export const IndividualInterviewDetails = () => {
             setInterview(userInterview);
           });
         })
-        
     };
 
   const deleteRequestForInterview = (id) => {
@@ -62,16 +80,22 @@ export const IndividualInterviewDetails = () => {
   const renderAddCustomPrepModal = () => {
     return (
       <>
-        <label htmlFor="my-modal" className="btn">
+        <label
+          htmlFor="my-modal"
+          className="px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white transition ease-in-out rounded-lg shadow-lg btn bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-blue-500/50"
+        >
           Add Custom Preps
         </label>
         <input type="checkbox" id="my-modal" className="modal-toggle" />
         <div className="modal">
-          <div className="modal-box bg-slate-50">
-            <h3 className="font-bold text-lg">
-              Congratulations random Internet user!
+          <div className="modal-box bg-neutral">
+            <h3 className="text-2xl font-bold text-white">
+              Add New Custom Prep
             </h3>
-            <AddCustomPreps sendToast={sendToast} prepId={interview?.prep?.id} />
+            <AddCustomPreps
+              sendToast={sendToast}
+              prepId={interview?.prep?.id}
+            />
             <div className="modal-action">
               <label
                 onClick={() => {
@@ -82,7 +106,7 @@ export const IndividualInterviewDetails = () => {
                   );
                 }}
                 htmlFor="my-modal"
-                className="btn"
+                className="px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white transition ease-in-out rounded-lg shadow-lg btn bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-blue-500/50"
               >
                 Close
               </label>
@@ -102,7 +126,7 @@ export const IndividualInterviewDetails = () => {
         <input type="checkbox" id="my-modal" className="modal-toggle" />
         <div className="modal">
           <div className="modal-box bg-slate-50">
-            <h3 className="font-bold text-lg">
+            <h3 className="text-lg font-bold">
               Congratulations random Internet user!
             </h3>
             <AddCustomPreps />
@@ -125,86 +149,111 @@ export const IndividualInterviewDetails = () => {
     );
   };
 
-  const doFunc = (id) => {
-    renderDeleteModal(id)
-  }
+  const putRequestForInterviewStatusScheduled = (event, interview) => {
+    event.preventDefault();
 
-  const renderDeleteModal = (id) => {
-    return (
-      <>
-        <input
-          type="checkbox"
-          id="deletecustomprep-modal"
-          className="modal-toggle"
-        />
-        <div className="modal">
-          <div className="modal-box">
-            <h3 className="font-bold text-lg">
-              Are you sure you want to delete this custom prep?
-            </h3>
-            <div className="flex justify-end gap-x-3">
-              <div className="modal-action ">
-                <label onClick={() => {
-                  deleteRequestForCustomPrep(id)
-                }} htmlFor="deletecustomprep-modal" className="btn">
-                  Yes
-                </label>
-              </div>
-              <div className="modal-action">
-                <label htmlFor="deletecustomprep-modal" className="btn">
-                  Cancel
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
-      </>
-    );
-  }
+    const interviewToApi = {
+      date: interview.date,
+      is_complete: interview.is_complete,
+      interview_team: interview.interview_team,
+      interview_feedback: interview.interview_feedback,
+    };
+
+    updateInterview(interviewToApi, interview.id)
+      .then(() => getSingleInterviewForUser())
+      .then((interview) => setInterview(interview));
+
+    toast.success(`Your interview has been updated to: Scheduled.`);
+  };
+
+  const putRequestForInterviewStatusComplete = (event, interview) => {
+    event.preventDefault();
+
+    const interviewToApi = {
+      date: interview.date,
+      is_complete: interview.is_complete,
+      interview_team: interview.interview_team,
+      interview_feedback: interview.interview_feedback,
+    };
+
+    updateInterview(interviewToApi, interview.id)
+      .then(() => getSingleInterviewForUser())
+      .then((interview) => setInterview(interview))
+
+    toast.success(`Your interview has been updated to: Inactive.`);
+  };
+
+
 
   return (
     <>
-      <main className="flex-col w-full bg-pinkswirl pt-5 pl-5">
-        <h1 className="text-3xl">
+      <main className="flex-col w-full pt-5 pl-5 bg-pinkswirl">
+        <h1 className="text-4xl text-white font-quicksand">
           {interview?.board_job?.custom_company === ""
             ? interview?.board_job?.company?.name
             : interview?.board_job?.custom_company}{" "}
           Interview
         </h1>
-        <h2 className="text-2xl">
+        <h2 className="text-2xl text-white font-quicksand">
           {interview?.board_job?.custom_company === ""
             ? interview?.board_job?.job?.title
             : interview?.board_job?.custom_company}
         </h2>
         <br></br>
         <button
-          className=" text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-lg shadow-blue-500/50 font-medium rounded-l-lg text-sm px-4 py-2 text-center  mb-2"
+          className="px-4 py-2 mb-2 text-sm font-medium text-center text-white rounded-l-lg shadow-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-blue-500/50"
           onClick={() => {
             navigate(`/editinterview/${interviewId}`);
           }}
         >
           Edit Interview
         </button>
-        {renderDeleteButton(interviewId)}
-        <div></div>
-        <h2 className="text-2xl">Company Info:</h2>
-        <p>{interview?.prep?.company_info}</p>
-        <h2 className="text-2xl">Preparation Material:</h2>
+        {renderDeleteButtonForInterview(interviewId)}
+        <div className="mt-4 mb-4">
+          <div
+            data-theme="othertheme"
+            className="bg-white tabs tabs-boxed w-fit"
+          >
+            <a
+              onClick={(event) => {
+                putRequestForInterviewStatusComplete(event, interview);
+              }}
+              className={`tab text-seeker-blue ${
+                !interview?.is_complete ? "tab-active text-primary" : ""
+              }`}
+            >
+              Scheduled
+            </a>
+            <a
+              onClick={(event) => {
+                putRequestForInterviewStatusScheduled(event, interview);
+              }}
+              className={`tab ${
+                interview?.is_complete ? "tab-active text-primary" : ""
+              } `}
+            >
+              Complete
+            </a>
+          </div>
+        </div>
+        <h2 className="text-2xl text-white">Company Info:</h2>
+        <p className="text-white">{interview?.prep?.company_info}</p>
+        <h2 className="text-2xl text-white">Preparation Material:</h2>
         {renderAddCustomPrepModal()}
-        <div className="w-1/2 flex-col space-y-5 mt-10">
+        <div className="flex-col w-1/2 mt-5 space-y-5">
           {interview?.prep?.custom_preps?.map((customPrep) => (
             <>
-              <div className="bg-slate-50 border rounded-md h-36 w-5/6 flex-col relative p-5">
+              <div className="relative flex-col w-5/6 p-5 border rounded-md bg-slate-50 h-36">
                 <div className="text-2xl text-seeker-blue">
                   Title: {customPrep?.title}
                 </div>
-                <div className=" text-seeker-blue">
+                <div className=" text-slate-600">
                   Description: {customPrep?.description}
                 </div>
-                <div className="text-seeker-blue">
+                <div className="text-slate-600">
                   Content: {customPrep?.content}
                 </div>
-                {doFunc(customPrep?.id)}
+                {renderDeleteButtonForCustomPrep(customPrep?.id)}
               </div>
             </>
           ))}
@@ -215,12 +264,3 @@ export const IndividualInterviewDetails = () => {
   );
 };
 
-// h2 className="text-2xl">Questions To Ask:</h2>
-//         {interview?.prep?.questions.map((question) => (
-//           <div>{question.content}</div>
-//         ))}
-//         <br></br>
-//         <br></br>
-//         <br></br>
-//         <br></br>
-//         {renderAddPrepQuestionModal()}
