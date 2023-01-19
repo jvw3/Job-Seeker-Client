@@ -11,6 +11,9 @@ import {
   IconFiles,
   IconBrowserCheck,
 } from "@tabler/icons";
+
+// SidebarNavigation component renders the sidebar for seeker and admin views.
+
 export const SideBarNavigation = ({isStaff}) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(true);
@@ -25,10 +28,10 @@ export const SideBarNavigation = ({isStaff}) => {
             open ? "w-72" : "w-20"
           } duration-500 bg-pinkswirl bg-cover text-white px-4`}
         >
-          <div className="py-3 flex justify-end">
+          <div className="flex justify-end py-3">
             <IconMenu2 onClick={() => setOpen(!open)} />
           </div>
-          <div className="mt-4 flex flex-col gap-4 relative">
+          <div className="relative flex flex-col gap-4 mt-4">
             <Link
               to="/dashboard"
               className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-blue-900 rounded-md ${
@@ -98,6 +101,23 @@ export const SideBarNavigation = ({isStaff}) => {
               </h2>
             </Link>
             <Link
+              to="/profile"
+              className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-blue-900 rounded-md ${
+                location.pathname === "/profile" ? "bg-blue-500" : ""
+              }`}
+            >
+              <div>
+                <IconUserCheck />
+              </div>
+              <h2
+                className={`whitespace-pre duration-500 ${
+                  !open ? "opacity-0 " : ""
+                }`}
+              >
+                Profile
+              </h2>
+            </Link>
+            <Link
               to="/dashboard"
               className="flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-blue-900 rounded-md"
             >
@@ -126,15 +146,16 @@ export const SideBarNavigation = ({isStaff}) => {
   };
 
   const renderAdminSideBar = () => {
-    return <main
+    return (
+      <main
         className={`min-h-screen ${
           open ? "w-72" : "w-20"
         } duration-500 bg-pinkswirl bg-cover text-white px-4`}
       >
-        <div className="py-3 flex justify-end">
+        <div className="flex justify-end py-3">
           <IconMenu2 onClick={() => setOpen(!open)} />
         </div>
-        <div className="mt-4 flex flex-col gap-4 relative">
+        <div className="relative flex flex-col gap-4 mt-4">
           <Link
             to="/dashboard"
             className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-blue-900 rounded-md ${
@@ -157,13 +178,21 @@ export const SideBarNavigation = ({isStaff}) => {
             className="flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-blue-900 rounded-md"
           >
             <div>
-              <IconLogout />
+              <IconLogout
+                onClick={() => {
+                  localStorage.removeItem("seeker_token");
+                  localStorage.removeItem("userId");
+                  localStorage.removeItem("isStaff");
+                  navigate("/");
+                  window.location.reload("/");
+                }}
+              />
             </div>
             <h2
               onClick={() => {
                 localStorage.removeItem("seeker_token");
                 localStorage.removeItem("userId");
-                localStorage.removeItem("isStaff");;
+                localStorage.removeItem("isStaff");
                 navigate("/");
                 window.location.reload("/");
               }}
@@ -176,6 +205,7 @@ export const SideBarNavigation = ({isStaff}) => {
           </Link>
         </div>
       </main>
+    );
   }
 
   return <>{renderSeekerSideBar()}</>;

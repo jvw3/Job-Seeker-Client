@@ -5,6 +5,8 @@ import {
   getUpcomingInterviewsForUser,
 } from "../managers/InterviewManager";
 
+// Interview Prep Home Component displays all upcoming interviews for a user.
+
 export const InterviewPrep = () => {
   const [upcomingInterviews, setUpcomingInterviews] = useState([]);
   const [interviewPreps, setInterviewPreps] = useState([]);
@@ -29,7 +31,7 @@ export const InterviewPrep = () => {
             onClick={() => {
               navigate(`/interviews/${interviewId}`);
             }}
-            className="transition-all duration-500 ease-in-out text-white bg-black hover:bg-grey focus:ring-4 focus:outline-none focus:ring-blue-300  shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
+            className="px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white transition-all duration-500 ease-in-out bg-black rounded-lg shadow-lg hover:bg-grey focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-blue-500/50"
           >
             Prepare for interview
           </button>
@@ -47,14 +49,14 @@ export const InterviewPrep = () => {
 
   return (
     <>
-      <main className="bg-pinkswirl w-full h-screen pt-8 pl-8">
-        <h1 className="text-5xl font-quicksand text-white">Interview Prep</h1>
-        <h2 className="text-3xl pt-5 pb-5 text-center font-roboto text-white">
+      <main className="w-full h-screen pt-8 pl-8 bg-pinkswirl">
+        <h1 className="text-5xl text-white font-quicksand">Interview Prep</h1>
+        <h2 className="pt-5 pb-5 text-3xl text-center text-white font-roboto">
           Upcoming Interviews
         </h2>
-        <div className="flex justify-center h-1/2 space-x-10">
+        <div className="flex justify-center space-x-10 h-1/2">
           {upcomingInterviews.map((upcomingInterview) => (
-            <div className="bg-white w-1/4 h-2/4 p-5 rounded-lg">
+            <div className="w-1/4 p-5 bg-white rounded-lg h-2/4">
               <div className="text-2xl text-seeker-blue">
                 {upcomingInterview?.board_job?.job?.title}
               </div>

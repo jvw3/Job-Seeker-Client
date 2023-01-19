@@ -20,9 +20,12 @@ export const Dashboard = () => {
   const [currentUser, setCurrentUser] = useState({});
   const [upcomingInterviews, setUpcomingInterviews] = useState([])
   const [upcomingMeetings, setUpcomingMeetings] = useState([])
-  const navigate = useNavigate();
   const [interviewTabActive, setInterviewTabActive] = useState(true)
   const [meetingTabActive, setMeetingTabActive] = useState(false)
+  const [priorityTabActive, setPriorityTabActive] = useState(true)
+  const [goalTabActive, setGoalTabActive] = useState(false)
+  const [requirementsTabActive, setRequirementsTabActive] = useState(false)
+  const navigate = useNavigate();
 
   useEffect(() => {
     getActiveBoard().then((userBoards) => {
@@ -68,7 +71,7 @@ export const Dashboard = () => {
               onClick={() => {
                 navigate(`/createinterview`);
               }}
-              className="btn text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
+              className="px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white rounded-lg shadow-lg btn bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80"
             >
               Create your interview Prep!
             </button>
@@ -77,7 +80,7 @@ export const Dashboard = () => {
               onClick={() => {
                 navigate(`/interviews/${interviewId}`);
               }}
-              className="btn text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
+              className="px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white rounded-lg shadow-lg btn bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80"
             >
               Prepare for interview
             </button>
@@ -103,6 +106,33 @@ export const Dashboard = () => {
         return
       }
     }
+    const controlPriorityTab = () => {
+      if (!priorityTabActive) {
+        setPriorityTabActive(true)
+        setGoalTabActive(false)
+        setRequirementsTabActive(false)
+      } else {
+        return
+      }
+    }
+    const controlGoalTab = () => {
+      if (!goalTabActive) {
+        setGoalTabActive(true)
+        setPriorityTabActive(false)
+        setRequirementsTabActive(false)
+      } else {
+        return
+      }
+    }
+    const controlRequirementsTab = () => {
+      if (!requirementsTabActive) {
+        setRequirementsTabActive(true)
+        setGoalTabActive(false)
+        setPriorityTabActive(false)
+      } else {
+        return
+      }
+    }
 
     const formatTime = (date) => {
       const interviewDate = new Date(date);
@@ -116,7 +146,7 @@ export const Dashboard = () => {
           {upcomingInterviews.map((upcomingInterview) => (
             <div
               key={`interview--${upcomingInterview.id}`}
-              className="w-1/4 h-3/4 mt-7 border flex-col card bg-white shadow-xl justify-evenly p-4 hover:-translate-y-2 transition-all ease-in-ou duration-300"
+              className="flex-col w-1/4 p-4 transition-all duration-300 bg-white border shadow-xl h-3/4 mt-7 card justify-evenly hover:-translate-y-2 ease-in-ou"
             >
               <div className="card-title text-slate-600">
                 {upcomingInterview?.board_job?.job?.title}
@@ -141,10 +171,10 @@ export const Dashboard = () => {
           {upcomingMeetings.map((upcomingMeeting) => (
             <div
               key={`activeBoard--${upcomingMeeting.id}`}
-              className="w-1/4 h-3/4 mt-7 border flex-col card bg-white shadow-xl justify-evenly p-4 hover:-translate-y-2 transition-all ease-in-ou duration-300"
+              className="flex-col w-1/4 p-4 transition-all duration-300 bg-white border shadow-xl h-3/4 mt-7 card justify-evenly hover:-translate-y-2 ease-in-ou"
             >
               <div className="card-title text-slate-600">
-                {setUpcomingMeetings?.board_job?.job?.title}
+                {upcomingMeeting?.board_job?.job?.title}
               </div>
               <div className="text-seeker-blue">
                 {upcomingMeeting?.board_job?.company?.name}
@@ -161,7 +191,7 @@ export const Dashboard = () => {
         return renderUpcomingInterviews()
       } else if (interviewTabActive && upcomingInterviews.length > 0) {
         return (
-          <div className="flex h-full place-content-center m-12">
+          <div className="flex h-full m-12 place-content-center">
             <div className="text-5xl text-white">No Upcoming Interviews</div>
           </div>
         );
@@ -169,7 +199,7 @@ export const Dashboard = () => {
         return renderUpcomingMeetings()
       } else if (meetingTabActive && upcomingMeetings.length === 0) {
         return (
-          <div className="flex h-full place-content-center m-12">
+          <div className="flex h-full m-12 place-content-center">
             <div className="text-5xl text-white">No Upcoming Meetings</div>
           </div>
         );
@@ -194,24 +224,27 @@ export const Dashboard = () => {
     <>
       <main className="flex-col w-full h-screen bg-pinkswirl">
         <div className="mb-10">
-          <h1 className="text-5xl mt-4 ml-4 font-quicksand text-white pt-4 pl-4">
+          <h1 className="pt-4 pl-4 mt-4 ml-4 text-5xl text-white font-quicksand">
             {" "}
             {returnTimeAdjustWelcomeText()} {currentUser.firstName}{" "}
           </h1>
         </div>
-        <div className="h-3/6 flex-col justify-evenly space-y-20">
-          <div className="h-96 bg-slate-50 bg-cover rounded-md ml-16 mr-16">
-            <div className="rounded-md h-full">
+        <div className="flex-col space-y-20 h-3/6 justify-evenly">
+          <div className="ml-16 mr-16 bg-cover rounded-md h-96">
+            <div className="h-full rounded-md">
               {activeBoard.map((activeBoard) => (
                 <>
-                  <div key={`activeBoard--${activeBoard.id}`}>
-                    <div className="w-full flex justify-center">
+                  <div
+                    className="w-1/3 rounded-lg bg-slate-50"
+                    key={`activeBoard--${activeBoard.id}`}
+                  >
+                    <div className="flex justify-center w-full">
                       <div className="flex-col">
-                        <h2 className="text-4xl text-seeker-blue pt-3 pb-3">
+                        <h2 className="pt-3 pb-3 text-4xl text-seeker-blue">
                           {activeBoard.title}
                         </h2>
                         <button
-                          className="ml-28 mt-2 btn text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
+                          className="px-4 py-2 mt-2 mb-2 mr-2 text-sm font-medium text-center text-white rounded-lg shadow-lg ml-28 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 dark:focus:ring-blue-800 shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80"
                           onClick={() => {
                             navigate(`/boards/${activeBoard.id}`);
                           }}
@@ -220,29 +253,77 @@ export const Dashboard = () => {
                         </button>
                       </div>
                     </div>
-                    <div className="flex mt-2 h-54">
-                      <div className="w-2/6  m-5 p-4 rounded-md bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700  shadow-xl shadow-blue-500/50 text-white">
-                        <h3 className="text-3xl">Priorities</h3>
-                        {activeBoard?.priorities?.map((priority) => {
-                          return (
-                            <div
-                              key={`priority--${priority.id}`}
-                              className="flex w-52 gap-x-4"
-                            >
-                              {priority?.name}{" "}
-                              {renderPriorityandIcon(priority.name)}
-                            </div>
-                          );
-                        })}
-                      </div>
-                      <div className="w-2/6  m-5 p-4 rounded-md bg-white text-white shadow-xl shadow-blue-500/50 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700">
+                    <div  className="mt-3 bg-secondary tabs tabs-boxed w-fit ml-14">
+                      <a
+                        onClick={() => {
+                          controlPriorityTab();
+                        }}
+                        className={`tab ${
+                          priorityTabActive
+                            ? "tab-active bg-white"
+                            : "text-primary"
+                        }`}
+                      >
+                        Priorities
+                      </a>
+                      <a
+                        className={`tab ${
+                          goalTabActive ? "tab-active bg-white" : "text-primary"
+                        }`}
+                        onClick={() => {
+                          controlGoalTab();
+                        }}
+                      >
+                        Goal
+                      </a>
+                      <a
+                        className={`tab ${
+                          requirementsTabActive
+                            ? "tab-active bg-white"
+                            : "text-primary"
+                        }`}
+                        onClick={() => {
+                          controlRequirementsTab();
+                        }}
+                      >
+                        Requirements
+                      </a>
+                    </div>
+                    <div className="flex mt-1 h-52">
+                      {priorityTabActive ? (
+                        <div className="w-full p-2 m-5 text-white rounded-md shadow-xl h-44 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 shadow-blue-500/50">
+                          <h3 className="text-3xl">Priorities</h3>
+                          {activeBoard?.priorities?.map((priority) => {
+                            return (
+                              <div
+                                key={`priority--${priority.id}`}
+                                className="flex w-52 gap-x-4"
+                              >
+                                {priority?.name}{" "}
+                                {renderPriorityandIcon(priority.name)}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                      {
+                        goalTabActive
+                        ? <div className="w-full p-4 m-5 text-white bg-white rounded-md shadow-xl shadow-blue-500/50 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700">
                         <h3 className="text-3xl">Goal</h3>
                         <h4 className="mt-4">{activeBoard.goal}</h4>
                       </div>
-                      <div className="w-2/6  m-5 p-4 rounded-md bg-white text-white shadow-xl shadow-blue-500/50 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700">
+                      : ""
+                      }
+                      {
+                        requirementsTabActive
+                        ? <div className="w-full p-4 m-5 text-white bg-white rounded-md shadow-xl shadow-blue-500/50 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700">
                         <h3 className="text-3xl ">Requirements</h3>
                         <h4 className="mt-4">{activeBoard.requirements}</h4>
                       </div>
+                      : ""
+                      }
                     </div>
                   </div>
                 </>
@@ -250,10 +331,10 @@ export const Dashboard = () => {
             </div>
           </div>
         </div>
-        <div className="w-full flex justify-center">
+        <div className="flex justify-center w-full">
           <div
             data-theme="othertheme"
-            className="tabs bg-secondary tabs-boxed w-96"
+            className="tabs bg-secondary tabs-boxed w-92"
           >
             <a
               onClick={() => {

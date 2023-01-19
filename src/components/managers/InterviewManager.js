@@ -1,7 +1,19 @@
 
+// Interview Manager Component holds all Interview related requests.
 
 export const createInterview = (interview) => {
   return fetch("http://localhost:8000/interviews", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
+    },
+    body: JSON.stringify(interview),
+  }).then((res) => res.json());
+};
+
+export const createInterviewPrep = (interview) => {
+  return fetch("http://localhost:8000/interviewpreps", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -72,4 +84,15 @@ export const getSingleInterviewPrep = (id) => {
       Authorization: `Token ${localStorage.getItem("seeker_token")}`,
     },
   }).then((res) => res.json());
+};
+
+export const updateInterview = (interview, id) => {
+  return fetch(`http://localhost:8000/interviews/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
+    },
+    body: JSON.stringify(interview),
+  });
 };

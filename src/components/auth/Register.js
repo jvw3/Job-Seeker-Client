@@ -6,6 +6,8 @@ import { IconArrowLeft } from "@tabler/icons";
 import SalyDeskImage from "../views/HompageImages/Saly-10.png";
 import SeekerLogoBlueZoom from "../views/HompageImages/SeekerLogoBlueZoom.svg";
 
+// Register Component handles creation of new users.
+
 export const Register = ({setToken}) => {
   const firstName = useRef()
   const lastName = useRef()
@@ -44,7 +46,7 @@ export const Register = ({setToken}) => {
   }
 
   return (
-    <main className="min-h-screen flex justify-center  bg-pinkswirl h-full">
+    <main className="flex justify-center h-full min-h-screen bg-pinkswirl">
       <div className="flex-col w-1/2 p-5">
         <button
           onClick={() => {
@@ -55,59 +57,59 @@ export const Register = ({setToken}) => {
         </button>
         <div className="h-full">
           <div className="flex justify-center">
-            <section className="self-center border p-5 rounded-md bg-white w-3/4 flex-col h-80">
+            <section className="flex-col self-center w-3/4 p-5 bg-white border rounded-md h-80">
               <img className="w-1/6 ml-60" src={SeekerLogoBlueZoom}></img>
               <form className="column is-two-thirds" onSubmit={handleRegister}>
-                <h1 className="title mb-2"></h1>
-                <p className="mb-2 text-seeker-blue text-2xl font-quicksand">
+                <h1 className="mb-2 title"></h1>
+                <p className="mb-2 text-2xl text-seeker-blue font-quicksand">
                   Create an account
                 </p>
                 <fieldset className="space-y-2">
-                  <div className="formSection rounded-md border border-gray-300 px-3 py-2 shadow-sm focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
+                  <div className="px-3 py-2 border border-gray-300 rounded-md shadow-sm formSection focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
                     <label className="block text-xs font-medium text-gray-900">
                       First Name
                     </label>
                     <div className="control">
                       <input
-                        className="form-input block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
+                        className="block w-full p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
                         type="text"
                         ref={firstName}
                       />
                     </div>
                   </div>
-                  <div className="formSection rounded-md border border-gray-300 px-3 py-2 shadow-sm focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
+                  <div className="px-3 py-2 border border-gray-300 rounded-md shadow-sm formSection focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
                     <label className="block text-xs font-medium text-gray-900">
                       Last Name
                     </label>
                     <div className="control">
                       <input
-                        className="form-input block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
+                        className="block w-full p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
                         type="text"
                         ref={lastName}
                       />
                     </div>
                   </div>
 
-                  <div className="formSection rounded-md border border-gray-300 px-3 py-2 shadow-sm focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
+                  <div className="px-3 py-2 border border-gray-300 rounded-md shadow-sm formSection focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
                     <label className="block text-xs font-medium text-gray-900">
                       Username
                     </label>
                     <div className="control">
                       <input
-                        className="form-input block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
+                        className="block w-full p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
                         type="text"
                         ref={username}
                       />
                     </div>
                   </div>
 
-                  <div className="formSection rounded-md border border-gray-300 px-3 py-2 shadow-sm focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
+                  <div className="px-3 py-2 border border-gray-300 rounded-md shadow-sm formSection focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
                     <label className="block text-xs font-medium text-gray-900">
                       Email
                     </label>
                     <div className="control">
                       <input
-                        className="form-input block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
+                        className="block w-full p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
                         type="email"
                         ref={email}
                       />
@@ -115,15 +117,15 @@ export const Register = ({setToken}) => {
                   </div>
                 </fieldset>
 
-                <div className="field mt-3 mb-3">
+                <div className="mt-3 mb-3 field">
                   <label className="text-seeker-blue font-quicksand">
                     Password
                   </label>
                   <div className="space-y-2">
-                    <div className="formSection rounded-md border border-gray-300 px-3 py-2 shadow-sm focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
+                    <div className="px-3 py-2 border border-gray-300 rounded-md shadow-sm formSection focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
                       <p className="block text-xs font-medium text-gray-900">
                         <input
-                          className="form-input block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
+                          className="block w-full p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
                           type="password"
                           placeholder="Password"
                           ref={password}
@@ -131,10 +133,10 @@ export const Register = ({setToken}) => {
                       </p>
                     </div>
 
-                    <div className="formSection rounded-md border border-gray-300 px-3 py-2 shadow-sm focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
+                    <div className="px-3 py-2 border border-gray-300 rounded-md shadow-sm formSection focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
                       <p className="block text-xs font-medium text-gray-900">
                         <input
-                          className="form-input block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
+                          className="block w-full p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
                           type="password"
                           placeholder="Verify Password"
                           ref={verifyPassword}
@@ -144,25 +146,25 @@ export const Register = ({setToken}) => {
                   </div>
                 </div>
                 <fieldset className="space-y-5">
-                  <div className="formSection rounded-md border border-gray-300 px-3 py-2 shadow-sm focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
+                  <div className="px-3 py-2 border border-gray-300 rounded-md shadow-sm formSection focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
                     <label className="block text-xs font-medium text-gray-900">
                       Current Role:
                     </label>
                     <div className="">
                       <input
-                        className="form-input block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
+                        className="block w-full p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
                         placeholder="Where are you working?"
                         ref={current_role}
                       ></input>
                     </div>
                   </div>
-                  <div className="formSection rounded-md border border-gray-300 px-3 py-2 shadow-sm focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
+                  <div className="px-3 py-2 border border-gray-300 rounded-md shadow-sm formSection focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
                     <label className="block text-xs font-medium text-gray-900">
                       Bio
                     </label>
                     <div className="control">
                       <textarea
-                        className="form-input block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
+                        className="block w-full p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
                         placeholder="Tell us about yourself..."
                         ref={bio}
                       ></textarea>
@@ -172,7 +174,7 @@ export const Register = ({setToken}) => {
                 <div className="field is-grouped">
                   <div className="control">
                     <button
-                      className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2 mt-4 w-40"
+                      className="w-40 px-4 py-2 mt-4 mb-2 mr-2 text-sm font-medium text-center text-white rounded-lg shadow-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-blue-500/50"
                       type="submit"
                     >
                       Submit
@@ -184,7 +186,7 @@ export const Register = ({setToken}) => {
           </div>
         </div>
       </div>
-      <section className="bg-home w-1/2 flex justify-center">
+      <section className="flex justify-center w-1/2 bg-home">
         <img className="h-3/4" src={SalyDeskImage}></img>
       </section>
     </main>

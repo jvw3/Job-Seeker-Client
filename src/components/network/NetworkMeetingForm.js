@@ -1,15 +1,9 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import {
-  createBoard,
-  createBoardJob,
-  getAllCategories,
-  getAllCompanies,
-  getAllJobs,
-  getAllTags,
-} from "../managers/BoardManager";
 import { getMeetingTypes, createNetworkMeeting } from "../managers/NetworkManager";
-import { Listbox } from "@headlessui/react";
+
+// Network Meeting Form Component allows a user to create a new network meeting.
+
 
 export const NetworkMeetingForm = ({sendCreateNetworkMeetingToast, contactId}) => {
   const [meetingTypes, setMeetingTypes] = useState([]);
@@ -55,8 +49,8 @@ export const NetworkMeetingForm = ({sendCreateNetworkMeetingToast, contactId}) =
   return (
     <>
       <main className="flex-col w-full text-black">
-        <div className="w-full h-5/6 flex justify-center">
-          <div className="border p-10 rounded-md bg-white w-4/5 h-5/6 flex-col">
+        <div className="flex justify-center w-full h-5/6">
+          <div className="flex-col w-4/5 p-10 bg-white border rounded-md h-5/6">
             <form className="flex-col space-y-4">
               <fieldset>
                 <div className="forminputfield">
@@ -82,7 +76,7 @@ export const NetworkMeetingForm = ({sendCreateNetworkMeetingToast, contactId}) =
                   </select>
                 </div>
               </fieldset>
-              <div className="formSection rounded-md border border-slate-500 px-3 py-2 shadow-sm focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600 ">
+              <div className="px-3 py-2 border rounded-md shadow-sm formSection border-slate-500 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600 ">
                 <label
                   className="text-xs font-medium text-gray-900"
                   htmlFor="name"
@@ -93,7 +87,7 @@ export const NetworkMeetingForm = ({sendCreateNetworkMeetingToast, contactId}) =
                   required
                   autoFocus
                   type="text"
-                  className="form-input block border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
+                  className="block p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
                   value={networkMeeting.description}
                   onChange={(evt) => {
                     const copy = { ...networkMeeting };
@@ -102,7 +96,7 @@ export const NetworkMeetingForm = ({sendCreateNetworkMeetingToast, contactId}) =
                   }}
                 />
               </div>
-              <div className="formSection rounded-md border border-slate-500 px-3 py-2 shadow-sm focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
+              <div className="px-3 py-2 border rounded-md shadow-sm formSection border-slate-500 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
                 <label
                   className="text-xs font-medium text-gray-900"
                   htmlFor="name"
@@ -114,7 +108,7 @@ export const NetworkMeetingForm = ({sendCreateNetworkMeetingToast, contactId}) =
                   required
                   autoFocus
                   type="datetime-local"
-                  className="form-input block border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
+                  className="block p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
                   value={networkMeeting.meeting_date}
                   onChange={(evt) => {
                     const copy = { ...networkMeeting };
@@ -124,9 +118,7 @@ export const NetworkMeetingForm = ({sendCreateNetworkMeetingToast, contactId}) =
                 />
               </div>
               <button
-                size="lg"
-                className="btn transition ease-in-out text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4  focus:ring-blue-300 shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
-                color="violet"
+                className="px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white transition ease-in-out rounded-lg shadow-lg btn bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:ring-blue-300 shadow-blue-500/50"
                 onClick={(clickEvent) =>
                   createMeetingHelperFunction(clickEvent)
                 }

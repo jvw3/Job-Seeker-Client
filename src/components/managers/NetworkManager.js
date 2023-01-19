@@ -1,5 +1,5 @@
 
-
+// Network Manager Component holds all Network related requests.
 
 export const getContactsForUser = () => {
   return fetch(`http://localhost:8000/contacts`, {
@@ -27,6 +27,14 @@ export const getMySchedule = () => {
 
 export const getCompletedNetworkMeetings = () => {
   return fetch(`http://localhost:8000/networkmeetings?completed`, {
+    headers: {
+      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
+    },
+  }).then((res) => res.json());
+};
+
+export const getScheduledNetworkMeetings = () => {
+  return fetch(`http://localhost:8000/networkmeetings?scheduled`, {
     headers: {
       Authorization: `Token ${localStorage.getItem("seeker_token")}`,
     },
@@ -166,6 +174,15 @@ export const sendDescendingSortLastContactRequest = () => {
 
 export const deleteContact = (id) => {
   return fetch(`http://localhost:8000/contacts/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
+    },
+  });
+};
+
+export const deleteNetworkMeeting = (id) => {
+  return fetch(`http://localhost:8000/networkmeetings/${id}`, {
     method: "DELETE",
     headers: {
       Authorization: `Token ${localStorage.getItem("seeker_token")}`,

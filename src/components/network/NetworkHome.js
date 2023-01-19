@@ -6,6 +6,8 @@ import { getUpcomingInterviewsForUser } from "../managers/InterviewManager";
 import { ContactList } from "./ContactList";
 import { MySchedule } from "./MySchedule"
 
+// Network Home Component renders My schedule and Contact List component.
+
 export const NetworkHome = () => {
   const [contactTabActive, setContactTabActive] = useState(true);
   const [scheduleTabActive, setScheduleTabActive] = useState(false);
@@ -30,14 +32,14 @@ export const NetworkHome = () => {
 
   return (
     <>
-      <main className="flex-col w-full bg-pinkswirl pt-8 pl-8">
+      <main className="flex-col w-screen h-screen pt-8 pl-8 bg-pinkswirl">
         <div className="h-1/6">
           <h1 className="text-5xl text-white font-quicksand">
             My Network
           </h1>
           <div
             data-theme="othertheme"
-            className=" tabs tabs-boxed bg-secondary w-fit box-border mt-5"
+            className="box-border mt-5 tabs tabs-boxed bg-secondary w-fit"
           >
             <a
               onClick={() => {

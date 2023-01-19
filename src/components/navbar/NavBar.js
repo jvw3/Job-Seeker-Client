@@ -1,11 +1,11 @@
 import { useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import SeekerLogoZoom from "../views/HompageImages/SeekerLogoZoom.svg"
-export const NavBar = ({ token, setToken }) => {
-  const navigate = useNavigate();
-  const navbar = useRef();
 
-  const NavLogoText = "< JobSeeker />"
+// Nav Bar Component displays the navbar for the home landing page.
+
+export const NavBar = () => {
+  const navbar = useRef();
 
   const location = useLocation();
 
@@ -14,29 +14,28 @@ export const NavBar = ({ token, setToken }) => {
       return (
         <>
           <nav
-            className="h-20 flex justify-between bg-pinkswirl
-          backdrop-filter"
+            className="flex justify-between h-20 bg-pinkswirl backdrop-filter"
           >
             <div className="flex">
               <a className="navbar-item" href="/">
                 <div className="flex">
-                  <img className=" h-20 ml-5 mt-2" src={SeekerLogoZoom}></img>{" "}
-                  <div className="self-center ml-2 text-4xl font-roboto text-white">
+                  <img className="h-20 mt-2 ml-5 " src={SeekerLogoZoom}></img>{" "}
+                  <div className="self-center ml-2 text-4xl text-white font-roboto">
                     JobSeeker
                   </div>
                 </div>
               </a>
             </div>
-            <div className="flex w-3/12  " ref={navbar}>
+            <div className="flex w-3/12 " ref={navbar}>
               <Link
                 to="/login"
-                className="text-white text-xl m-4 border rounded p-2 font-quicksand"
+                className="p-2 m-4 text-xl text-white border rounded font-quicksand"
               >
                 Log in
               </Link>
               <Link
                 to="/register"
-                className="text-white text-xl font-quicksand  rounded-md h-fit m-4 bg-home-blue border p-2"
+                className="p-2 m-4 text-xl text-white border rounded-md font-quicksand h-fit bg-home-blue"
               >
                 Sign Up Free
               </Link>

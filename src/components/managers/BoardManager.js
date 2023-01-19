@@ -1,4 +1,5 @@
 
+// Board Manager Component holds all Board related requests.
 
 //? RETRIEVE REQUESTS
 export const getSingleBoardForUser = (id) => {

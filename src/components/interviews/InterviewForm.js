@@ -1,44 +1,61 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { createInterview } from "../managers/InterviewManager";
+import { createInterview, createInterviewPrep } from "../managers/InterviewManager";
+
+// Interview Form component allows a user to create a new interview.
 
 export const InterviewForm = () => {
     const { jobId } = useParams()
 
     const [interview, setInterview] = useState({
     board_job: jobId,
+    prep: 0,
     date: "",
     is_complete: false,
     interview_team: "",
     interview_feedback: ""
   });
+  const [interviewPrep, setInterviewPrep] = useState({
+    company_info: "",
+  });
 
   const navigate = useNavigate();
 
-  const postRequestForBoard = (event) => {
+  const postRequestForInterviewPrep = (event) => {
     event.preventDefault();
+
+    const interviewPrepToApi = {
+      company_info: interviewPrep.company_info
+    };
+
+    createInterviewPrep(interviewPrepToApi).then((interviewPrep) => {
+      postRequestForInterview(interviewPrep.id)
+    })
+  }
+
+  const postRequestForInterview = (interviewPrepId) => {
 
     const interviewToApi = {
       board_job: parseInt(interview.board_job),
+      prep: interviewPrepId,
       date: interview.date,
       is_complete: interview.is_complete,
       interview_team: interview.interview_team,
       interview_feedback: interview.interview_feedback,
     };
-
-    createInterview(interviewToApi).then(() => navigate("/dashboard"));
+    createInterview(interviewToApi).then(() => navigate(-1));
   };
 
   return (
     <>
       <main className="flex-col w-full bg-pinkswirl text-slate-500">
         <div className="h-1/6 ">
-          <h1 className="text-white text-4xl p-5">New Interview</h1>
+          <h1 className="p-5 text-4xl text-white">New Interview</h1>
         </div>
-        <div className="w-full h-5/6 flex justify-center">
-          <div className="border p-10 rounded -md bg-white w-2/5 h-5/6 flex-col">
+        <div className="flex justify-center w-full h-5/6">
+          <div className="flex-col w-2/5 p-10 bg-white border rounded -md h-5/6">
             <form className="space-y-5 w-96">
-              <div className="formSection rounded-md border border-slate-500 px-3 py-2 shadow-sm focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
+              <div className="px-3 py-2 border rounded-md shadow-sm formSection border-slate-500 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
                 <label
                   className="text-xs font-medium text-gray-900"
                   htmlFor="name"
@@ -50,7 +67,7 @@ export const InterviewForm = () => {
                   required
                   autoFocus
                   type="datetime-local"
-                  className="form-input block border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
+                  className="block p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
                   value={interview.date}
                   onChange={(evt) => {
                     const copy = { ...interview };
@@ -59,7 +76,7 @@ export const InterviewForm = () => {
                   }}
                 />
               </div>
-              <div className="formSection rounded-md border border-slate-500 px-3 py-2 shadow-sm focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600 ">
+              <div className="px-3 py-2 border rounded-md shadow-sm formSection border-slate-500 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600 ">
                 <label
                   className="text-xs font-medium text-gray-900"
                   htmlFor="name"
@@ -68,9 +85,8 @@ export const InterviewForm = () => {
                 </label>
                 <input
                   required
-                  autoFocus
                   type="text"
-                  className="form-input block border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
+                  className="block p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
                   value={interview.interview_view}
                   onChange={(evt) => {
                     const copy = { ...interview };
@@ -79,11 +95,30 @@ export const InterviewForm = () => {
                   }}
                 />
               </div>
+              <div className="px-3 py-2 border rounded-md shadow-sm formSection border-slate-500 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600 ">
+                <label
+                  className="text-xs font-medium text-gray-900"
+                  htmlFor="name"
+                >
+                  Company Info
+                </label>
+                <input
+                  required
+                  type="text"
+                  className="block p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
+                  value={interviewPrep.company_info}
+                  onChange={(evt) => {
+                    const copy = { ...interviewPrep };
+                    copy.company_info = evt.target.value;
+                    setInterviewPrep(copy);
+                  }}
+                />
+              </div>
               <button
-                className=" text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition ease-in-out focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
+                className="px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white transition ease-in-out rounded-lg shadow-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-blue-500/50"
                 size="lg"
                 color="violet"
-                onClick={(clickEvent) => postRequestForBoard(clickEvent)}
+                onClick={(clickEvent) => postRequestForInterviewPrep(clickEvent)}
               >
                 Add New Interview!
               </button>

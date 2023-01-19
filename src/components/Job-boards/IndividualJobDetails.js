@@ -21,16 +21,18 @@ import {
   IconDeviceDesktop,
   IconBuilding,
   IconDeviceLaptop,
+  IconTrash,
 } from "@tabler/icons";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ManageTags } from "./ManageBoardTags";
+import { deleteInterview } from "../managers/InterviewManager";
 
 export const IndividualJobDetails = () => {
   const { boardId } = useParams();
   const { jobId } = useParams();
   const navigate = useNavigate();
-  const [priorityRankings, setPriorityRankings] = useState([])
+  const [priorityRankings, setPriorityRankings] = useState([]);
   const [boardJob, setBoardJob] = useState({
     job: 0,
     custom_job: "",
@@ -74,7 +76,7 @@ export const IndividualJobDetails = () => {
     return (
       <>
         <button
-          className=" text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br transition ease-in-out focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-lg shadow-blue-500/50 font-medium rounded-r-lg text-sm px-4 py-2 text-center mr-2 mb-2"
+          className="px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white transition ease-in-out rounded-r-lg shadow-lg  bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-blue-500/50"
           onClick={() => {
             if (window.confirm("Are you sure you want to delete this Job?")) {
               deleteRequestForBoardJob(id);
@@ -120,10 +122,10 @@ export const IndividualJobDetails = () => {
   const renderJobRatingsBox = () => {
     return (
       <>
-        <div className="text-2xl mb-1 text-white">Job Ratings</div>
+        <div className="mb-1 text-2xl text-white">Job Ratings</div>
         <label
           htmlFor="jobrating-modal"
-          className="btn transition ease-in-out text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
+          className="px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white transition ease-in-out rounded-lg shadow-lg btn bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-blue-500/50"
         >
           Edit Ratings
         </label>
@@ -134,10 +136,10 @@ export const IndividualJobDetails = () => {
             className="modal-toggle"
           />
           <div className="modal">
-            <div className="modal-box relative">
+            <div className="relative modal-box bg-neutral">
               <label
                 htmlFor="jobrating-modal"
-                className="btn btn-sm btn-circle absolute right-2 top-2"
+                className="absolute btn btn-sm btn-circle right-2 top-2"
                 onClick={() => {
                   getSingleJobForUser(jobId).then((userJob) => {
                     setBoardJob(userJob);
@@ -146,7 +148,7 @@ export const IndividualJobDetails = () => {
               >
                 <IconX />
               </label>
-              <h3 className="font-bold text-xl">Update Job Ratings</h3>
+              <h3 className="text-xl font-bold">Update Job Ratings</h3>
               <p>Salary Rating</p>
               <input
                 type="range"
@@ -161,7 +163,7 @@ export const IndividualJobDetails = () => {
                 className="w-full"
                 step="1"
               />
-              <div className="w-full flex justify-between text-xs px-2">
+              <div className="flex justify-between w-full px-2 text-xs">
                 <span>0</span>
                 <span>1</span>
                 <span>2</span>
@@ -188,7 +190,7 @@ export const IndividualJobDetails = () => {
                 className="w-full"
                 step="1"
               />
-              <div className="w-full flex justify-between text-xs px-2">
+              <div className="flex justify-between w-full px-2 text-xs">
                 <span>0</span>
                 <span>1</span>
                 <span>2</span>
@@ -215,7 +217,7 @@ export const IndividualJobDetails = () => {
                 className="w-full"
                 step="1"
               />
-              <div className="w-full flex justify-between text-xs px-2">
+              <div className="flex justify-between w-full px-2 text-xs">
                 <span>0</span>
                 <span>1</span>
                 <span>2</span>
@@ -242,7 +244,7 @@ export const IndividualJobDetails = () => {
                 className="w-full"
                 step="1"
               />
-              <div className="w-full flex justify-between text-xs px-2">
+              <div className="flex justify-between w-full px-2 text-xs">
                 <span>0</span>
                 <span>1</span>
                 <span>2</span>
@@ -269,7 +271,7 @@ export const IndividualJobDetails = () => {
                 className="w-full"
                 step="1"
               />
-              <div className="w-full flex justify-between text-xs px-2">
+              <div className="flex justify-between w-full px-2 text-xs">
                 <span>0</span>
                 <span>1</span>
                 <span>2</span>
@@ -290,7 +292,7 @@ export const IndividualJobDetails = () => {
                     });
                   }}
                   htmlFor="jobrating-modal"
-                  className="btn"
+                  className="text-white btn bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 "
                 >
                   Save Ratings
                 </label>
@@ -301,23 +303,23 @@ export const IndividualJobDetails = () => {
                     });
                   }}
                   htmlFor="jobrating-modal"
-                  className="btn"
+                  className="text-white btn bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 "
                 >
                   Close
                 </label>
               </div>
             </div>
           </div>
-          <div className="stats shadow text-blue-500">
+          <div className="text-blue-500 shadow stats">
             <div className="stat bg-slate-50 ">
-              <div className="stat-figure text-blue-500">
+              <div className="text-blue-500 stat-figure">
                 <IconBrandCashapp size={30} />
               </div>
-              <div className="stat-title text-blue-500">Salary Rating</div>
-              <div className="stat-value text-blue-500">
+              <div className="text-blue-500 stat-title">Salary Rating</div>
+              <div className="text-blue-500 stat-value">
                 {boardJob?.salary_rating}
               </div>
-              <div className="stat-desc text-blue-500">
+              <div className="text-blue-500 stat-desc">
                 {priorityRankings.map((rank) => {
                   if (rank.name === "salary") {
                     return `Current Rank: ${rank.rank_value}`;
@@ -326,7 +328,7 @@ export const IndividualJobDetails = () => {
               </div>
             </div>
             <div className="stat bg-slate-50">
-              <div className="stat-figure text-blue-500">
+              <div className="text-blue-500 stat-figure">
                 <IconMap2 size={30} />
               </div>
               <div className="stat-title">Location Rating</div>
@@ -340,7 +342,7 @@ export const IndividualJobDetails = () => {
               </div>
             </div>
             <div className="stat bg-slate-50">
-              <div className="stat-figure text-blue-500">
+              <div className="text-blue-500 stat-figure">
                 <IconFriends size={30} />
               </div>
               <div className="stat-title">Culture Rating</div>
@@ -354,7 +356,7 @@ export const IndividualJobDetails = () => {
               </div>
             </div>
             <div className="stat bg-slate-50">
-              <div className="stat-figure text-blue-500">
+              <div className="text-blue-500 stat-figure">
                 <IconCrown size={30} />
               </div>
               <div className="stat-title">Leadership Rating</div>
@@ -368,7 +370,7 @@ export const IndividualJobDetails = () => {
               </div>
             </div>
             <div className="stat bg-slate-50">
-              <div className="stat-figure text-blue-500">
+              <div className="text-blue-500 stat-figure">
                 <IconUsers size={30} />
               </div>
               <div className="stat-title">Team Rating</div>
@@ -391,21 +393,31 @@ export const IndividualJobDetails = () => {
     deleteBoardJob(id).then(() => navigate(`/boards/${boardId}`));
   };
 
+  const deleteRequestForInterview = (id) => {
+    deleteInterview(id)
+      .then(() => {
+        getAllInterviewsForBoardJob(jobId);
+      })
+      .then((userInterviews) => {
+        setInterviews(userInterviews);
+      });
+  };
+
   const renderTagsBox = () => {
     return (
       <div className="mt-4 mb-4 ml-5">
         <label
           htmlFor="category-modal"
-          className="btn transition ease-in-out text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
+          className="px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white transition ease-in-out rounded-lg shadow-lg btn bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-blue-500/50"
         >
           Manage Tags
         </label>
         <input type="checkbox" id="category-modal" className="modal-toggle" />
         <div className="modal">
-          <div className="modal-box">
+          <div className="modal-box bg-neutral">
             <label
               htmlFor="category-modal"
-              className="btn btn-sm btn-square absolute right-2 top-2"
+              className="absolute btn btn-sm btn-square right-2 top-2"
               onClick={() => {
                 getSingleJobForUser(jobId).then((userBoard) => {
                   setBoardJob(userBoard);
@@ -414,7 +426,7 @@ export const IndividualJobDetails = () => {
             >
               <IconX />
             </label>
-            <h3 className="font-bold text-lg">Manage Tags</h3>
+            <h3 className="text-2xl font-bold text-white">Manage Tags</h3>
             <ManageTags />
             <div className="modal-action">
               <label
@@ -428,7 +440,7 @@ export const IndividualJobDetails = () => {
                     });
                 }}
                 htmlFor="category-modal"
-                className="btn"
+                className="px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white transition-all duration-500 ease-in-out rounded-lg shadow-lg btn bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-blue-500/50"
               >
                 Save Changes
               </label>
@@ -446,15 +458,17 @@ export const IndividualJobDetails = () => {
 
   const renderWorkStatusIcon = (workStatus) => {
     if (workStatus === "On-site") {
-      return <IconBuilding />
+      return <IconBuilding />;
     } else if (workStatus === "Remote") {
-      return <IconDeviceDesktop />
+      return <IconDeviceDesktop />;
     } else {
-      return <>
-      <IconBuilding /> <IconDeviceLaptop />
-      </>
+      return (
+        <>
+          <IconBuilding /> <IconDeviceLaptop />
+        </>
+      );
     }
-  }
+  };
 
   const formatTime = (date) => {
     const interviewDate = new Date(date);
@@ -463,9 +477,9 @@ export const IndividualJobDetails = () => {
   };
 
   return (
-    <main className="bg-pinkswirl w-full pl-5 pt-5">
+    <main className="w-screen h-screen pt-5 pl-5 overflow-y-auto bg-pinkswirl">
       <div className="flex">
-        <div className="text-white  basis-3/4">
+        <div className="text-white basis-3/4">
           <h1 className="text-3xl">
             {boardJob?.custom_job === ""
               ? boardJob?.job?.title
@@ -478,7 +492,7 @@ export const IndividualJobDetails = () => {
           </h2>
           <div class="inline-flex rounded-md shadow-sm" role="group">
             <button
-              className=" text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-lg shadow-blue-500/50 font-medium rounded-l-lg text-sm px-4 py-2 text-center  mb-2"
+              className="px-4 py-2 mb-2 text-sm font-medium text-center text-white rounded-l-lg shadow-lg  bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-blue-500/50"
               onClick={() => {
                 navigate(`/boards/${boardId}/jobs/${boardJob.id}/editjob`);
               }}
@@ -487,7 +501,7 @@ export const IndividualJobDetails = () => {
             </button>
             {renderDeleteButton(jobId)}
           </div>
-          <div className="flex justify-evenly w-1/4 mt-2 ml-16 mb-2 space-x-8">
+          <div className="flex w-1/4 mt-2 mb-2 ml-16 space-x-8 justify-evenly">
             <div className="flex justify-between">
               <div>
                 <IconCurrencyDollar size={30} />
@@ -508,10 +522,10 @@ export const IndividualJobDetails = () => {
 
           <div className="text-sm breadcrumbs">
             <ul>
-              <li>
+              <li className="text-slate-500">
                 <Link to="/dashboard">Dashboard</Link>
               </li>
-              <li>
+              <li className="text-slate-500">
                 <Link to={`/boards/${boardId}`}>My Board</Link>
               </li>
               <li>Job Details</li>
@@ -519,43 +533,43 @@ export const IndividualJobDetails = () => {
           </div>
         </div>
         <div className="flex justify-end flex-1">
-          <div className="bg-home  bg-cover mt-4 mr-4 rounded-lg h-60">
-            <div className="mr-6 rounded-md backdrop-filter backdrop-blur-lg text-white h-60 w-full text-9xl flex-col ">
+          <div className="h-40 mt-4 mr-4 bg-cover rounded-lg bg-home">
+            <div className="flex-col w-full h-20 pl-3 mr-6 text-white rounded-md backdrop-filter backdrop-blur-lg text-9xl">
               <div>{boardJob.job_score}</div>
-              <div className="flex justify-center">
-                <div>
-              {priorityRankings.map((rank) => {
-                  return (
-                    <div className="text-sm">
-                      {rank.name} {rank.rank_value}
+              <div className="flex justify-end">
+                <div className="flex mr-2 dropdown dropdown-end">
+                  <label
+                    tabIndex={0}
+                    className="btn btn-circle btn-ghost btn-xs text-info"
+                  >
+                    <IconInfoCircle color="white" />
+                  </label>
+                  <div
+                    tabIndex={0}
+                    className="w-64 shadow card compact dropdown-content bg-base-100 rounded-box"
+                  >
+                    <div className="card-body">
+                      <h2 className="text-blue-500 card-title">
+                        This is your job score!
+                      </h2>
+                      <p className="text-slate-500">
+                        It is calculated by using a weighted average formula to
+                        score each rating on a job based on the priorities that
+                        you set on your board. These are your current priority
+                        rankings:
+                      </p>
+                      <div className="text-slate-500">
+                        {priorityRankings.map((rank) => {
+                          return (
+                            <div className="text-sm">
+                              {rank.rank_value} {rank.name}
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
-                  );
-
-              })}
-                </div>
-              <div className="dropdown dropdown-end justify-self-start">
-                <label
-                  tabIndex={0}
-                  className="btn btn-circle btn-ghost btn-xs text-info"
-                >
-                  <IconInfoCircle color="white" />
-                </label>
-                <div
-                  tabIndex={0}
-                  className="card compact dropdown-content shadow bg-base-100 rounded-box w-64"
-                >
-                  <div className="card-body">
-                    <h2 className="card-title text-blue-500">
-                      This is your job score!
-                    </h2>
-                    <p className="text-slate-500">
-                      It is calculated by using a weighted average of your
-                      current priorities rankings.
-                    </p>
                   </div>
                 </div>
-              </div>
-
               </div>
             </div>
           </div>
@@ -564,31 +578,51 @@ export const IndividualJobDetails = () => {
       <br></br>
       <div className="ml-5 mr-5">{renderJobRatingsBox()}</div>
       {renderTagsBox()}
-      <div className="border bg-white ml-10 mr-10 p-5 rounded-md h-2/4">
+      <div className="p-5 ml-10 mr-10 bg-white border rounded-md h-2/6">
         <h2 className="text-2xl text-secondary">My Interviews</h2>
         <button
           onClick={() => {
             navigate(`/jobs/${boardJob.id}/createinterview`);
           }}
-          className="transition ease-in-out text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
+          className="px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white transition ease-in-out rounded-lg shadow-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-blue-500/50"
         >
           Add New Interview
         </button>
-        <div className="overflow-y-auto h-full">
-        {interviews.map((interview) => (
-          <>
-            <div className="text-secondary">Date of Interview: {formatTime(interview.date)}</div>
-            <div className="text-secondary">Feedback: {interview.interview_feedback}</div>
-            <button
-              onClick={() => {
-                navigate(`/interviews/${interview.id}`);
-              }}
-              className="transition ease-in-out text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
-            >
-              View Details
-            </button>
-          </>
-        ))}
+        <div className="flex h-full pt-4 pb-4 space-x-5 overflow-x-auto">
+          {interviews.map((interview) => (
+            <>
+              <div className="relative border hover:-translate-y-1.5 rounded-lg w-2/12 h-3/4 p-3 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 transition-all ease-in-ou duration-300">
+                <button className="absolute top-1 right-1">
+                  <IconTrash
+                    onClick={() => {
+                      if (
+                        window.confirm(
+                          "Are you sure you want to delete this Interview?"
+                        )
+                      ) {
+                        deleteRequestForInterview(interview.id);
+                      }
+                    }}
+                    color="white"
+                  />
+                </button>
+                <div className="text-primary">
+                  Date of Interview: {formatTime(interview.date)}
+                </div>
+                <div className="text-primary">
+                  Interviewers: {interview.interview_team}
+                </div>
+                <button
+                  onClick={() => {
+                    navigate(`/interviews/${interview.id}`);
+                  }}
+                  className="px-4 py-2 mt-2 mb-2 mr-2 text-sm font-medium text-center transition ease-in-out bg-white rounded-lg shadow-lg text-seeker-blue focus:ring-blue-300 shadow-blue-500/50"
+                >
+                  Prepare For Interview
+                </button>
+              </div>
+            </>
+          ))}
         </div>
       </div>
       <ToastContainer pauseOnHover={false} autoClose={2500} />
