@@ -44,58 +44,13 @@ export const ContactList = () => {
   };
 
 
-
-
-  const renderCreateMeetingModal = (contact) => {
-    return (
-      <>
-        <label
-          htmlFor="my-modal-createmeeting"
-          className="px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white shadow-lg btn bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80"
-        >
-          <IconCalendarEvent />
-        </label>
-
-        <input
-          type="checkbox"
-          id="my-modal-createmeeting"
-          className="modal-toggle"
-        />
-        <div className="modal">
-          <div className="relative modal-box">
-            <label
-              htmlFor="my-modal-createmeeting"
-              className="absolute btn btn-sm btn-circle right-2 top-2"
-            >
-              ✕
-            </label>
-            <h3 className="text-lg font-bold">
-              Add Meeting for: {contact.name}
-            </h3>
-            <p className="py-4">
-              <NetworkMeetingForm
-                sendCreateNetworkMeetingToast={sendCreateNetworkMeetingToast}
-                contactId={contact.id}
-              />
-            </p>
-            <div className="modal-action">
-              <label htmlFor="my-modal-createmeeting" className="btn">
-                Close
-              </label>
-            </div>
-          </div>
-        </div>
-      </>
-    );
-  }
-
   //  Function: This function renders the network table that holds all of a user's contacts.
   const renderNetworkTable = () => {
     return (
       <>
-        <table className="w-11/12 shadow-2xl">
-          <thead className="bg-gray-100">
-            <tr>
+        <table className="w-11/12 h-40 shadow-2xl">
+          <thead className="w-full bg-gray-100">
+            <tr className="">
               <th
                 scope="col"
                 className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 border-transparent rounded-tl-md"
@@ -146,12 +101,12 @@ export const ContactList = () => {
               </th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+          <tbody className="overflow-y-scroll bg-white divide-y divide-gray-200">
             {contacts.map((contact) => (
               <>
                 <tr
                   height="100"
-                  className={`flexjustify-evenly w-full mt-6 border gap-x-4 ${
+                  className={` mt-6 gap-x-4 ${
                     contact.id % 2 ? "" : "bg-blue-100"
                   }  `}
                   key={`contact--${contact.id}`}
@@ -195,7 +150,7 @@ export const ContactList = () => {
               </>
             ))}
           </tbody>
-          <tfoot className="h-10 bg-gray-100">
+          <tfoot className="w-full h-10 bg-gray-100">
             <tr>
               <th className="border-separate rounded-bl-md" scope="row"></th>
               <th scope="row"></th>
@@ -276,8 +231,9 @@ export const ContactList = () => {
                 setContacts(userContacts);
                 setSortValue("0");
                 setConnectionFilterValue("0");
+                
               })
-              .then(() => setSearchedTitle(""));
+              
           }}
         >
           Reset
@@ -306,12 +262,6 @@ export const ContactList = () => {
     );
   };
 
-
-  const sendCreateNetworkMeetingToast = () => {
-    toast.success("A new meeting has been updated.", {
-      toastId: 'success1'
-    });
-  };
 
   const renderSortAndFilterBars = () => {
     return (
@@ -407,7 +357,7 @@ export const ContactList = () => {
 
   return (
     <>
-      <main className="flex-col w-full bg-pinkswirl">
+      <main className="flex-col w-full ">
         <div>
           <div>
             <button
