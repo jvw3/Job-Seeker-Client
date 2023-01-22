@@ -48,3 +48,14 @@ export const getAllSeekers = () => {
     },
   }).then((res) => res.json());
 };
+
+export const updateProfile = (profile, id) => {
+  return fetch(`http://localhost:8000/seekers/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
+    },
+    body: JSON.stringify(profile),
+  });
+};
