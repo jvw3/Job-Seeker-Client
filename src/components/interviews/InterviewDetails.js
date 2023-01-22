@@ -203,7 +203,7 @@ export const IndividualInterviewDetails = () => {
         <button
           className="px-4 py-2 mb-2 text-sm font-medium text-center text-white rounded-l-lg shadow-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-blue-500/50"
           onClick={() => {
-            navigate(`/editinterview/${interviewId}`);
+            navigate(`/editinterview/${interviewId}/interviewprep/${interview.prep.id}`);
           }}
         >
           Edit Interview
