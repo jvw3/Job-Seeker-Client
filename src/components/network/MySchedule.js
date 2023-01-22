@@ -38,22 +38,15 @@ export const MySchedule = () => {
               {mySchedule.map((meeting) => {
                 return (
                   <div className="p-5 ml-10 mr-1 bg-white border rounded-lg">
-                    <div className="text-seeker-blue">
-                      {meeting.contact.name}
-                    </div>
-                    <div className="text-seeker-blue">
-                      {meeting.contact.current_role}
-                    </div>
-                    <div className="text-seeker-blue">
+                    <div className="text-2xl text-seeker-blue">
+                      Meeting with: {meeting.contact.name} -{" "}
+                      {meeting.contact.current_role} @{" "}
                       {meeting.contact.current_company}
                     </div>
-                    <div className="text-seeker-blue">
-                      {meeting.contact.linked_in}
+                    <div className="text-slate-700">
+                      Topic: {meeting.description}
                     </div>
-                    <div className="text-seeker-blue">
-                      {meeting.description}
-                    </div>
-                    <div className="text-seeker-blue">
+                    <div className="text-slate-700">
                       {formatTime(meeting.meeting_date)}
                     </div>
                   </div>
