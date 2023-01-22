@@ -183,6 +183,17 @@ export const createBoardCategory = (boardCategory) => {
   }).then((res) => res.json());
 };
 
+export const createPriorityRank = (priorityRank) => {
+  return fetch("http://localhost:8000/priorityranks", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
+    },
+    body: JSON.stringify(priorityRank),
+  }).then((res) => res.json());
+};
+
 //? UPDATE REQUESTS
 export const updateBoard = (board, id) => {
   return fetch(`http://localhost:8000/boards/${id}`, {
