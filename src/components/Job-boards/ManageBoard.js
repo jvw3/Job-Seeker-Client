@@ -1,18 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getCurrentUser } from "../managers/AuthManager";
 import { deleteBoard, getActiveBoard, getAllBoardsForUser, updateBoard } from "../managers/BoardManager";
-import { getUpcomingInterviewsForUser } from "../managers/InterviewManager";
-import { getUpcomingMeetingsForUser } from "../managers/NetworkManager";
 import {
   IconMapPin,
-  IconCurrencyDollar,
   IconBrandCashapp,
   IconCrown,
   IconFriends,
-  IconMap2,
   IconUsers,
-  IconX,
   IconTrash
 } from "@tabler/icons";
 import { ToastContainer, toast } from "react-toastify";
@@ -157,7 +151,7 @@ export const BoardManager = () => {
         </div>
         <div className="flex-col space-y-20 h-2/5 justify-evenly">
           <div className="ml-4 mr-4 bg-cover rounded-md h-96">
-            <div className="h-full rounded-md">
+            <div className="flex justify-center h-full space-x-10 rounded-md">
               {activeBoard.map((activeBoard) => (
                 <>
                   <div
@@ -179,6 +173,8 @@ export const BoardManager = () => {
                         </button>
                       </div>
                     </div>
+                    <div>
+                      
                     <div className="mt-3 bg-secondary tabs tabs-boxed w-fit ml-14">
                       <a
                         onClick={() => {
@@ -214,6 +210,7 @@ export const BoardManager = () => {
                       >
                         Requirements
                       </a>
+                    </div>
                     </div>
                     <div className="flex mt-1 h-52">
                       {priorityTabActive ? (
@@ -266,11 +263,11 @@ export const BoardManager = () => {
         >
           Create New Board
         </button>
-        <div className="overflow-y-auto h-1/2">
+        <div className="flex ml-10 space-x-5 h-1/2 wrap">
           {allBoards.map((board) => {
             return (
-              <div className="relative w-1/4 ml-40 mr-40 bg-white border rounded-lg h-1/4">
-                <div className="mt-3 ml-3 mr-3 text-3xl">{board.title}</div>
+              <div className="relative w-1/4 bg-white border rounded-lg h-1/4">
+                <div className="mt-3 ml-3 mr-3 text-3xl text-seeker-blue">{board.title}</div>
                 <div className="flex justify-evenly">
                   <button
                     className="px-4 py-2 mt-4 mb-2 mr-2 text-sm font-medium text-center text-white rounded-lg shadow-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 dark:focus:ring-blue-800 shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80"

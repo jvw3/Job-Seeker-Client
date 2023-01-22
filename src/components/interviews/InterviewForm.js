@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { createInterview, createInterviewPrep } from "../managers/InterviewManager";
 
 // Interview Form component allows a user to create a new interview.
@@ -28,8 +28,8 @@ export const InterviewForm = () => {
       company_info: interviewPrep.company_info
     };
 
-    createInterviewPrep(interviewPrepToApi).then((interviewPrep) => {
-      postRequestForInterview(interviewPrep.id)
+    createInterviewPrep(interviewPrepToApi).then((interviewPrepObject) => {
+      postRequestForInterview(interviewPrepObject.id)
     })
   }
 

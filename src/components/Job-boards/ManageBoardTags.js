@@ -12,8 +12,6 @@ const [jobTags, setJobTags] = useState([])
 const [isVisible, setVisibility] = useState(true)
 const [currentButton, setCurrentButton] = useState("")
 const { jobId } = useParams()
-const { boardId } = useParams()
-const navigate = useNavigate();
 
   useEffect(() => {
     getAllBoardJobTagsForBoardJob(jobId).then((tags) => {

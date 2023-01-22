@@ -76,7 +76,7 @@ export const IndividualJobDetails = () => {
     return (
       <>
         <button
-          className="px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white transition ease-in-out rounded-r-lg shadow-lg  bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-blue-500/50"
+          className="px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white transition ease-in-out rounded-r-lg shadow-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-blue-500/50"
           onClick={() => {
             if (window.confirm("Are you sure you want to delete this Job?")) {
               deleteRequestForBoardJob(id);
@@ -458,13 +458,23 @@ export const IndividualJobDetails = () => {
 
   const renderWorkStatusIcon = (workStatus) => {
     if (workStatus === "On-site") {
-      return <IconBuilding />;
+      return (
+        <div className="mr-1">
+          <IconBuilding size={30} />
+        </div>
+      );
     } else if (workStatus === "Remote") {
-      return <IconDeviceDesktop />;
+      return (
+        <div className="mr-1">
+          <IconDeviceDesktop size={30} />
+        </div>
+      );
     } else {
       return (
         <>
-          <IconBuilding /> <IconDeviceLaptop />
+          <div className="mr-1">
+            <IconBuilding size={30} /> <IconDeviceLaptop size={30} />
+          </div>
         </>
       );
     }
@@ -492,7 +502,7 @@ export const IndividualJobDetails = () => {
           </h2>
           <div class="inline-flex rounded-md shadow-sm" role="group">
             <button
-              className="px-4 py-2 mb-2 text-sm font-medium text-center text-white rounded-l-lg shadow-lg  bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-blue-500/50"
+              className="px-4 py-2 mb-2 text-sm font-medium text-center text-white rounded-l-lg shadow-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-blue-500/50"
               onClick={() => {
                 navigate(`/boards/${boardId}/jobs/${boardJob.id}/editjob`);
               }}
@@ -501,22 +511,22 @@ export const IndividualJobDetails = () => {
             </button>
             {renderDeleteButton(jobId)}
           </div>
-          <div className="flex w-1/4 mt-2 mb-2 ml-16 space-x-8 justify-evenly">
-            <div className="flex justify-between">
+          <div className="flex w-1/2 mt-2 mb-2">
+            <div className="flex basis-1/4">
               <div>
                 <IconCurrencyDollar size={30} />
               </div>
               <div className="text-xl">{boardJob.salary}</div>
             </div>
-            <div className="flex">
-              <div className="basis-1">
+            <div className="flex basis-1/4">
+              {renderWorkStatusIcon(boardJob.work_status)}
+              <div className="text-lg">{boardJob.work_status}</div>
+            </div>
+            <div className="flex basis-1/2">
+              <div className="mr-1">
                 <IconMapPin size={30} />
               </div>
-              <div className="text-xl basis-4">{boardJob.location}</div>
-            </div>
-            <div className="flex">
-              {renderWorkStatusIcon(boardJob.work_status)}
-              {boardJob.work_status}
+              <div className="text-lg">{boardJob.location}</div>
             </div>
           </div>
 
@@ -533,8 +543,8 @@ export const IndividualJobDetails = () => {
           </div>
         </div>
         <div className="flex justify-end flex-1">
-          <div className="h-40 mt-4 mr-4 bg-cover rounded-lg bg-home">
-            <div className="flex-col w-full h-20 pl-3 mr-6 text-white rounded-md backdrop-filter backdrop-blur-lg text-9xl">
+          <div className="mt-4 mr-4 bg-cover rounded-lg h-42 bg-home">
+            <div className="flex-col w-full h-20 pl-3 mr-6 text-white rounded-md text-9xl">
               <div>{boardJob.job_score}</div>
               <div className="flex justify-end">
                 <div className="flex mr-2 dropdown dropdown-end">

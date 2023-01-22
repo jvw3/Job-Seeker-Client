@@ -1,18 +1,15 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCurrentUser } from "../managers/AuthManager";
-import { getActiveBoard, getAllBoardsForUser } from "../managers/BoardManager";
+import { getActiveBoard } from "../managers/BoardManager";
 import { getUpcomingInterviewsForUser } from "../managers/InterviewManager";
 import { getUpcomingMeetingsForUser } from "../managers/NetworkManager"
 import {
   IconMapPin,
-  IconCurrencyDollar,
   IconBrandCashapp,
   IconCrown,
   IconFriends,
-  IconMap2,
   IconUsers,
-  IconX,
 } from "@tabler/icons";
 
 export const Dashboard = () => {
@@ -148,13 +145,13 @@ export const Dashboard = () => {
               key={`interview--${upcomingInterview.id}`}
               className="flex-col w-1/4 p-4 transition-all duration-300 bg-white border shadow-xl h-3/4 mt-7 card justify-evenly hover:-translate-y-2 ease-in-ou"
             >
-              <div className="card-title text-slate-600">
+              <div className="card-title text-seeker-blue">
                 {upcomingInterview?.board_job?.job?.title}
               </div>
-              <div className="text-seeker-blue">
+              <div className="text-slate-700">
                 {upcomingInterview?.board_job?.company?.name}
               </div>
-              <div className="text-seeker-blue">
+              <div className="text-slate-700">
                 {formatTime(upcomingInterview.date)}
               </div>
               {renderInterviewPrepButton(upcomingInterview?.id)}
@@ -173,13 +170,19 @@ export const Dashboard = () => {
               key={`activeBoard--${upcomingMeeting.id}`}
               className="flex-col w-1/4 p-4 transition-all duration-300 bg-white border shadow-xl h-3/4 mt-7 card justify-evenly hover:-translate-y-2 ease-in-ou"
             >
-              <div className="card-title text-slate-600">
-                {upcomingMeeting?.board_job?.job?.title}
+              <div className="card-title text-seeker-blue">
+                {upcomingMeeting?.contact?.name}
               </div>
-              <div className="text-seeker-blue">
-                {upcomingMeeting?.board_job?.company?.name}
+              <div className="text-slate-700">
+                {upcomingMeeting?.contact?.current_role} @{" "}
+                {upcomingMeeting?.contact?.current_company}
               </div>
-              <div className="text-seeker-blue">{upcomingMeeting.date}</div>
+              <div className="text-slate-700">
+                {upcomingMeeting.description}
+              </div>
+              <div className="text-slate-700">
+                {formatTime(upcomingMeeting.meeting_date)}
+              </div>
             </div>
           ))}
         </div>
@@ -231,7 +234,7 @@ export const Dashboard = () => {
         </div>
         <div className="flex-col space-y-20 h-3/6 justify-evenly">
           <div className="ml-16 mr-16 bg-cover rounded-md h-96">
-            <div className="h-full rounded-md">
+            <div className="flex justify-center h-full space-x-10 rounded-md">
               {activeBoard.map((activeBoard) => (
                 <>
                   <div
@@ -253,7 +256,7 @@ export const Dashboard = () => {
                         </button>
                       </div>
                     </div>
-                    <div  className="mt-3 bg-secondary tabs tabs-boxed w-fit ml-14">
+                    <div className="mt-3 bg-secondary tabs tabs-boxed w-fit ml-14">
                       <a
                         onClick={() => {
                           controlPriorityTab();
@@ -308,26 +311,33 @@ export const Dashboard = () => {
                       ) : (
                         ""
                       )}
-                      {
-                        goalTabActive
-                        ? <div className="w-full p-4 m-5 text-white bg-white rounded-md shadow-xl shadow-blue-500/50 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700">
-                        <h3 className="text-3xl">Goal</h3>
-                        <h4 className="mt-4">{activeBoard.goal}</h4>
-                      </div>
-                      : ""
-                      }
-                      {
-                        requirementsTabActive
-                        ? <div className="w-full p-4 m-5 text-white bg-white rounded-md shadow-xl shadow-blue-500/50 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700">
-                        <h3 className="text-3xl ">Requirements</h3>
-                        <h4 className="mt-4">{activeBoard.requirements}</h4>
-                      </div>
-                      : ""
-                      }
+                      {goalTabActive ? (
+                        <div className="w-full p-4 m-5 text-white bg-white rounded-md shadow-xl shadow-blue-500/50 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700">
+                          <h3 className="text-3xl">Goal</h3>
+                          <h4 className="mt-4">{activeBoard.goal}</h4>
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                      {requirementsTabActive ? (
+                        <div className="w-full p-4 m-5 text-white bg-white rounded-md shadow-xl shadow-blue-500/50 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700">
+                          <h3 className="text-3xl ">Requirements</h3>
+                          <h4 className="mt-4">{activeBoard.requirements}</h4>
+                        </div>
+                      ) : (
+                        ""
+                      )}
                     </div>
                   </div>
                 </>
               ))}
+            </div>
+            <div className="flex justify-center w-full">
+              <button onClick={() => {
+                navigate('/boardmanager')
+              }} className="px-4 py-2 mt-5 mb-5 ml-10 text-sm font-medium text-center text-white rounded-lg shadow-lg btn bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80">
+                Manage Boards
+              </button>
             </div>
           </div>
         </div>
