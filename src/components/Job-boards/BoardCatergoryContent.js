@@ -14,11 +14,13 @@ export const BoardCategoryContent = ({
   boardJobs
 }) => {
   const navigate = useNavigate();
-  const [fetchValue, setFetchValue] = useState(0);
+  const [fetchValue, setFetchValue] = useState("");
   const [boardJob, setBoardJob] = useState({});
 
+// This UseEffect is observing the state of fetchValue. fetchValue is a stateVariable that can be updated by a onMouseDown function. When a user clicks the button to change a job's category, the state variable is updated and the boardJob data is fetched. onMouseUp this boardJob data is used to send a put request to the server.
+
   useEffect(() => {
-    if (fetchValue > 0) {
+    if (fetchValue !== "") {
       getSingleJobForUser(fetchValue).then((singleBoardJob) => {
         const updatedBoardJob = {
           job: singleBoardJob?.job?.id,
@@ -37,7 +39,7 @@ export const BoardCategoryContent = ({
           culture_rating: singleBoardJob.culture_rating,
           leadership_rating: singleBoardJob.leadership_rating,
           team_rating: singleBoardJob.team_rating,
-          board: parseInt(boardId),
+          board: boardId,
           category: singleBoardJob.category,
         };
         setBoardJob(updatedBoardJob);
@@ -47,6 +49,7 @@ export const BoardCategoryContent = ({
     }
   }, [fetchValue]);
 
+  // Put request to update a job's category
   const JobCategoryPutRequest = (event, boardJobId, catId) => {
     event.preventDefault();
 
@@ -78,8 +81,8 @@ export const BoardCategoryContent = ({
       
   };
 
-
-  const returnConditional = (boardJob) => {
+  // function: conditionally renders all jobs in their correct categories
+  const conditionallyRenderCorrectJobsInCategories = (boardJob) => {
     if (categoryId === boardJob?.category) {
       return (
         <>
@@ -160,7 +163,7 @@ export const BoardCategoryContent = ({
         </div>
         <div className="space-y-5">
           {boardJobs?.map((boardJob) => {
-            return <div>{returnConditional(boardJob)}</div>;
+            return <div>{conditionallyRenderCorrectJobsInCategories(boardJob)}</div>;
           })}
         </div>
       </div>
