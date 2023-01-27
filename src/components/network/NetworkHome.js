@@ -1,8 +1,4 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { getCurrentUser } from "../managers/AuthManager";
-import { getAllBoardsForUser } from "../managers/BoardManager";
-import { getUpcomingInterviewsForUser } from "../managers/InterviewManager";
+import { useState } from "react";
 import { ContactList } from "./ContactList";
 import { MySchedule } from "./MySchedule"
 
@@ -32,7 +28,7 @@ export const NetworkHome = () => {
 
   return (
     <>
-      <main className="flex-col w-screen h-screen pt-8 pl-8 bg-pinkswirl">
+      <main className="flex-col w-screen h-screen pt-8 pl-8 pr-8 bg-pinkswirl">
         <div className="h-1/6">
           <h1 className="text-5xl text-white font-quicksand">
             My Network

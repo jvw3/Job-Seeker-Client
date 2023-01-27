@@ -187,7 +187,7 @@ export const ProfileEdit = () => {
                     required
                     type="text"
                     className="block w-full p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
-                    placeholder="What does this contact currently work?"
+                    placeholder="What is your story?"
                     value={profile.elevator_pitch}
                     onChange={(evt) => {
                       const copy = { ...profile };

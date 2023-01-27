@@ -67,7 +67,7 @@ export const BoardCategoryContent = ({
       culture_rating: boardJob.culture_rating,
       leadership_rating: boardJob.leadership_rating,
       team_rating: boardJob.team_rating,
-      board: parseInt(boardJob.board),
+      board: boardJob.board,
       category: parseInt(catId),
     };
 
@@ -152,7 +152,7 @@ export const BoardCategoryContent = ({
 
   return (
     <>
-      <div className="flex-1 pl-3 pr-3 overflow-y-auto w-60">
+      <div className="flex-initial w-1/5 pl-3 pr-3 overflow-y-auto ">
         <div className="sticky top-0 pt-2 pb-2 bg-slate-50">
           <h2 className="text-2xl text-center text-secondary">
             {categoryName}

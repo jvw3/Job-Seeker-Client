@@ -147,7 +147,9 @@ export const BoardManager = () => {
     <>
       <main className="flex-col w-screen h-screen bg-pinkswirl">
         <div className="mb-10">
-          <h1 className="mt-4 ml-4 text-4xl text-white font-quicksand">Active Boards</h1>
+          <h1 className="mt-4 ml-4 text-4xl text-white font-quicksand">
+            Active Boards
+          </h1>
         </div>
         <div className="flex-col space-y-20 h-2/5 justify-evenly">
           <div className="ml-4 mr-4 bg-cover rounded-md h-96">
@@ -155,7 +157,7 @@ export const BoardManager = () => {
               {activeBoard.map((activeBoard) => (
                 <>
                   <div
-                    className="w-1/3 rounded-lg bg-slate-50"
+                    className="w-1/3 transition-all duration-300 ease-in-out rounded-lg bg-slate-50 hover:-translate-y-2 "
                     key={`activeBoard--${activeBoard.id}`}
                   >
                     <div className="flex justify-center w-full">
@@ -173,44 +175,45 @@ export const BoardManager = () => {
                         </button>
                       </div>
                     </div>
-                    <div>
-                      
-                    <div className="mt-3 bg-secondary tabs tabs-boxed w-fit ml-14">
-                      <a
-                        onClick={() => {
-                          controlPriorityTab();
-                        }}
-                        className={`tab ${
-                          priorityTabActive
-                            ? "tab-active bg-white"
-                            : "text-primary"
-                        }`}
-                      >
-                        Priorities
-                      </a>
-                      <a
-                        className={`tab ${
-                          goalTabActive ? "tab-active bg-white" : "text-primary"
-                        }`}
-                        onClick={() => {
-                          controlGoalTab();
-                        }}
-                      >
-                        Goal
-                      </a>
-                      <a
-                        className={`tab ${
-                          requirementsTabActive
-                            ? "tab-active bg-white"
-                            : "text-primary"
-                        }`}
-                        onClick={() => {
-                          controlRequirementsTab();
-                        }}
-                      >
-                        Requirements
-                      </a>
-                    </div>
+                    <div className="flex justify-center w-full">
+                      <div className="mt-3 bg-secondary tabs tabs-boxed w-fit ">
+                        <a
+                          onClick={() => {
+                            controlPriorityTab();
+                          }}
+                          className={`tab ${
+                            priorityTabActive
+                              ? "tab-active bg-white"
+                              : "text-primary"
+                          }`}
+                        >
+                          Priorities
+                        </a>
+                        <a
+                          className={`tab ${
+                            goalTabActive
+                              ? "tab-active bg-white"
+                              : "text-primary"
+                          }`}
+                          onClick={() => {
+                            controlGoalTab();
+                          }}
+                        >
+                          Goal
+                        </a>
+                        <a
+                          className={`tab ${
+                            requirementsTabActive
+                              ? "tab-active bg-white"
+                              : "text-primary"
+                          }`}
+                          onClick={() => {
+                            controlRequirementsTab();
+                          }}
+                        >
+                          Requirements
+                        </a>
+                      </div>
                     </div>
                     <div className="flex mt-1 h-52">
                       {priorityTabActive ? (
@@ -254,7 +257,9 @@ export const BoardManager = () => {
             </div>
           </div>
         </div>
-        <h2 className="mt-5 text-3xl text-center text-white font-quicksand">Board List</h2>
+        <h2 className="mt-5 text-3xl text-center text-white font-quicksand">
+          Board List
+        </h2>
         <button
           className="px-4 py-2 mt-5 mb-5 ml-10 text-sm font-medium text-center text-white rounded-lg shadow-lg btn bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80"
           onClick={() => {
@@ -266,39 +271,41 @@ export const BoardManager = () => {
         <div className="flex ml-10 space-x-5 h-1/2 wrap">
           {allBoards.map((board) => {
             return (
-              <div className="relative w-1/4 bg-white border rounded-lg h-1/4">
-                <div className="mt-3 ml-3 mr-3 text-3xl text-seeker-blue">{board.title}</div>
-                <div className="flex justify-evenly">
+              <div className="relative w-1/4 transition-all duration-300 ease-in-out bg-white border rounded-lg h-1/4 hover:-translate-y-1">
+                <div className="mt-3 ml-3 mr-3 text-3xl text-seeker-blue">
+                  {board.title}
+                </div>
+                <div className="flex mt-4 justify-evenly">
                   <button
-                    className="px-4 py-2 mt-4 mb-2 mr-2 text-sm font-medium text-center text-white rounded-lg shadow-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 dark:focus:ring-blue-800 shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80"
+                    className="px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white rounded-lg shadow-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 dark:focus:ring-blue-800 shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80"
                     onClick={() => {
                       navigate(`/boards/${board.id}`);
                     }}
                   >
                     View Board
                   </button>
-                    <div className="tabs tabs-boxed bg-secondary h-fit">
-                      <a
-                        onClick={(event) => {
-                          putRequestForBoardStatusActive(event, board);
-                        }}
-                        className={`tab ${
-                          board?.is_active ? "tab-active" : "text-white"
-                        }`}
-                      >
-                        Active
-                      </a>
-                      <a
-                        onClick={(event) => {
-                          putRequestForBoardStatusInactive(event, board);
-                        }}
-                        className={`tab ${
-                          !board?.is_active ? "tab-active" : "text-white"
-                        }`}
-                      >
-                        Inactive
-                      </a>
-                    </div>
+                  <div className="tabs tabs-boxed bg-secondary h-fit">
+                    <a
+                      onClick={(event) => {
+                        putRequestForBoardStatusActive(event, board);
+                      }}
+                      className={`tab ${
+                        board?.is_active ? "tab-active" : "text-white"
+                      }`}
+                    >
+                      Active
+                    </a>
+                    <a
+                      onClick={(event) => {
+                        putRequestForBoardStatusInactive(event, board);
+                      }}
+                      className={`tab ${
+                        !board?.is_active ? "tab-active" : "text-white"
+                      }`}
+                    >
+                      Inactive
+                    </a>
+                  </div>
                 </div>
                 {renderDeleteBoardButton(board.id)}
               </div>

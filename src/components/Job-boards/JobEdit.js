@@ -11,8 +11,6 @@ import {
   getSingleJobForUser,
   updateBoardJob,
 } from "../managers/BoardManager";
-import { BoardCategoryContent } from "./BoardCatergoryContent";
-import { Select } from "react-select";
 
 export const JobEdit = () => {
   const [jobs, setJobs] = useState([]);
@@ -120,7 +118,7 @@ export const JobEdit = () => {
 
   const renderCustomJobForm = () => {
     return (
-      <div className="px-3 py-2 border rounded-md shadow-sm formSection border-slate-500 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600 w-fit">
+      <div className="w-1/2 px-3 py-2 mt-2 border rounded-md shadow-sm formSection border-slate-500 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
         <label className="text-xs font-medium text-gray-900" htmlFor="name">
           Job Title
         </label>
@@ -143,7 +141,7 @@ export const JobEdit = () => {
 
   const renderCustomCompanyForm = () => {
     return (
-      <div className="px-3 py-2 border rounded-md shadow-sm formSection border-slate-500 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600 w-fit">
+      <div className="w-1/2 px-3 py-2 border rounded-md shadow-sm formSection border-slate-500 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
         <label className="text-xs font-medium text-gray-900" htmlFor="name">
           Company Name
         </label>
@@ -168,7 +166,7 @@ export const JobEdit = () => {
     <>
       <main className="flex-col w-full bg-pinkswirl">
         <div className="h-1/6 ">
-          <h1 className="p-5 text-4xl text-white">Edit Job</h1>
+          <h1 className="p-5 text-4xl text-white font-quicksand">Edit Job</h1>
         </div>
         <div className="flex justify-center w-full h-5/6">
           <div className="flex-col w-2/5 p-10 bg-white border rounded -md h-5/6">
@@ -201,8 +199,8 @@ export const JobEdit = () => {
                       );
                     })}
                   </select>
-                  {boardJob.job === "1" ? renderCustomJobForm() : ""}
                 </div>
+                  {boardJob.job === "1" ? renderCustomJobForm() : ""}
               </fieldset>
               <div className="w-1/2 px-3 py-2 border border-gray-500 rounded-md shadow-sm formSection focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
                 <label
@@ -277,7 +275,7 @@ export const JobEdit = () => {
                 />
                 Have you Applied?
               </div>
-              <div className="px-3 py-2 border rounded-md shadow-sm formSection border-slate-500 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600 w-fit">
+              <div className="w-1/2 px-3 py-2 border rounded-md shadow-sm formSection border-slate-500 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
                 <label
                   className="text-xs font-medium text-gray-900"
                   htmlFor="name"
@@ -297,7 +295,7 @@ export const JobEdit = () => {
                   }}
                 />
               </div>
-              <div className="px-3 py-2 border rounded-md shadow-sm formSection border-slate-500 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600 w-fit">
+              <div className="w-1/2 px-3 py-2 border rounded-md shadow-sm formSection border-slate-500 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
                 <label
                   className="text-xs font-medium text-gray-900"
                   htmlFor="name"
@@ -318,7 +316,7 @@ export const JobEdit = () => {
                   }}
                 />
               </div>
-              <div className="px-3 py-2 border rounded-md shadow-sm formSection border-slate-500 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600 w-fit">
+              <div className="w-1/2 px-3 py-2 border rounded-md shadow-sm formSection border-slate-500 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
                 <label
                   className="text-xs font-medium text-gray-900"
                   htmlFor="name"

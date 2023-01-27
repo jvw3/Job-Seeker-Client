@@ -85,7 +85,7 @@ export const BoardView = () => {
               evt.preventDefault();
 
               const boardCategory = {
-                board: parseInt(boardId),
+                board: boardId,
                 category: category.id,
               };
 
@@ -247,7 +247,7 @@ export const BoardView = () => {
 
   return (
     <>
-      <main className="w-screen h-screen overflow-y-auto bg-pinkswirl">
+      <main className="w-screen h-full overflow-y-auto bg-pinkswirl">
         <div className="p-4 text-white">
           <h1 className="text-4xl font-quicksand ">{board.title}</h1>
         </div>

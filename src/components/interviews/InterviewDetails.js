@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  getSingleInterviewForUser,
-} from "../managers/BoardManager";
-import { deleteCustomPrep, deleteInterview, updateInterview } from "../managers/InterviewManager";
+
+import { deleteCustomPrep, deleteInterview, getSingleInterview, updateInterview } from "../managers/InterviewManager";
 import { AddCustomPreps } from "./AddCustomPreps";
 import { IconTrash,} from "@tabler/icons";
 import { ToastContainer, toast } from "react-toastify";
@@ -15,8 +13,10 @@ export const IndividualInterviewDetails = () => {
 
   const { interviewId } = useParams();
   const navigate = useNavigate();
+
+  
   useEffect(() => {
-    getSingleInterviewForUser(interviewId).then((userInterview) => {
+    getSingleInterview(interviewId).then((userInterview) => {
       setInterview(userInterview);
     });
   }, []);
@@ -63,7 +63,7 @@ export const IndividualInterviewDetails = () => {
     const deleteRequestForCustomPrep = (id) => {
       deleteCustomPrep(id)
         .then(() => {
-          getSingleInterviewForUser(interviewId).then((userInterview) => {
+          getSingleInterview(interviewId).then((userInterview) => {
             setInterview(userInterview);
           });
         })
@@ -99,7 +99,7 @@ export const IndividualInterviewDetails = () => {
             <div className="modal-action">
               <label
                 onClick={() => {
-                  getSingleInterviewForUser(interviewId).then(
+                  getSingleInterview(interviewId).then(
                     (userInterview) => {
                       setInterview(userInterview);
                     }
@@ -133,7 +133,7 @@ export const IndividualInterviewDetails = () => {
             <div className="modal-action">
               <label
                 onClick={() => {
-                  getSingleInterviewForUser(interviewId).then(() => {
+                  getSingleInterview(interviewId).then(() => {
                     toast.success("You have created a new custom prep.");
                   });
                 }}
@@ -153,14 +153,16 @@ export const IndividualInterviewDetails = () => {
     event.preventDefault();
 
     const interviewToApi = {
+      board_job: interview.board_job.id,
+      prep: interview.prep.id,
       date: interview.date,
-      is_complete: interview.is_complete,
+      is_complete: false,
       interview_team: interview.interview_team,
       interview_feedback: interview.interview_feedback,
     };
 
     updateInterview(interviewToApi, interview.id)
-      .then(() => getSingleInterviewForUser())
+      .then(() => getSingleInterview(interview.id))
       .then((interview) => setInterview(interview));
 
     toast.success(`Your interview has been updated to: Scheduled.`);
@@ -170,17 +172,19 @@ export const IndividualInterviewDetails = () => {
     event.preventDefault();
 
     const interviewToApi = {
+      board_job: interview.board_job.id,
+      prep: interview.prep.id,
       date: interview.date,
-      is_complete: interview.is_complete,
+      is_complete: true,
       interview_team: interview.interview_team,
       interview_feedback: interview.interview_feedback,
     };
 
     updateInterview(interviewToApi, interview.id)
-      .then(() => getSingleInterviewForUser())
+      .then(() => getSingleInterview(interview.id))
       .then((interview) => setInterview(interview))
 
-    toast.success(`Your interview has been updated to: Inactive.`);
+    toast.success(`Your interview has been updated to: Complete.`);
   };
 
 
@@ -216,20 +220,20 @@ export const IndividualInterviewDetails = () => {
           >
             <a
               onClick={(event) => {
-                putRequestForInterviewStatusComplete(event, interview);
+                putRequestForInterviewStatusScheduled(event, interview);
               }}
               className={`tab text-seeker-blue ${
-                !interview?.is_complete ? "tab-active text-primary" : ""
+                !interview?.is_complete ? "tab-active text-primary" : "text-seeker-blue"
               }`}
             >
               Scheduled
             </a>
             <a
               onClick={(event) => {
-                putRequestForInterviewStatusScheduled(event, interview);
+                 putRequestForInterviewStatusComplete(event, interview);
               }}
               className={`tab ${
-                interview?.is_complete ? "tab-active text-primary" : ""
+                interview?.is_complete ? "tab-active text-primary" : "text-seeker-blue"
               } `}
             >
               Complete

@@ -84,7 +84,7 @@ export const JobForm = () => {
       culture_rating: boardJob.culture_rating,
       leadership_rating: boardJob.leadership_rating,
       team_rating: boardJob.team_rating,
-      board: parseInt(boardJob.board),
+      board: boardJob.board,
       category: parseInt(boardJob.category),
       tags: Array.from(checkedOptions)
     };
@@ -94,7 +94,7 @@ export const JobForm = () => {
 
   const renderCustomJobForm = () => {
     return (
-      <div className="px-3 py-2 border rounded-md shadow-sm formSection border-slate-500 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600 w-fit">
+      <div className="w-1/2 px-3 py-2 mt-2 border rounded-md shadow-sm formSection border-slate-500 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
         <label className="text-xs font-medium text-gray-900" htmlFor="name">
           Job Title
         </label>
@@ -117,7 +117,7 @@ export const JobForm = () => {
 
   const renderCustomCompanyForm = () => {
     return (
-      <div className="px-3 py-2 border rounded-md shadow-sm formSection border-slate-500 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600 w-fit">
+      <div className="w-1/2 px-3 py-2 border rounded-md shadow-sm formSection border-slate-500 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
         <label className="text-xs font-medium text-gray-900" htmlFor="name">
           Company Name
         </label>
@@ -141,13 +141,13 @@ export const JobForm = () => {
   return (
     <>
       <main className="flex-col w-full text-black bg-pinkswirl">
-        <div className="h-1/6 ">
+        <div className="mb-3">
           <h1 className="p-5 text-4xl text-white font-quicksand">
             Add New Job
           </h1>
         </div>
-        <div className="flex justify-center w-full h-5/6">
-          <div className="flex-col w-2/5 p-10 bg-white border rounded-md h-80">
+        <div className="flex justify-center w-full pb-5 h-90">
+          <div className="flex-col w-2/5 p-5 bg-white border rounded-md h-90">
             <form className="flex-col space-y-2">
               <fieldset>
                 <div className="w-1/2 px-3 py-2 border border-gray-500 rounded-md shadow-sm formSection focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
@@ -177,8 +177,8 @@ export const JobForm = () => {
                       );
                     })}
                   </select>
-                  {boardJob.job === "1" ? renderCustomJobForm() : ""}
                 </div>
+                  {boardJob.job === "1" ? renderCustomJobForm() : ""}
               </fieldset>
               <div className="w-1/2 px-3 py-2 border border-gray-500 rounded-md shadow-sm formSection focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
                 <label
@@ -214,7 +214,7 @@ export const JobForm = () => {
                     className="block text-xs font-medium text-gray-900"
                     htmlFor="name"
                   >
-                    Company
+                    Category
                   </label>
                   <select
                     className="block w-full p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
@@ -254,7 +254,7 @@ export const JobForm = () => {
                 />
                 Have you Applied?
               </div>
-              <div className="px-3 py-2 border rounded-md shadow-sm formSection border-slate-500 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600 w-fit">
+              <div className="w-1/2 px-3 py-2 border rounded-md shadow-sm formSection border-slate-500 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
                 <label
                   className="text-xs font-medium text-gray-900"
                   htmlFor="name"
@@ -274,7 +274,7 @@ export const JobForm = () => {
                   }}
                 />
               </div>
-              <div className="px-3 py-2 border rounded-md shadow-sm formSection border-slate-500 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600 w-fit">
+              <div className="w-1/2 px-3 py-2 border rounded-md shadow-sm formSection border-slate-500 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
                 <label
                   className="text-xs font-medium text-gray-900"
                   htmlFor="name"
@@ -295,7 +295,7 @@ export const JobForm = () => {
                   }}
                 />
               </div>
-              <div className="px-3 py-2 border rounded-md shadow-sm formSection border-slate-500 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600 w-fit">
+              <div className="w-1/2 px-3 py-2 border rounded-md shadow-sm formSection border-slate-500 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
                 <label
                   className="text-xs font-medium text-gray-900"
                   htmlFor="name"
@@ -306,7 +306,7 @@ export const JobForm = () => {
                 <input
                   required
                   type="text"
-                  className="block p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
+                  className="block w-full p-0 overflow-visible text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
                   placeholder="On-site, Hybrid, or Remote"
                   value={boardJob.work_status}
                   onChange={(evt) => {

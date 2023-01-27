@@ -143,13 +143,15 @@ export const Dashboard = () => {
           {upcomingInterviews.map((upcomingInterview) => (
             <div
               key={`interview--${upcomingInterview.id}`}
-              className="flex-col w-1/4 p-4 transition-all duration-300 bg-white border shadow-xl h-3/4 mt-7 card justify-evenly hover:-translate-y-2 ease-in-ou"
+              className="flex-col w-1/4 p-4 transition-all duration-300 ease-in-out bg-white border shadow-xl h-3/4 mt-7 card justify-evenly hover:-translate-y-2"
             >
               <div className="card-title text-seeker-blue">
                 {upcomingInterview?.board_job?.job?.title}
               </div>
               <div className="text-slate-700">
-                {upcomingInterview?.board_job?.company?.name}
+                {upcomingInterview?.board_job?.custom_company === ""
+                  ? upcomingInterview?.board_job?.company?.name
+                  : upcomingInterview?.board_job?.custom_company}
               </div>
               <div className="text-slate-700">
                 {formatTime(upcomingInterview.date)}
@@ -202,7 +204,7 @@ export const Dashboard = () => {
         return renderUpcomingMeetings()
       } else if (meetingTabActive && upcomingMeetings.length === 0) {
         return (
-          <div className="flex h-full m-12 place-content-center">
+          <div className="flex m-12 place-content-center">
             <div className="text-5xl text-white">No Upcoming Meetings</div>
           </div>
         );
@@ -238,7 +240,7 @@ export const Dashboard = () => {
               {activeBoard.map((activeBoard) => (
                 <>
                   <div
-                    className="w-1/3 rounded-lg bg-slate-50"
+                    className="w-1/3 transition-all duration-300 ease-in-out rounded-lg bg-slate-50 hover:-translate-y-2"
                     key={`activeBoard--${activeBoard.id}`}
                   >
                     <div className="flex justify-center w-full">
@@ -256,7 +258,8 @@ export const Dashboard = () => {
                         </button>
                       </div>
                     </div>
-                    <div className="mt-3 bg-secondary tabs tabs-boxed w-fit ml-14">
+                    <div className="flex justify-center w-full">
+                    <div className="mt-3 bg-secondary tabs tabs-boxed w-fit">
                       <a
                         onClick={() => {
                           controlPriorityTab();
@@ -291,6 +294,8 @@ export const Dashboard = () => {
                       >
                         Requirements
                       </a>
+                    </div>
+                      
                     </div>
                     <div className="flex mt-1 h-52">
                       {priorityTabActive ? (
@@ -333,9 +338,12 @@ export const Dashboard = () => {
               ))}
             </div>
             <div className="flex justify-center w-full">
-              <button onClick={() => {
-                navigate('/boardmanager')
-              }} className="px-4 py-2 mt-5 mb-5 ml-10 text-sm font-medium text-center text-white rounded-lg shadow-lg btn bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80">
+              <button
+                onClick={() => {
+                  navigate("/boardmanager");
+                }}
+                className="px-4 py-2 mt-5 mb-5 ml-10 text-sm font-medium text-center text-white rounded-lg shadow-lg btn bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80"
+              >
                 Manage Boards
               </button>
             </div>

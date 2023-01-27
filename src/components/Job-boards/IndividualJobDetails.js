@@ -110,7 +110,7 @@ export const IndividualJobDetails = () => {
       culture_rating: boardJob.culture_rating,
       leadership_rating: boardJob.leadership_rating,
       team_rating: boardJob.team_rating,
-      board: parseInt(boardJob.board.id),
+      board: boardJob.board.id,
       category: parseInt(boardJob.category),
     };
 
@@ -490,12 +490,12 @@ export const IndividualJobDetails = () => {
     <main className="w-screen h-screen pt-5 pl-5 overflow-y-auto bg-pinkswirl">
       <div className="flex">
         <div className="text-white basis-3/4">
-          <h1 className="text-3xl">
+          <h1 className="text-3xl font-quicksand">
             {boardJob?.custom_job === ""
               ? boardJob?.job?.title
               : boardJob?.custom_job}
           </h1>
-          <h2 className="text-2xl">
+          <h2 className="text-2xl font-quicksand">
             {boardJob?.custom_company === ""
               ? boardJob?.company?.name
               : boardJob?.custom_company}

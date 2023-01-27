@@ -25,13 +25,6 @@ export const getSingleJobForUser = (id) => {
     },
   }).then((res) => res.json());
 };
-export const getSingleInterviewForUser = (id) => {
-  return fetch(`http://localhost:8000/interviews/${id}`, {
-    headers: {
-      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
-    },
-  }).then((res) => res.json());
-};
 
 export const getSinglePriorityRankForBoard = (id) => {
   return fetch(`http://localhost:8000/priorityranks?board=${id}`, {

@@ -15,9 +15,6 @@ import {
   deleteContact
 } from "../managers/NetworkManager";
 import { IconBrandLinkedin, IconTrash, IconSearch, IconCalendarEvent} from "@tabler/icons";
-import { ContactEdit } from "./ContactEdit";
-import { ToastContainer, toast } from "react-toastify";
-import { NetworkMeetingForm } from "./NetworkMeetingForm";
 
 // Contact List Component renders a table that holds all contacts.
 
@@ -48,7 +45,7 @@ export const ContactList = () => {
   const renderNetworkTable = () => {
     return (
       <>
-        <table className="w-11/12 h-40 shadow-2xl">
+        <table className="w-full h-full shadow-2xl">
           <thead className="w-full bg-gray-100">
             <tr className="">
               <th
@@ -177,35 +174,35 @@ export const ContactList = () => {
   };
 
   const sendSortRequestToApi = (sortValue) => {
-    if (sortValue == "8") {
+    if (sortValue === "8") {
       sendAscendingSortNameRequest().then((filteredContactsArray) => {
         setContacts(filteredContactsArray);
       });
-    } else if (sortValue == "7") {
+    } else if (sortValue === "7") {
       sendDescendingSortNameRequest().then((filteredContactsArray) => {
         setContacts(filteredContactsArray);
       });
-    } else if (sortValue == "6") {
+    } else if (sortValue === "6") {
       sendAscendingSortContactNumberRequest().then((filteredContactsArray) => {
         setContacts(filteredContactsArray);
       });
-    } else if (sortValue == "5") {
+    } else if (sortValue === "5") {
       sendDescendingSortContactNumberRequest().then((filteredContactsArray) => {
         setContacts(filteredContactsArray);
       });
-    } else if (sortValue == "4") {
+    } else if (sortValue === "4") {
       sendAscendingSortConnectionLevelRequest().then((filteredContactsArray) => {
         setContacts(filteredContactsArray);
       });
-    } else if (sortValue == "3") {
+    } else if (sortValue === "3") {
       sendDescendingSortConnectionLevelRequest().then((filteredContactsArray) => {
         setContacts(filteredContactsArray);
       });
-    } else if (sortValue == "2") {
+    } else if (sortValue === "2") {
       sendAscendingSortLastContactRequest().then((filteredContactsArray) => {
         setContacts(filteredContactsArray);
       });
-    } else if (sortValue == "1") {
+    } else if (sortValue === "1") {
       sendDescendingSortLastContactRequest().then((filteredContactsArray) => {
         setContacts(filteredContactsArray);
       });
@@ -224,7 +221,7 @@ export const ContactList = () => {
     return (
       <>
         <button
-          className="px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white rounded-lg shadow-lg btn bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80"
+          className="px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white rounded-lg shadow-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80"
           onClick={() => {
             getContactsForUser()
               .then((userContacts) => {
@@ -238,7 +235,7 @@ export const ContactList = () => {
         >
           Reset
         </button>
-        <div className="w-1/4 input-group">
+        <div className="w-1/5 input-group">
           <input
             type="text"
             className="w-56 h-10 rounded-md text-slate-500"
@@ -266,7 +263,7 @@ export const ContactList = () => {
   const renderSortAndFilterBars = () => {
     return (
       <>
-        <div>
+        <div className="w-1/5 mr-6 input-group ">
           <select
             onChange={(evt) => {
               const copy = evt.target.value;
@@ -288,12 +285,12 @@ export const ContactList = () => {
             onClick={() => {
               sendSortRequestToApi(sortValue);
             }}
-            className="h-10 px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white rounded-lg shadow-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80"
+            className="h-10 px-4 py-1 mb-2 mr-2 text-xs font-medium text-center text-white rounded-lg shadow-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80"
           >
             Sort Contacts
           </button>
         </div>
-        <div>
+        <div className="w-1/5 ml-2 input-group">
           <select
             className="h-10 rounded-md text-slate-500"
             value={connectionFilterValue}
@@ -361,7 +358,7 @@ export const ContactList = () => {
         <div>
           <div>
             <button
-              className="px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white rounded-lg shadow-lg btn bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80"
+              className="px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white rounded-lg shadow-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80"
               onClick={() => {
                 navigate(`/createcontact`);
               }}
@@ -379,7 +376,6 @@ export const ContactList = () => {
           </div>
         </div>
         </div>
-        <ToastContainer />
       </main>
     </>
   );

@@ -1,7 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { createInterview, getSingleInterview, getSingleInterviewPrep, updateInterviewPrep, updateInterview } from "../managers/InterviewManager";
-import { updateBoard } from "../managers/BoardManager";
+import { getSingleInterview, getSingleInterviewPrep, updateInterviewPrep, updateInterview } from "../managers/InterviewManager";
 
 // Interview Edit Component allows a user to update their interview data.
 
@@ -25,7 +24,15 @@ export const InterviewEdit = ({}) => {
 
   useEffect(() => {
     getSingleInterview(interviewId).then((currentInterview) => {
-      setInterview(currentInterview);
+      const updatedInterview = {
+        board_job: currentInterview.board_job.id,
+        prep: currentInterview.prep.id,
+        date: currentInterview.date,
+        is_complete: currentInterview.is_complete,
+        interview_team: currentInterview.interview_team,
+        interview_feedback: currentInterview.interview_feedback,
+      };
+      setInterview(updatedInterview);
     });
   }, []);
 
@@ -51,7 +58,7 @@ export const InterviewEdit = ({}) => {
 
   const putRequestForInterview = () => {
     const interviewToApi = {
-      board_job: parseInt(interview.board_job),
+      board_job: interview.board_job,
       prep: interview.prep,
       date: interview.date,
       is_complete: interview.is_complete,
