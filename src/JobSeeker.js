@@ -39,7 +39,7 @@ export const JobSeeker = () => {
           </>
         ) : (
           <>
-            <NavBar token={token} setToken={setToken} />
+            
             <UnauthorizedViews
               token={token}
               setToken={setToken}

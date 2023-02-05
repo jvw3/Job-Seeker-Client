@@ -1,18 +1,19 @@
 import SalyImg from "./HompageImages/Saly-1.png"
+import { NavBar } from "../navbar/NavBar";
 
-// HomePage Landing Component displays the homepage for an unauthorized user's view.
+// HomePage Landing Component displays the homepage for an unauthorized users view
 
 
 export const HomePageLanding = () => {
 
   return (
-    <main className="bg-pinkswirl ">
-      <div className="flex h-screen">
-        <div className="self-center w-1/5 p-10 text-left text-white text-7xl font-quicksand">
-          Are you ready to take your Job Search to the next Level?
+    <main className="h-screen bg-pinkswirl">
+      <NavBar  />
+      <div className="flex justify-between ">
+        <img className="w-1/2 h-5/6" src={SalyImg}></img>
+        <div className="self-start w-1/3 p-10 mt-10 text-5xl leading-tight text-right text-white font-quicksand">
+          Are you ready to take your job search to the next level?
         </div>
-        <img className="w-3/5" src={SalyImg}></img>
-        <div className="w-1/5 mt-32 text-4xl text-white font-quicksand">Job Seeker is a job application tracker built for developers.</div>
       </div>
     </main>
   );

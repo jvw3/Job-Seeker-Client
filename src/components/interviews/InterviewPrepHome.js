@@ -4,12 +4,14 @@ import {
   getInterviewPrepsForUser,
   getUpcomingInterviewsForUser,
 } from "../managers/InterviewManager";
+import {
+  IconDiscountCheck, IconCalendarEvent
+} from "@tabler/icons";
 
 // Interview Prep Home Component displays all upcoming interviews for a user.
 
 export const InterviewPrep = () => {
   const [upcomingInterviews, setUpcomingInterviews] = useState([]);
-  const [interviewPreps, setInterviewPreps] = useState([]);
 
   const navigate = useNavigate()
 
@@ -18,23 +20,18 @@ export const InterviewPrep = () => {
       setUpcomingInterviews(upcomingInterviews);
     });
   }, []);
-  useEffect(() => {
-    getInterviewPrepsForUser().then((interviewPreps) => {
-      setUpcomingInterviews(interviewPreps);
-    });
-  }, []);
 
   const renderInterviewPrepButton = (prep, interviewId) => {
     return (
       <>
-          <button
-            onClick={() => {
-              navigate(`/interviews/${interviewId}`);
-            }}
-            className="px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white transition-all duration-500 ease-in-out bg-black rounded-lg shadow-lg hover:bg-grey focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-blue-500/50"
-          >
-            Prepare for interview
-          </button>
+        <button
+          onClick={() => {
+            navigate(`/interviews/${interviewId}`);
+          }}
+          className="px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white transition-all duration-500 ease-in-out rounded-lg shadow-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-grey focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-blue-500/50"
+        >
+          Prepare for interview
+        </button>
       </>
     );
   };
@@ -56,12 +53,14 @@ export const InterviewPrep = () => {
         </h2>
         <div className="flex justify-center space-x-10 h-1/2">
           {upcomingInterviews.map((upcomingInterview) => (
-            <div className="w-1/4 p-5 bg-white rounded-lg h-2/4">
+            <div className="relative w-1/4 pt-10 transition-all duration-300 ease-in-out bg-white rounded-lg pl-7 pr-7 h-2/4 hover:-translate-y-2">
               <div className="text-2xl text-seeker-blue">
                 {upcomingInterview?.board_job?.job?.title}
               </div>
               <div className="text-xl text-seeker-blue">
-                {upcomingInterview?.board_job?.company?.name}
+                {upcomingInterview?.board_job?.custom_company === ""
+                  ? upcomingInterview?.board_job?.company?.name
+                  : upcomingInterview?.board_job?.custom_company}
               </div>
               <div className="text-slate-500">
                 Interviewing with: {upcomingInterview?.interview_team}
@@ -72,6 +71,20 @@ export const InterviewPrep = () => {
               {renderInterviewPrepButton(
                 upcomingInterview?.prep,
                 upcomingInterview?.id
+              )}
+              <div className="absolute p-1 text-sm text-white rounded-lg top-1 right-2 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 ">
+                {upcomingInterview?.board_job?.board?.title}
+              </div>
+              {upcomingInterview.is_complete ? (
+                <div className="absolute top-1 left-1">
+                  {" "}
+                  <IconDiscountCheck color="green" size={30} />
+                </div>
+              ) : (
+                <div className="absolute top-1 left-1 text-seeker-blue">
+                  {" "}
+                  <IconCalendarEvent size={30} />
+                </div>
               )}
             </div>
           ))}

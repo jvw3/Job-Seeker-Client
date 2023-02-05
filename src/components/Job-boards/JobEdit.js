@@ -9,10 +9,8 @@ import {
   getAllJobs,
   getAllTags,
   getSingleJobForUser,
-  updateBoardJob
+  updateBoardJob,
 } from "../managers/BoardManager";
-import { BoardCategoryContent } from "./BoardCatergoryContent";
-import { Select } from "react-select"
 
 export const JobEdit = () => {
   const [jobs, setJobs] = useState([]);
@@ -21,60 +19,40 @@ export const JobEdit = () => {
   const { boardId } = useParams();
   const { jobId } = useParams();
   const navigate = useNavigate();
-  const [boardJob, setBoardJob] = useState({
-    job: 0,
-    custom_job: "",
-    company: 0,
-    custom_company: "",
-    has_applied: false,
-    has_interviewed: false,
-    interview_rounds: 0,
-    received_offer: false,
-    salary: 0,
-    location: "",
-    salary_rating: 0,
-    location_rating: 0,
-    culture_rating: 0,
-    leadership_rating: 0,
-    team_rating: 0,
-    board: boardId,
-    category: 0
-  });
+  const [boardJob, setBoardJob] = useState({});
 
-// When using serializers with Django, and you're creating an edit form. You have to basically create a copy of your state so you can create a custom object that can be sent to the server.
+  // When using serializers with Django, and you're creating an edit form. You have to basically create a copy of your state so you can create a custom object that can be sent to the server.
   useEffect(() => {
-    getSingleJobForUser(jobId)
-      .then((singleBoardJob) => {
-        const updatedBoardJob = {
-          job: singleBoardJob?.job?.id,
-          custom_job: singleBoardJob.custom_job,
-          company: singleBoardJob.company.id,
-          custom_company: singleBoardJob.custom_job,
-          has_applied: singleBoardJob.has_applied,
-          has_interviewed: singleBoardJob.has_interviewed,
-          interview_rounds: singleBoardJob.interview_rounds,
-          received_offer: singleBoardJob.received_offer,
-          salary: singleBoardJob.salary,
-          location: singleBoardJob.location,
-          salary_rating: singleBoardJob.salary_rating,
-          location_rating: singleBoardJob.location_rating,
-          culture_rating: singleBoardJob.culture_rating,
-          leadership_rating: singleBoardJob.leadership_rating,
-          team_rating: singleBoardJob.team_rating,
-          board: parseInt(boardId),
-          category: singleBoardJob.category,
-        };
-        setBoardJob(updatedBoardJob);
-      })
+    getSingleJobForUser(jobId).then((singleBoardJob) => {
+      const updatedBoardJob = {
+        job: singleBoardJob?.job?.id,
+        custom_job: singleBoardJob.custom_job,
+        company: singleBoardJob.company.id,
+        custom_company: singleBoardJob.custom_job,
+        has_applied: singleBoardJob.has_applied,
+        has_interviewed: singleBoardJob.has_interviewed,
+        interview_rounds: singleBoardJob.interview_rounds,
+        received_offer: singleBoardJob.received_offer,
+        salary: singleBoardJob.salary,
+        location: singleBoardJob.location,
+        work_status: singleBoardJob.work_status,
+        salary_rating: singleBoardJob.salary_rating,
+        location_rating: singleBoardJob.location_rating,
+        culture_rating: singleBoardJob.culture_rating,
+        leadership_rating: singleBoardJob.leadership_rating,
+        team_rating: singleBoardJob.team_rating,
+        board: parseInt(boardId),
+        category: singleBoardJob.category,
+      };
+      setBoardJob(updatedBoardJob);
+    });
   }, []);
-
 
   useEffect(() => {
     getAllJobs().then((allJobs) => {
       setJobs(allJobs);
     });
   }, []);
-
 
   useEffect(() => {
     getAllCompanies().then((allCompanies) => {
@@ -87,7 +65,6 @@ export const JobEdit = () => {
       setCategories(allCategories);
     });
   }, []);
-
 
   // const handleChange = (event) => {
   //   let updatedList = [...checkedOptions];
@@ -103,7 +80,6 @@ export const JobEdit = () => {
   //   setCheckedOptions(updatedList);
   // };
 
-
   // const checkTag = (tagId) => {
   //   for (const check of checkedOptions) {
   //     if (check === tagId) {
@@ -112,9 +88,6 @@ export const JobEdit = () => {
   //   }
   //   return false
   // }
-
-
-
 
   const putRequestForJob = (event) => {
     event.preventDefault();
@@ -130,163 +103,251 @@ export const JobEdit = () => {
       received_offer: boardJob.received_offer,
       salary: boardJob.salary,
       location: boardJob.location,
+      work_status: boardJob.work_status,
       salary_rating: boardJob.salary_rating,
       location_rating: boardJob.location_rating,
       culture_rating: boardJob.culture_rating,
       leadership_rating: boardJob.leadership_rating,
       team_rating: boardJob.team_rating,
       board: parseInt(boardJob.board),
-      category: parseInt(boardJob.category)
+      category: parseInt(boardJob.category),
     };
 
-    updateBoardJob(boardJobToApi, jobId)
-      .then(() => navigate(-1));
+    updateBoardJob(boardJobToApi, jobId).then(() => navigate(-1));
+  };
+
+  const renderCustomJobForm = () => {
+    return (
+      <div className="w-1/2 px-3 py-2 mt-2 border rounded-md shadow-sm formSection border-slate-500 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
+        <label className="text-xs font-medium text-gray-900" htmlFor="name">
+          Job Title
+        </label>
+        <input
+          required
+          autoFocus
+          type="text"
+          className="block p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
+          placeholder="Name of position"
+          value={boardJob.custom_job}
+          onChange={(evt) => {
+            const copy = { ...boardJob };
+            copy.custom_job = evt.target.value;
+            setBoardJob(copy);
+          }}
+        />
+      </div>
+    );
+  };
+
+  const renderCustomCompanyForm = () => {
+    return (
+      <div className="w-1/2 px-3 py-2 border rounded-md shadow-sm formSection border-slate-500 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
+        <label className="text-xs font-medium text-gray-900" htmlFor="name">
+          Company Name
+        </label>
+        <input
+          required
+          autoFocus
+          type="text"
+          className="block p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
+          placeholder="Name of position"
+          value={boardJob.custom_company}
+          onChange={(evt) => {
+            const copy = { ...boardJob };
+            copy.custom_company = evt.target.value;
+            setBoardJob(copy);
+          }}
+        />
+      </div>
+    );
   };
 
   return (
     <>
-      <main>
-        <h1>Edit Job</h1>
-      </main>
-      <form>
-        <fieldset>
-          <div className="forminputfield">
-            <label className="formlabel" htmlFor="job">
-              What is the name of the position?
-            </label>
-            <select
-              className="form-control"
-              value={boardJob.job}
-              required
-              autoFocus
-              onChange={(evt) => {
-                const copy = { ...boardJob };
-                copy.job = evt.target.value;
-                setBoardJob(copy);
-              }}
-            >
-              <option value="0">Choose job title</option>
-              {jobs.map((job) => {
-                return (
-                  <option value={job.id} key={job.id}>
-                    {job.title}
-                  </option>
-                );
-              })}
-            </select>
-            {boardJob.job === "1" ? <div>Create Custom Job</div> : ""}
-          </div>
-        </fieldset>
-        <fieldset>
-          <div className="forminputfield">
-            <label className="formlabel" htmlFor="job">
-              What is the name of the Company?
-            </label>
-            <select
-              className="form-control"
-              value={boardJob.company}
-              required
-              autoFocus
-              onChange={(evt) => {
-                const copy = { ...boardJob };
-                copy.company = evt.target.value;
-                setBoardJob(copy);
-              }}
-            >
-              <option value="0">Choose Company</option>
-              {companies.map((company) => {
-                return (
-                  <option value={company.id} key={company.id}>
-                    {company.name}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-        </fieldset>
-        <fieldset>
-          <div className="forminputfield">
-            <label className="formlabel" htmlFor="category">
-              Choose a category:
-            </label>
-            <select
-              className="form-control"
-              value={boardJob.category}
-              required
-              autoFocus
-              onChange={(evt) => {
-                const copy = { ...boardJob };
-                copy.category = evt.target.value;
-                setBoardJob(copy);
-              }}
-            >
-              <option value="0">Choose Category</option>
-              {categories.map((category) => {
-                return (
-                  <option value={category.id} key={category.id}>
-                    {category.name}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-        </fieldset>
-        <div className="radio">
-          <label htmlFor="applied-yes"></label>
-          <input
-            type="checkbox"
-            id="applied-yes"
-            name="applicationstatus"
-            value={boardJob.has_applied}
-            checked={boardJob.has_applied}
-            onChange={(evt) => {
-              const copy = { ...boardJob };
-              copy.has_applied = evt.target.checked;
-              setBoardJob(copy);
-            }}
-          />
-          Have you Applied?
+      <main className="flex-col w-full bg-pinkswirl">
+        <div className="h-1/6 ">
+          <h1 className="p-5 text-4xl text-white font-quicksand">Edit Job</h1>
         </div>
-        <fieldset className="formSection">
-          <label htmlFor="name">What is the Salary?</label>
-          <input
-            required
-            autoFocus
-            type="number"
-            className="form-control"
-            placeholder="Amount in dollars"
-            value={boardJob.salary}
-            onChange={(evt) => {
-              const copy = { ...boardJob };
-              copy.salary = evt.target.value;
-              setBoardJob(copy);
-            }}
-          />
-        </fieldset>
-        <fieldset className="formSection">
-          <label htmlFor="name">Where is the job located?</label>
-          <input
-            required
-            autoFocus
-            type="text"
-            className="form-control"
-            placeholder="Amount in dollars"
-            value={boardJob.location}
-            onChange={(evt) => {
-              const copy = { ...boardJob };
-              copy.location = evt.target.value;
-              setBoardJob(copy);
-            }}
-          />
-        </fieldset>
-        <button
-          size="lg"
-          color="violet"
-          onClick={(clickEvent) => putRequestForJob(clickEvent)}
-        >
-          Save Changes!
-        </button>
-      </form>
+        <div className="flex justify-center w-full h-5/6">
+          <div className="flex-col w-2/5 p-10 bg-white border rounded -md h-5/6">
+            <form className="space-y-2">
+              <fieldset>
+                <div className="w-1/2 px-3 py-2 border border-gray-500 rounded-md shadow-sm formSection focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
+                  <label
+                    className="block text-xs font-medium text-gray-900"
+                    htmlFor="name"
+                  >
+                    Job Title
+                  </label>
+                  <select
+                    className="block w-full p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
+                    value={boardJob.job}
+                    required
+                    autoFocus
+                    onChange={(evt) => {
+                      const copy = { ...boardJob };
+                      copy.job = evt.target.value;
+                      setBoardJob(copy);
+                    }}
+                  >
+                    <option value="0">Choose job title</option>
+                    {jobs.map((job) => {
+                      return (
+                        <option value={job.id} key={job.id}>
+                          {job.title}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+                  {boardJob.job === "1" ? renderCustomJobForm() : ""}
+              </fieldset>
+              <div className="w-1/2 px-3 py-2 border border-gray-500 rounded-md shadow-sm formSection focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
+                <label
+                  className="block text-xs font-medium text-gray-900"
+                  htmlFor="name"
+                >
+                  Company
+                </label>
+                <select
+                  className="block w-full p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
+                  value={boardJob.company}
+                  required
+                  onChange={(evt) => {
+                    const copy = { ...boardJob };
+                    copy.company = evt.target.value;
+                    setBoardJob(copy);
+                  }}
+                >
+                  <option value="0">Choose Company</option>
+                  {companies.map((company) => {
+                    return (
+                      <option value={company.id} key={company.id}>
+                        {company.name}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+              {boardJob.company === "1" ? renderCustomCompanyForm() : ""}
+              <fieldset>
+                <div className="w-1/2 px-3 py-2 border border-gray-500 rounded-md shadow-sm formSection focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
+                  <label
+                    className="block text-xs font-medium text-gray-900"
+                    htmlFor="name"
+                  >
+                    Company
+                  </label>
+                  <select
+                    className="block w-full p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
+                    value={boardJob.category}
+                    required
+                    onChange={(evt) => {
+                      const copy = { ...boardJob };
+                      copy.category = evt.target.value;
+                      setBoardJob(copy);
+                    }}
+                  >
+                    <option value="0">Choose Category</option>
+                    {categories.map((category) => {
+                      return (
+                        <option value={category.id} key={category.id}>
+                          {category.name}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+              </fieldset>
+              <div className="flex w-4/12 text-slate-600 ">
+                <input
+                  className="mr-2 checkbox checkbox-sm checkbox-secondary text-slate-700"
+                  type="checkbox"
+                  id="applied-yes"
+                  name="applicationstatus"
+                  value={boardJob.has_applied}
+                  checked={boardJob.has_applied}
+                  onChange={(evt) => {
+                    const copy = { ...boardJob };
+                    copy.has_applied = evt.target.checked;
+                    setBoardJob(copy);
+                  }}
+                />
+                Have you Applied?
+              </div>
+              <div className="w-1/2 px-3 py-2 border rounded-md shadow-sm formSection border-slate-500 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
+                <label
+                  className="text-xs font-medium text-gray-900"
+                  htmlFor="name"
+                >
+                  What is the salary or hourly pay?
+                </label>
+                <input
+                  required
+                  type="number"
+                  className="block p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
+                  placeholder="Amount in dollars"
+                  value={boardJob.salary}
+                  onChange={(evt) => {
+                    const copy = { ...boardJob };
+                    copy.salary = evt.target.value;
+                    setBoardJob(copy);
+                  }}
+                />
+              </div>
+              <div className="w-1/2 px-3 py-2 border rounded-md shadow-sm formSection border-slate-500 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
+                <label
+                  className="text-xs font-medium text-gray-900"
+                  htmlFor="name"
+                >
+                  {" "}
+                  Where is the job located?
+                </label>
+                <input
+                  required
+                  type="text"
+                  className="block p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
+                  placeholder="Office Location"
+                  value={boardJob.location}
+                  onChange={(evt) => {
+                    const copy = { ...boardJob };
+                    copy.location = evt.target.value;
+                    setBoardJob(copy);
+                  }}
+                />
+              </div>
+              <div className="w-1/2 px-3 py-2 border rounded-md shadow-sm formSection border-slate-500 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
+                <label
+                  className="text-xs font-medium text-gray-900"
+                  htmlFor="name"
+                >
+                  {" "}
+                  Work Status
+                </label>
+                <input
+                  required
+                  type="text"
+                  className="block p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
+                  placeholder="On-site, Hybrid, or Remote"
+                  value={boardJob.work_status}
+                  onChange={(evt) => {
+                    const copy = { ...boardJob };
+                    copy.work_status = evt.target.value;
+                    setBoardJob(copy);
+                  }}
+                />
+              </div>
+              <button
+                className="px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white transition ease-in-out rounded-lg shadow-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br shadow-blue-500/50"
+                onClick={(clickEvent) => putRequestForJob(clickEvent)}
+              >
+                Save Changes!
+              </button>
+            </form>
+          </div>
+        </div>
+      </main>
+      ;
     </>
   );
 };

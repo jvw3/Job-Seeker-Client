@@ -15,9 +15,6 @@ import {
   deleteContact
 } from "../managers/NetworkManager";
 import { IconBrandLinkedin, IconTrash, IconSearch, IconCalendarEvent} from "@tabler/icons";
-import { ContactEdit } from "./ContactEdit";
-import { ToastContainer, toast } from "react-toastify";
-import { NetworkMeetingForm } from "./NetworkMeetingForm";
 
 // Contact List Component renders a table that holds all contacts.
 
@@ -44,58 +41,13 @@ export const ContactList = () => {
   };
 
 
-
-
-  const renderCreateMeetingModal = (contact) => {
-    return (
-      <>
-        <label
-          htmlFor="my-modal-createmeeting"
-          className="px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white shadow-lg btn bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80"
-        >
-          <IconCalendarEvent />
-        </label>
-
-        <input
-          type="checkbox"
-          id="my-modal-createmeeting"
-          className="modal-toggle"
-        />
-        <div className="modal">
-          <div className="relative modal-box">
-            <label
-              htmlFor="my-modal-createmeeting"
-              className="absolute btn btn-sm btn-circle right-2 top-2"
-            >
-              ✕
-            </label>
-            <h3 className="text-lg font-bold">
-              Add Meeting for: {contact.name}
-            </h3>
-            <p className="py-4">
-              <NetworkMeetingForm
-                sendCreateNetworkMeetingToast={sendCreateNetworkMeetingToast}
-                contactId={contact.id}
-              />
-            </p>
-            <div className="modal-action">
-              <label htmlFor="my-modal-createmeeting" className="btn">
-                Close
-              </label>
-            </div>
-          </div>
-        </div>
-      </>
-    );
-  }
-
   //  Function: This function renders the network table that holds all of a user's contacts.
   const renderNetworkTable = () => {
     return (
       <>
-        <table className="w-11/12 shadow-2xl">
-          <thead className="bg-gray-100">
-            <tr>
+        <table className="w-full h-full shadow-2xl">
+          <thead className="w-full bg-gray-100">
+            <tr className="">
               <th
                 scope="col"
                 className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 border-transparent rounded-tl-md"
@@ -146,12 +98,12 @@ export const ContactList = () => {
               </th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+          <tbody className="overflow-y-scroll bg-white divide-y divide-gray-200">
             {contacts.map((contact) => (
               <>
                 <tr
                   height="100"
-                  className={`flexjustify-evenly w-full mt-6 border gap-x-4 ${
+                  className={` mt-6 gap-x-4 ${
                     contact.id % 2 ? "" : "bg-blue-100"
                   }  `}
                   key={`contact--${contact.id}`}
@@ -195,7 +147,7 @@ export const ContactList = () => {
               </>
             ))}
           </tbody>
-          <tfoot className="h-10 bg-gray-100">
+          <tfoot className="w-full h-10 bg-gray-100">
             <tr>
               <th className="border-separate rounded-bl-md" scope="row"></th>
               <th scope="row"></th>
@@ -222,35 +174,35 @@ export const ContactList = () => {
   };
 
   const sendSortRequestToApi = (sortValue) => {
-    if (sortValue == "8") {
+    if (sortValue === "8") {
       sendAscendingSortNameRequest().then((filteredContactsArray) => {
         setContacts(filteredContactsArray);
       });
-    } else if (sortValue == "7") {
+    } else if (sortValue === "7") {
       sendDescendingSortNameRequest().then((filteredContactsArray) => {
         setContacts(filteredContactsArray);
       });
-    } else if (sortValue == "6") {
+    } else if (sortValue === "6") {
       sendAscendingSortContactNumberRequest().then((filteredContactsArray) => {
         setContacts(filteredContactsArray);
       });
-    } else if (sortValue == "5") {
+    } else if (sortValue === "5") {
       sendDescendingSortContactNumberRequest().then((filteredContactsArray) => {
         setContacts(filteredContactsArray);
       });
-    } else if (sortValue == "4") {
+    } else if (sortValue === "4") {
       sendAscendingSortConnectionLevelRequest().then((filteredContactsArray) => {
         setContacts(filteredContactsArray);
       });
-    } else if (sortValue == "3") {
+    } else if (sortValue === "3") {
       sendDescendingSortConnectionLevelRequest().then((filteredContactsArray) => {
         setContacts(filteredContactsArray);
       });
-    } else if (sortValue == "2") {
+    } else if (sortValue === "2") {
       sendAscendingSortLastContactRequest().then((filteredContactsArray) => {
         setContacts(filteredContactsArray);
       });
-    } else if (sortValue == "1") {
+    } else if (sortValue === "1") {
       sendDescendingSortLastContactRequest().then((filteredContactsArray) => {
         setContacts(filteredContactsArray);
       });
@@ -269,20 +221,21 @@ export const ContactList = () => {
     return (
       <>
         <button
-          className="px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white rounded-lg shadow-lg btn bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80"
+          className="px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white rounded-lg shadow-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80"
           onClick={() => {
             getContactsForUser()
               .then((userContacts) => {
                 setContacts(userContacts);
                 setSortValue("0");
                 setConnectionFilterValue("0");
+                
               })
-              .then(() => setSearchedTitle(""));
+              
           }}
         >
           Reset
         </button>
-        <div className="w-1/4 input-group">
+        <div className="w-1/5 input-group">
           <input
             type="text"
             className="w-56 h-10 rounded-md text-slate-500"
@@ -307,16 +260,10 @@ export const ContactList = () => {
   };
 
 
-  const sendCreateNetworkMeetingToast = () => {
-    toast.success("A new meeting has been updated.", {
-      toastId: 'success1'
-    });
-  };
-
   const renderSortAndFilterBars = () => {
     return (
       <>
-        <div>
+        <div className="w-1/5 mr-6 input-group ">
           <select
             onChange={(evt) => {
               const copy = evt.target.value;
@@ -338,12 +285,12 @@ export const ContactList = () => {
             onClick={() => {
               sendSortRequestToApi(sortValue);
             }}
-            className="h-10 px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white rounded-lg shadow-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80"
+            className="h-10 px-4 py-1 mb-2 mr-2 text-xs font-medium text-center text-white rounded-lg shadow-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80"
           >
             Sort Contacts
           </button>
         </div>
-        <div>
+        <div className="w-1/5 ml-2 input-group">
           <select
             className="h-10 rounded-md text-slate-500"
             value={connectionFilterValue}
@@ -407,11 +354,11 @@ export const ContactList = () => {
 
   return (
     <>
-      <main className="flex-col w-full bg-pinkswirl">
+      <main className="flex-col w-full ">
         <div>
           <div>
             <button
-              className="px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white rounded-lg shadow-lg btn bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80"
+              className="px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white rounded-lg shadow-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80"
               onClick={() => {
                 navigate(`/createcontact`);
               }}
@@ -429,7 +376,6 @@ export const ContactList = () => {
           </div>
         </div>
         </div>
-        <ToastContainer />
       </main>
     </>
   );

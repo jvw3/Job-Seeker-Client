@@ -7,9 +7,8 @@ import "react-toastify/dist/ReactToastify.css";
 // User Profile Component renders the user profile data
 
 export const UserProfile = () => {
-  const navigate = useNavigate()
-  const [currentSeeker, setCurrentSeeker] = useState({})
-
+  const navigate = useNavigate();
+  const [currentSeeker, setCurrentSeeker] = useState({});
 
   useEffect(() => {
     getCurrentSeeker().then((user) => {
@@ -17,14 +16,16 @@ export const UserProfile = () => {
     });
   }, []);
 
-
   return (
     <>
       <main className="w-full pt-4 pl-4 bg-pinkswirl">
         <h1 className="mb-3 text-4xl text-white font-quicksand">
           {currentSeeker.full_name}
         </h1>
-        <button onClick={() => navigate(`/editprofile`)} className="px-4 mb-2 mr-2 text-sm font-medium text-center text-white rounded-lg shadow-lg btn bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br">
+        <button
+          onClick={() => navigate(`/editprofile`)}
+          className="px-4 mb-2 mr-2 text-sm font-medium text-center text-white rounded-lg shadow-lg btn bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br"
+        >
           Edit Profile
         </button>
         <div className="space-y-1">
@@ -33,6 +34,9 @@ export const UserProfile = () => {
           </div>
           <div className="text-2xl text-white">
             {currentSeeker?.user?.email}
+          </div>
+          <div className="text-2xl text-white">
+            {currentSeeker.current_role}
           </div>
           <div className="text-2xl text-white">{currentSeeker?.bio}</div>
           <div>{currentSeeker.elevator_pitch}</div>

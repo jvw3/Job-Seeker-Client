@@ -187,7 +187,7 @@ export const IndividualContact = () => {
   };
 
   const sendCreateNetworkMeetingToast = () => {
-    toast.success("A new meeting has been updated.", {
+    toast.success("A new meeting has been created.", {
       toastId: "success1",
     });
   };
@@ -200,7 +200,7 @@ export const IndividualContact = () => {
 
   const formatTime = (date) => {
     const interviewDate = new Date(date);
-    const formattedInterviewDate = interviewDate.toLocaleString();
+    const formattedInterviewDate = interviewDate.toLocaleString("en-US");
     return formattedInterviewDate;
   };
 

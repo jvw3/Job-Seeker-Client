@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { createInterview, createInterviewPrep } from "../managers/InterviewManager";
 
 // Interview Form component allows a user to create a new interview.
@@ -28,15 +28,15 @@ export const InterviewForm = () => {
       company_info: interviewPrep.company_info
     };
 
-    createInterviewPrep(interviewPrepToApi).then((interviewPrep) => {
-      postRequestForInterview(interviewPrep.id)
+    createInterviewPrep(interviewPrepToApi).then((interviewPrepObject) => {
+      postRequestForInterview(interviewPrepObject.id)
     })
   }
 
   const postRequestForInterview = (interviewPrepId) => {
 
     const interviewToApi = {
-      board_job: parseInt(interview.board_job),
+      board_job: interview.board_job,
       prep: interviewPrepId,
       date: interview.date,
       is_complete: interview.is_complete,
@@ -105,7 +105,7 @@ export const InterviewForm = () => {
                 <input
                   required
                   type="text"
-                  className="block p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
+                  className="block w-full p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
                   value={interviewPrep.company_info}
                   onChange={(evt) => {
                     const copy = { ...interviewPrep };

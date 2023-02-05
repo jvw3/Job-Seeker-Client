@@ -21,6 +21,7 @@ import { NetworkHome } from "../network/NetworkHome";
 import { BoardManager } from "../Job-boards/ManageBoard";
 import { InterviewEdit } from "../interviews/InterviewEdit";
 import { IndividualContact } from "../network/IndividualContact";
+import { ProfileEdit } from "../profile/ProfileEdit";
 
 // Seeker Views Component handles the routes for an authorized seeker (regular-non admin user)
 
@@ -56,10 +57,11 @@ export const SeekerViews = ({ token, setToken }) => {
       <Route path="jobs/:jobId/createinterview" element={<InterviewForm />} />
       <Route path="/createcontact" element={<ContactForm />} />
       <Route path="/network/contact/:contactId" element={<ContactEdit />} />
-      <Route path="/editinterview/:interviewId" element={<InterviewEdit />} />
+      <Route path="/editinterview/:interviewId/interviewprep/:prepId" element={<InterviewEdit />} />
       <Route path="/network" element={<NetworkHome />} />
       <Route path="/contacts/:contactId" element={<IndividualContact />} />
       <Route path="/profile" element={<UserProfile />} />
+      <Route path="/editprofile" element={<ProfileEdit />} />
       <Route path="/boardmanager" element={<BoardManager />} />
     </Routes>
   );

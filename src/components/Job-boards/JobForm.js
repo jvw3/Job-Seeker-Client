@@ -84,7 +84,7 @@ export const JobForm = () => {
       culture_rating: boardJob.culture_rating,
       leadership_rating: boardJob.leadership_rating,
       team_rating: boardJob.team_rating,
-      board: parseInt(boardJob.board),
+      board: boardJob.board,
       category: parseInt(boardJob.category),
       tags: Array.from(checkedOptions)
     };
@@ -94,7 +94,7 @@ export const JobForm = () => {
 
   const renderCustomJobForm = () => {
     return (
-      <div className="formSection rounded-md border border-slate-500 px-3 py-2 shadow-sm focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600 w-fit">
+      <div className="w-1/2 px-3 py-2 mt-2 border rounded-md shadow-sm formSection border-slate-500 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
         <label className="text-xs font-medium text-gray-900" htmlFor="name">
           Job Title
         </label>
@@ -102,7 +102,7 @@ export const JobForm = () => {
           required
           autoFocus
           type="text"
-          className="form-input block border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
+          className="block p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
           placeholder="Name of position"
           value={boardJob.custom_job}
           onChange={(evt) => {
@@ -117,7 +117,7 @@ export const JobForm = () => {
 
   const renderCustomCompanyForm = () => {
     return (
-      <div className="formSection rounded-md border border-slate-500 px-3 py-2 shadow-sm focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600 w-fit">
+      <div className="w-1/2 px-3 py-2 border rounded-md shadow-sm formSection border-slate-500 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
         <label className="text-xs font-medium text-gray-900" htmlFor="name">
           Company Name
         </label>
@@ -125,7 +125,7 @@ export const JobForm = () => {
           required
           autoFocus
           type="text"
-          className="form-input block border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
+          className="block p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
           placeholder="Name of position"
           value={boardJob.custom_company}
           onChange={(evt) => {
@@ -140,17 +140,25 @@ export const JobForm = () => {
 
   return (
     <>
-      <main className="flex-col w-full bg-pinkswirl text-black">
-        <div className="h-1/6 ">
-          <h1 className="text-white text-4xl p-5 font-quicksand">Add New Job</h1>
+      <main className="flex-col w-full text-black bg-pinkswirl">
+        <div className="mb-3">
+          <h1 className="p-5 text-4xl text-white font-quicksand">
+            Add New Job
+          </h1>
         </div>
-        <div className="w-full h-5/6 flex justify-center">
-          <div className="border p-10 rounded-md bg-white w-2/5 h-80 flex-col">
+        <div className="flex justify-center w-full pb-5 h-90">
+          <div className="flex-col w-2/5 p-5 bg-white border rounded-md h-90">
             <form className="flex-col space-y-2">
               <fieldset>
-                <div className="forminputfield">
+                <div className="w-1/2 px-3 py-2 border border-gray-500 rounded-md shadow-sm formSection focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
+                  <label
+                    className="block text-xs font-medium text-gray-900"
+                    htmlFor="name"
+                  >
+                    Job Title
+                  </label>
                   <select
-                    className="rounded-md"
+                    className="block w-full p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
                     value={boardJob.job}
                     required
                     autoFocus
@@ -169,12 +177,18 @@ export const JobForm = () => {
                       );
                     })}
                   </select>
-                  {boardJob.job === "1" ? renderCustomJobForm() : ""}
                 </div>
+                  {boardJob.job === "1" ? renderCustomJobForm() : ""}
               </fieldset>
-              <div className="forminputfield">
+              <div className="w-1/2 px-3 py-2 border border-gray-500 rounded-md shadow-sm formSection focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
+                <label
+                  className="block text-xs font-medium text-gray-900"
+                  htmlFor="name"
+                >
+                  Company
+                </label>
                 <select
-                  className="form-control rounded-md"
+                  className="block w-full p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
                   value={boardJob.company}
                   required
                   onChange={(evt) => {
@@ -195,9 +209,15 @@ export const JobForm = () => {
               </div>
               {boardJob.company === "1" ? renderCustomCompanyForm() : ""}
               <fieldset>
-                <div className="forminputfield">
+                <div className="w-1/2 px-3 py-2 border border-gray-500 rounded-md shadow-sm formSection focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
+                  <label
+                    className="block text-xs font-medium text-gray-900"
+                    htmlFor="name"
+                  >
+                    Category
+                  </label>
                   <select
-                    className="rounded-md"
+                    className="block w-full p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
                     value={boardJob.category}
                     required
                     onChange={(evt) => {
@@ -217,9 +237,10 @@ export const JobForm = () => {
                   </select>
                 </div>
               </fieldset>
-              <div className=" flex w-3/12">
+              <div className="flex w-4/12 ">
                 <label htmlFor="applied-yes"></label>
                 <input
+                  className="mr-2 checkbox checkbox-sm checkbox-secondary"
                   type="checkbox"
                   id="applied-yes"
                   name="applicationstatus"
@@ -233,7 +254,7 @@ export const JobForm = () => {
                 />
                 Have you Applied?
               </div>
-              <div className="formSection rounded-md border border-slate-500 px-3 py-2 shadow-sm focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600 w-fit">
+              <div className="w-1/2 px-3 py-2 border rounded-md shadow-sm formSection border-slate-500 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
                 <label
                   className="text-xs font-medium text-gray-900"
                   htmlFor="name"
@@ -243,7 +264,7 @@ export const JobForm = () => {
                 <input
                   required
                   type="number"
-                  className="form-input block border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
+                  className="block p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
                   placeholder="Amount in dollars"
                   value={boardJob.salary}
                   onChange={(evt) => {
@@ -253,7 +274,7 @@ export const JobForm = () => {
                   }}
                 />
               </div>
-              <div className="formSection rounded-md border border-slate-500 px-3 py-2 shadow-sm focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600 w-fit">
+              <div className="w-1/2 px-3 py-2 border rounded-md shadow-sm formSection border-slate-500 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
                 <label
                   className="text-xs font-medium text-gray-900"
                   htmlFor="name"
@@ -264,7 +285,7 @@ export const JobForm = () => {
                 <input
                   required
                   type="text"
-                  className="form-input block border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
+                  className="block p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
                   placeholder="Office Location"
                   value={boardJob.location}
                   onChange={(evt) => {
@@ -274,7 +295,7 @@ export const JobForm = () => {
                   }}
                 />
               </div>
-              <div className="formSection rounded-md border border-slate-500 px-3 py-2 shadow-sm focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600 w-fit">
+              <div className="w-1/2 px-3 py-2 border rounded-md shadow-sm formSection border-slate-500 focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
                 <label
                   className="text-xs font-medium text-gray-900"
                   htmlFor="name"
@@ -285,7 +306,7 @@ export const JobForm = () => {
                 <input
                   required
                   type="text"
-                  className="form-input block border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
+                  className="block w-full p-0 overflow-visible text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
                   placeholder="On-site, Hybrid, or Remote"
                   value={boardJob.work_status}
                   onChange={(evt) => {
@@ -302,7 +323,7 @@ export const JobForm = () => {
                     <div className="flex">
                       {tag.name}
                       <input
-                        className="checkbox checkbox-sm checkbox-secondary"
+                        className="ml-2 checkbox checkbox-sm checkbox-secondary"
                         value={tag.id}
                         onChange={(event) => {
                           const copy = new Set(checkedOptions);
@@ -320,9 +341,7 @@ export const JobForm = () => {
                 </div>
               </fieldset>
               <button
-                size="lg"
-                className="btn transition ease-in-out text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4  focus:ring-blue-300 shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
-                color="violet"
+                className="px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white transition ease-in-out rounded-lg shadow-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br shadow-blue-500/50"
                 onClick={(clickEvent) => postRequestForJob(clickEvent)}
               >
                 Create New Job!

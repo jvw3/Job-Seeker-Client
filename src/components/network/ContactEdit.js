@@ -55,7 +55,7 @@ export const ContactEdit = ({ contactId, sendEditContactToast }) => {
         <div className="flex justify-center w-full h-5/6">
           <div className="flex-col w-4/5 p-10 bg-white border rounded -md h-5/6">
             <form className="flex-col">
-              <fieldset className="">
+              <fieldset className="mb-2 space-y-2">
                 <div className="px-3 py-2 border border-gray-300 rounded-md shadow-sm formSection focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
                   <label
                     className="block text-xs font-medium text-gray-900"
@@ -128,7 +128,6 @@ export const ContactEdit = ({ contactId, sendEditContactToast }) => {
                     required
                     type="date"
                     className="block w-full p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
-                    placeholder="What are your job requirements?"
                     value={contact.last_contact}
                     onChange={(evt) => {
                       const copy = { ...contact };

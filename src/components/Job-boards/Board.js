@@ -14,11 +14,9 @@ import {
 import { JobList } from "./JobList";
 import {
   IconMapPin,
-  IconCurrencyDollar,
   IconBrandCashapp,
   IconCrown,
   IconFriends,
-  IconMap2,
   IconUsers,
   IconX,
   IconTie,
@@ -87,7 +85,7 @@ export const BoardView = () => {
               evt.preventDefault();
 
               const boardCategory = {
-                board: parseInt(boardId),
+                board: boardId,
                 category: category.id,
               };
 
@@ -249,7 +247,7 @@ export const BoardView = () => {
 
   return (
     <>
-      <main className="w-screen h-screen overflow-y-auto bg-pinkswirl">
+      <main className="w-screen h-full overflow-y-auto bg-pinkswirl">
         <div className="p-4 text-white">
           <h1 className="text-4xl font-quicksand ">{board.title}</h1>
         </div>
@@ -274,8 +272,8 @@ export const BoardView = () => {
             </button>
             {renderDeleteButton(boardId)}
           </div>
-          <div className="flex justify-evenly h-72">
-            <div className="w-3/12 p-4 bg-white rounded-md shadow-lg">
+          <div className="flex justify-between w-full h-72">
+            <div className="w-3/12 p-4 bg-white rounded-md shadow-lg basis-1/5">
               <h2 className="text-2xl text-black">Priorities</h2>
               {renderPriorityDragList()}
               <button
@@ -295,19 +293,19 @@ export const BoardView = () => {
                 Update Rankings
               </button>
             </div>
-            <div className="space-y-8">
-              <div className="flex justify-evenly">
-                <div className="w-5/12 p-4 bg-white border rounded-md shadow-lg">
+            <div className="space-y-8 basis-3/4">
+              <div className="flex justify-between">
+                <div className="w-5.75/12 p-4 bg-white border rounded-md shadow-lg">
                   <h2 className="text-2xl text-black">Goal</h2>
                   <div className="text-seeker-blue">{board.goal}</div>
                 </div>
-                <div className="w-5/12 p-4 bg-white border rounded-md shadow-lg">
+                <div className="w-5.75/12 p-4 bg-white border rounded-md shadow-lg">
                   <h2 className="text-2xl text-black">Requirements</h2>
                   <div className="text-seeker-blue">{board.requirements}</div>
                 </div>
               </div>
-              <div className="flex justify-center pl-3 pr-3">
-                <div className="w-11/12 shadow stats">
+              <div className="flex justify-center ">
+                <div className="w-full shadow stats">
                   <div className="stat">
                     <div className="stat-title text-seeker-blue">
                       Total Applications <IconSend />
@@ -373,7 +371,9 @@ export const BoardView = () => {
                 >
                   <IconX />
                 </label>
-                <h3 className="text-2xl font-bold text-white">Manage Board Categories</h3>
+                <h3 className="text-2xl font-bold text-white">
+                  Manage Board Categories
+                </h3>
                 {manageBoardCategories()}
                 <div className="modal-action">
                   <label

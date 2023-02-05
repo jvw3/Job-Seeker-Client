@@ -1,67 +1,62 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { createBoard, getAllCategories } from "../managers/BoardManager";
-import { getSingleContact, updateContact } from "../managers/NetworkManager";
+import { getCurrentSeeker, updateProfile } from "../managers/AuthManager";
 
-// Contact Edit Component allows user to edit contact data.
+// Profile Edit Component allows user to edit their profile information.
 
-export const ContactEdit = ({ contactId, sendEditContactToast }) => {
-  const [contact, setContact] = useState({
-    name: "",
-    current_role: "",
-    current_company: "",
-    last_contact: "",
-    number_of_contacts: 0,
-    connection_level: 0,
-    linked_in: "",
-    notes: "",
-  });
-
-  console.log(contactId);
+export const ProfileEdit = () => {
+  const [profile, setProfile] = useState({});
 
   useEffect(() => {
-    getSingleContact(contactId).then((userContact) => {
-      setContact(userContact);
+    getCurrentSeeker().then((seeker) => {
+      const updatedSeeker = {
+        id: seeker.id,
+        first_name: seeker.user.first_name,
+        last_name: seeker.user.last_name,
+        username: seeker.user.username,
+        email: seeker.user.email,
+        current_role: seeker.current_role,
+        bio: seeker.bio,
+        elevator_pitch: seeker.elevator_pitch,
+      };
+      setProfile(updatedSeeker);
     });
-  }, [contactId]);
+  }, []);
 
   const navigate = useNavigate();
 
-  const putRequestForContact = (event) => {
+  const putRequestForProfile = (event) => {
     event.preventDefault();
 
-    const contactToApi = {
-      name: contact.name,
-      current_role: contact.current_role,
-      current_company: contact.current_company,
-      last_contact: contact.last_contact,
-      number_of_contacts: contact.number_of_contacts,
-      connection_level: contact.connection_level,
-      linked_in: contact.linked_in,
-      notes: contact.notes,
+    const profileToApi = {
+      first_name: profile.first_name,
+      last_name: profile.last_name,
+      username: profile.username,
+      email: profile.email,
+      current_role: profile.current_role,
+      bio: profile.bio,
+      elevator_pitch: profile.elevator_pitch,
     };
 
-    updateContact(contactToApi, contactId);
-  };
-
-  const updateContactHelperFunction = (clickEvent) => {
-    sendEditContactToast();
-    putRequestForContact(clickEvent);
+    updateProfile(profileToApi, profile.id).then(() => {
+      navigate(-1);
+    });
   };
 
   return (
     <>
-      <main className="flex-col w-full h-full space-y-4 bg-neutral">
+      <main className="flex-col w-screen h-screen space-y-4 text-white bg-pinkswirl">
+        <h1 className="mt-5 mb-20 text-4xl font-quicksand">Edit Profile</h1>
         <div className="flex justify-center w-full h-5/6">
           <div className="flex-col w-4/5 p-10 bg-white border rounded -md h-5/6">
             <form className="flex-col">
-              <fieldset className="">
+              <fieldset className="mb-5 space-y-2">
                 <div className="px-3 py-2 border border-gray-300 rounded-md shadow-sm formSection focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
                   <label
                     className="block text-xs font-medium text-gray-900"
                     htmlFor="name"
                   >
-                    Name:
+                    First Name
                   </label>
                   <input
                     required
@@ -69,11 +64,95 @@ export const ContactEdit = ({ contactId, sendEditContactToast }) => {
                     type="text"
                     className="block w-full p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
                     placeholder="How would you describe your job search?"
-                    value={contact.name}
+                    value={profile.first_name}
                     onChange={(evt) => {
-                      const copy = { ...contact };
-                      copy.name = evt.target.value;
-                      setContact(copy);
+                      const copy = { ...profile };
+                      copy.first_name = evt.target.value;
+                      setProfile(copy);
+                    }}
+                  />
+                </div>
+                <div className="px-3 py-2 border border-gray-300 rounded-md shadow-sm formSection focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
+                  <label
+                    className="block text-xs font-medium text-gray-900"
+                    htmlFor="name"
+                  >
+                    Last Name
+                  </label>
+                  <input
+                    required
+                    autoFocus
+                    type="text"
+                    className="block w-full p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
+                    placeholder="How would you describe your job search?"
+                    value={profile.last_name}
+                    onChange={(evt) => {
+                      const copy = { ...profile };
+                      copy.last_name = evt.target.value;
+                      setProfile(copy);
+                    }}
+                  />
+                </div>
+                <div className="px-3 py-2 border border-gray-300 rounded-md shadow-sm formSection focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
+                  <label
+                    className="block text-xs font-medium text-gray-900"
+                    htmlFor="name"
+                  >
+                    Username
+                  </label>
+                  <input
+                    required
+                    autoFocus
+                    type="text"
+                    className="block w-full p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
+                    placeholder="How would you describe your job search?"
+                    value={profile.username}
+                    onChange={(evt) => {
+                      const copy = { ...profile };
+                      copy.username = evt.target.value;
+                      setProfile(copy);
+                    }}
+                  />
+                </div>
+                <div className="px-3 py-2 border border-gray-300 rounded-md shadow-sm formSection focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
+                  <label
+                    className="block text-xs font-medium text-gray-900"
+                    htmlFor="name"
+                  >
+                    Email
+                  </label>
+                  <input
+                    required
+                    autoFocus
+                    type="text"
+                    className="block w-full p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
+                    placeholder="How would you describe your job search?"
+                    value={profile.email}
+                    onChange={(evt) => {
+                      const copy = { ...profile };
+                      copy.email = evt.target.value;
+                      setProfile(copy);
+                    }}
+                  />
+                </div>
+                <div className="px-3 py-2 border border-gray-300 rounded-md shadow-sm formSection focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
+                  <label
+                    className="block text-xs font-medium text-gray-900"
+                    htmlFor="name"
+                  >
+                    Current Role
+                  </label>
+                  <input
+                    required
+                    autoFocus
+                    type="text"
+                    className="block w-full p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
+                    placeholder="How would you describe your job search?"
+                    value={profile.current_role}
+                    onChange={(evt) => {
+                      const copy = { ...profile };
+                      copy.current_role = evt.target.value;
+                      setProfile(copy);
                     }}
                   />
                 </div>
@@ -82,18 +161,18 @@ export const ContactEdit = ({ contactId, sendEditContactToast }) => {
                     className="block text-xs font-medium text-gray-900"
                     htmlFor="goal"
                   >
-                    Current Role:
+                    Bio
                   </label>
                   <input
                     required
                     type="text"
                     className="block w-full p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
                     placeholder="What is the current role of this contact?"
-                    value={contact.current_role}
+                    value={profile.bio}
                     onChange={(evt) => {
-                      const copy = { ...contact };
-                      copy.current_role = evt.target.value;
-                      setContact(copy);
+                      const copy = { ...profile };
+                      copy.bio = evt.target.value;
+                      setProfile(copy);
                     }}
                   />
                 </div>
@@ -102,118 +181,18 @@ export const ContactEdit = ({ contactId, sendEditContactToast }) => {
                     className="block text-xs font-medium text-gray-900"
                     htmlFor="name"
                   >
-                    Current Company:
+                    Elevator Pitch
                   </label>
-                  <input
+                  <textarea
                     required
                     type="text"
                     className="block w-full p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
-                    placeholder="What does this contact currently work?"
-                    value={contact.current_company}
+                    placeholder="What is your story?"
+                    value={profile.elevator_pitch}
                     onChange={(evt) => {
-                      const copy = { ...contact };
-                      copy.current_company = evt.target.value;
-                      setContact(copy);
-                    }}
-                  />
-                </div>
-                <div className="px-3 py-2 border border-gray-300 rounded-md shadow-sm formSection focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
-                  <label
-                    className="block text-xs font-medium text-gray-900"
-                    htmlFor="name"
-                  >
-                    Date of Last Contact:
-                  </label>
-                  <input
-                    required
-                    type="date"
-                    className="block w-full p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
-                    placeholder="What are your job requirements?"
-                    value={contact.last_contact}
-                    onChange={(evt) => {
-                      const copy = { ...contact };
-                      copy.last_contact = evt.target.value;
-                      setContact(copy);
-                    }}
-                  />
-                </div>
-                <div className="px-3 py-2 border border-gray-300 rounded-md shadow-sm formSection focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
-                  <label
-                    className="block text-xs font-medium text-gray-900"
-                    htmlFor="name"
-                  >
-                    Number Of Contacts:
-                  </label>
-                  <input
-                    required
-                    type="number"
-                    className="block w-full p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
-                    placeholder="What are your job requirements?"
-                    value={contact.number_of_contacts}
-                    onChange={(evt) => {
-                      const copy = { ...contact };
-                      copy.number_of_contacts = evt.target.value;
-                      setContact(copy);
-                    }}
-                  />
-                </div>
-                <div className="px-3 py-2 border border-gray-300 rounded-md shadow-sm formSection focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
-                  <label
-                    className="block text-xs font-medium text-gray-900"
-                    htmlFor="name"
-                  >
-                    Connection Level:
-                  </label>
-                  <input
-                    required
-                    type="number"
-                    className="block w-full p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
-                    placeholder="How would you rate your connection with this contact?"
-                    value={contact.connection_level}
-                    onChange={(evt) => {
-                      const copy = { ...contact };
-                      copy.connection_level = evt.target.value;
-                      setContact(copy);
-                    }}
-                  />
-                </div>
-                <div className="px-3 py-2 border border-gray-300 rounded-md shadow-sm formSection focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
-                  <label
-                    className="block text-xs font-medium text-gray-900"
-                    htmlFor="name"
-                  >
-                    LinkedIn:
-                  </label>
-                  <input
-                    required
-                    type="text"
-                    className="block w-full p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
-                    placeholder="Add LinkedIn for Contact. Do not include 'https://' in the link."
-                    value={contact.linked_in}
-                    onChange={(evt) => {
-                      const copy = { ...contact };
-                      copy.linked_in = evt.target.value;
-                      setContact(copy);
-                    }}
-                  />
-                </div>
-                <div className="px-3 py-2 border border-gray-300 rounded-md shadow-sm formSection focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
-                  <label
-                    className="block text-xs font-medium text-gray-900"
-                    htmlFor="name"
-                  >
-                    Notes:
-                  </label>
-                  <input
-                    required
-                    type="textarea"
-                    className="block w-full p-0 text-gray-900 placeholder-gray-500 border-0 form-input focus:ring-0 sm:text-sm"
-                    placeholder="What are your job requirements?"
-                    value={contact.notes}
-                    onChange={(evt) => {
-                      const copy = { ...contact };
-                      copy.notes = evt.target.value;
-                      setContact(copy);
+                      const copy = { ...profile };
+                      copy.elevator_pitch = evt.target.value;
+                      setProfile(copy);
                     }}
                   />
                 </div>
@@ -221,9 +200,7 @@ export const ContactEdit = ({ contactId, sendEditContactToast }) => {
               <button
                 type="submit"
                 className="px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white transition ease-in-out rounded-lg shadow-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-blue-500/50"
-                onClick={(clickEvent) =>
-                  updateContactHelperFunction(clickEvent)
-                }
+                onClick={(clickEvent) => putRequestForProfile(clickEvent)}
               >
                 Save Changes
               </button>

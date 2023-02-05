@@ -25,13 +25,6 @@ export const getSingleJobForUser = (id) => {
     },
   }).then((res) => res.json());
 };
-export const getSingleInterviewForUser = (id) => {
-  return fetch(`http://localhost:8000/interviews/${id}`, {
-    headers: {
-      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
-    },
-  }).then((res) => res.json());
-};
 
 export const getSinglePriorityRankForBoard = (id) => {
   return fetch(`http://localhost:8000/priorityranks?board=${id}`, {
@@ -180,6 +173,17 @@ export const createBoardCategory = (boardCategory) => {
       Authorization: `Token ${localStorage.getItem("seeker_token")}`,
     },
     body: JSON.stringify(boardCategory),
+  }).then((res) => res.json());
+};
+
+export const createPriorityRank = (priorityRank) => {
+  return fetch("http://localhost:8000/priorityranks", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Token ${localStorage.getItem("seeker_token")}`,
+    },
+    body: JSON.stringify(priorityRank),
   }).then((res) => res.json());
 };
 
