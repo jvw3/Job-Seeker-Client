@@ -22,10 +22,13 @@ Job Seeker is a web application that allows users to organize their job search b
 - Job Seeker users can create, edit and delete network meetings
 
 
+<h2>Job Seeker Video Demo</h2>
+
+[![Job Seeker Video Demo](https://img.youtube.com/vi/vw1axveZo5k/maxresdefault.jpg)](https://www.youtube.com/watch?v=vw1axveZo5k)
+
+
 <h2>Entity Relationship Diagram</h2>
 https://drawsql.app/teams/jonathan-woodard/diagrams/jobseeker
-
-
 
 
 <h2>Initial Wireframe</h2>
@@ -42,8 +45,11 @@ https://www.figma.com/file/0UYJkwDjWaKMf7OvAGvbK2/JobSeeker?node-id=2%3A3&t=cSTb
 - Figma (Wireframe)
 - Canva (Logo Design)
 - TailwindCSS
+- DaisyUI (Tailwind Framework)
 - CSS3
 - Tabler Icons (Icons)
+- React-beautiful-dnd (drag and drop library)
+- React toastify (toast notification library)
 
 
 
