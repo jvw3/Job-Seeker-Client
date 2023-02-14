@@ -17,8 +17,6 @@ export const ContactEdit = ({ contactId, sendEditContactToast }) => {
     notes: "",
   });
 
-  console.log(contactId);
-
   useEffect(() => {
     getSingleContact(contactId).then((userContact) => {
       setContact(userContact);
@@ -44,6 +42,7 @@ export const ContactEdit = ({ contactId, sendEditContactToast }) => {
     updateContact(contactToApi, contactId);
   };
 
+  // function: sends toast notification in modal.
   const updateContactHelperFunction = (clickEvent) => {
     sendEditContactToast();
     putRequestForContact(clickEvent);
