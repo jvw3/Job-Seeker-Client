@@ -39,6 +39,7 @@ export const NetworkMeetingForm = ({sendCreateNetworkMeetingToast, contactId}) =
     createNetworkMeeting(networkMeetingToApi);
   };
 
+  // function: creates toast notification in modal.
   const createMeetingHelperFunction = (clickEvent) => {
     sendCreateNetworkMeetingToast();
     postRequestForNetworkMeeting(clickEvent);
