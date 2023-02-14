@@ -58,6 +58,7 @@ export const BoardView = () => {
     }
   };
 
+  // function: renders the board categories modal
   const manageBoardCategories = () => {
     return (
       <div>
@@ -110,6 +111,7 @@ export const BoardView = () => {
     );
   };
 
+  // useEffect: any time the priority rankings change, the board will get rerendered.
   useEffect(() => {
     getSingleBoardForUser(boardId).then((userJobs) => {
       setBoard(userJobs);
@@ -148,6 +150,7 @@ export const BoardView = () => {
       .then(() => navigate("/dashboard"));
   };
 
+  // function: handles the restructuring of the drag and drop list when an item is moved.
   const handleOnDragEnd = (result) => {
     if (!result.destination) return;
     const items = Array.from(priorityRankings);
@@ -157,6 +160,8 @@ export const BoardView = () => {
     setPriorityRankings(items);
   };
 
+
+  // function: updates the state of the ranking rankings.
   const updatePriorityRankings = () => {
     const arrayCopy = [...priorityRankings];
     arrayCopy.forEach((ranking) => {
@@ -166,6 +171,7 @@ export const BoardView = () => {
     setPriorityRankings(arrayCopy);
   };
 
+  // function: sends put request for the priority ranking.
   const sendPriorityRankingsPutRequests = (event) => {
     event.preventDefault();
 

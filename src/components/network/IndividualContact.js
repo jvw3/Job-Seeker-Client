@@ -29,6 +29,7 @@ export const IndividualContact = () => {
     });
   }, []);
 
+  // function: opens LinkedIn link in new tab
   const openLinkInNewTab = (url) => {
     window.open(url, "_blank");
   };
@@ -130,8 +131,8 @@ export const IndividualContact = () => {
   const deleteRequestForNetworkMeeting = (id) => {
     deleteNetworkMeeting(id).then(() => {
       getScheduledNetworkMeetings().then((meetings) => {
-        setMeetings(meetings)
-      })
+        setMeetings(meetings);
+      });
     });
   };
 
@@ -186,12 +187,13 @@ export const IndividualContact = () => {
     );
   };
 
+  // function: creates toast notification for a network meeting.
   const sendCreateNetworkMeetingToast = () => {
     toast.success("A new meeting has been created.", {
       toastId: "success1",
     });
   };
-
+   // function: creates toast notification for a Editing a Contact.
   const sendEditContactToast = () => {
     toast.success("Your contact has been updated.", {
       toastId: "success1",

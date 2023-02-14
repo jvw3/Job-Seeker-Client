@@ -4,7 +4,7 @@ import { createCustomPrep, getSingleInterviewPrep } from "../managers/InterviewM
 // Add Custom Preps Component is a modal that handles the creation of new Custom Preps material.
 
 export const AddCustomPreps = ({ prepId, sendToast }) => {
-  const [interviewPrep, setPrep] = useState(0)
+  const [interviewPrep, setPrep] = useState(0);
   const [customPrep, setCustomPrep] = useState({
     title: "",
     description: "",
@@ -12,10 +12,10 @@ export const AddCustomPreps = ({ prepId, sendToast }) => {
   });
 
   useEffect(() => {
-    setPrep(prepId)
+    setPrep(prepId);
   }, [prepId]);
 
-
+  // function: sends Post request for new Custom Prep
   const postRequestForCustomPrep = (event) => {
     event.preventDefault();
 
@@ -26,19 +26,18 @@ export const AddCustomPreps = ({ prepId, sendToast }) => {
       content: customPrep.content,
     };
 
-    createCustomPrep(customPrepToApi)
-    
+    createCustomPrep(customPrepToApi);
   };
 
+  // function: sends toast notification when a new custom prep is created.
   const newPrep = (clickEvent) => {
-    sendToast()
-    postRequestForCustomPrep(clickEvent)
-  }
+    sendToast();
+    postRequestForCustomPrep(clickEvent);
+  };
 
   return (
     <>
-      <main>
-      </main>
+      <main></main>
       <form>
         <fieldset className="mt-3 mb-3 space-y-3">
           <div className="px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm formSection focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">

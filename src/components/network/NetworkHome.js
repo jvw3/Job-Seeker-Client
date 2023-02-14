@@ -8,6 +8,7 @@ export const NetworkHome = () => {
   const [contactTabActive, setContactTabActive] = useState(true);
   const [scheduleTabActive, setScheduleTabActive] = useState(false);
 
+  // function: controls the schedule tab of contact.
   const controlContactTab = () => {
     if (!contactTabActive) {
       setContactTabActive(true);
@@ -17,6 +18,7 @@ export const NetworkHome = () => {
     }
   };
 
+  // function: controls the schedule tab of network.
   const controlScheduleTab = () => {
     if (!scheduleTabActive) {
       setScheduleTabActive(true);
@@ -30,9 +32,7 @@ export const NetworkHome = () => {
     <>
       <main className="flex-col w-screen h-screen pt-8 pl-8 pr-8 bg-pinkswirl">
         <div className="h-1/6">
-          <h1 className="text-5xl text-white font-quicksand">
-            My Network
-          </h1>
+          <h1 className="text-5xl text-white font-quicksand">My Network</h1>
           <div
             data-theme="othertheme"
             className="box-border mt-5 tabs tabs-boxed bg-secondary w-fit"

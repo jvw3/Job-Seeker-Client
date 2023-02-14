@@ -14,7 +14,6 @@ export const IndividualInterviewDetails = () => {
   const { interviewId } = useParams();
   const navigate = useNavigate();
 
-  
   useEffect(() => {
     getSingleInterview(interviewId).then((userInterview) => {
       setInterview(userInterview);
@@ -47,7 +46,9 @@ export const IndividualInterviewDetails = () => {
           className="absolute top-0 right-0 px-4 py-2 mt-1 mb-2 mr-2 text-sm font-medium text-center text-white transition ease-in-out rounded-lg shadow-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-blue-500/50"
           onClick={() => {
             if (
-              window.confirm("Are you sure you want to delete this Custom Prep?")
+              window.confirm(
+                "Are you sure you want to delete this Custom Prep?"
+              )
             ) {
               deleteRequestForCustomPrep(id);
             }
@@ -60,22 +61,21 @@ export const IndividualInterviewDetails = () => {
     );
   };
 
-    const deleteRequestForCustomPrep = (id) => {
-      deleteCustomPrep(id)
-        .then(() => {
-          getSingleInterview(interviewId).then((userInterview) => {
-            setInterview(userInterview);
-          });
-        })
-    };
+  const deleteRequestForCustomPrep = (id) => {
+    deleteCustomPrep(id).then(() => {
+      getSingleInterview(interviewId).then((userInterview) => {
+        setInterview(userInterview);
+      });
+    });
+  };
 
   const deleteRequestForInterview = (id) => {
     deleteInterview(id).then(() => navigate(-1));
   };
 
   const sendToast = () => {
-    toast.success("New prep has been added.")
-  }
+    toast.success("New prep has been added.");
+  };
 
   const renderAddCustomPrepModal = () => {
     return (
@@ -99,11 +99,9 @@ export const IndividualInterviewDetails = () => {
             <div className="modal-action">
               <label
                 onClick={() => {
-                  getSingleInterview(interviewId).then(
-                    (userInterview) => {
-                      setInterview(userInterview);
-                    }
-                  );
+                  getSingleInterview(interviewId).then((userInterview) => {
+                    setInterview(userInterview);
+                  });
                 }}
                 htmlFor="my-modal"
                 className="px-4 py-2 mb-2 mr-2 text-sm font-medium text-center text-white transition ease-in-out rounded-lg shadow-lg btn bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-blue-500/50"
@@ -149,6 +147,7 @@ export const IndividualInterviewDetails = () => {
     );
   };
 
+  // function: put request to change interview status to scheduled
   const putRequestForInterviewStatusScheduled = (event, interview) => {
     event.preventDefault();
 
@@ -167,7 +166,7 @@ export const IndividualInterviewDetails = () => {
 
     toast.success(`Your interview has been updated to: Scheduled.`);
   };
-
+  // function: put request to change interview status to complete
   const putRequestForInterviewStatusComplete = (event, interview) => {
     event.preventDefault();
 
@@ -182,12 +181,10 @@ export const IndividualInterviewDetails = () => {
 
     updateInterview(interviewToApi, interview.id)
       .then(() => getSingleInterview(interview.id))
-      .then((interview) => setInterview(interview))
+      .then((interview) => setInterview(interview));
 
     toast.success(`Your interview has been updated to: Complete.`);
   };
-
-
 
   return (
     <>
@@ -207,7 +204,9 @@ export const IndividualInterviewDetails = () => {
         <button
           className="px-4 py-2 mb-2 text-sm font-medium text-center text-white rounded-l-lg shadow-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-blue-500/50"
           onClick={() => {
-            navigate(`/editinterview/${interviewId}/interviewprep/${interview.prep.id}`);
+            navigate(
+              `/editinterview/${interviewId}/interviewprep/${interview.prep.id}`
+            );
           }}
         >
           Edit Interview
@@ -223,17 +222,21 @@ export const IndividualInterviewDetails = () => {
                 putRequestForInterviewStatusScheduled(event, interview);
               }}
               className={`tab text-seeker-blue ${
-                !interview?.is_complete ? "tab-active text-primary" : "text-seeker-blue"
+                !interview?.is_complete
+                  ? "tab-active text-primary"
+                  : "text-seeker-blue"
               }`}
             >
               Scheduled
             </a>
             <a
               onClick={(event) => {
-                 putRequestForInterviewStatusComplete(event, interview);
+                putRequestForInterviewStatusComplete(event, interview);
               }}
               className={`tab ${
-                interview?.is_complete ? "tab-active text-primary" : "text-seeker-blue"
+                interview?.is_complete
+                  ? "tab-active text-primary"
+                  : "text-seeker-blue"
               } `}
             >
               Complete
