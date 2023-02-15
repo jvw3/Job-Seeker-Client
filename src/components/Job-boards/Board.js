@@ -49,7 +49,7 @@ export const BoardView = () => {
     });
   }, []);
 
-  // Function: This function handles receiving responses that are a message from the server, versus the requested
+  // Function: This function handles receiving responses that are a message from the server
   const handleCreateBoardCategory = (data) => {
     if (data.hasOwnProperty("message")) {
       toast.info(data.message);
